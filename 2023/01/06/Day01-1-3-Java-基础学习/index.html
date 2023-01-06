@@ -1,0 +1,770 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Day01-1-3-Java-基础学习0.前置知识-计算机中的存储1.存储规则 2.进制表现形式 3.进制间的转化1.任意进制转十进制  2.二进制转十进制 3.十进制转其他进制 4.进制转化小结 4.计算机存储规则小结 1.编译和解释型语言 2.跨平台原理 3.JDK和JRE 12345JVM（Java Virtual Machine），Java虚拟机JRE（Java Runtime Envir">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/2023/01/06/Day01-1-3-Java-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Day01-1-3-Java-基础学习0.前置知识-计算机中的存储1.存储规则 2.进制表现形式 3.进制间的转化1.任意进制转十进制  2.二进制转十进制 3.十进制转其他进制 4.进制转化小结 4.计算机存储规则小结 1.编译和解释型语言 2.跨平台原理 3.JDK和JRE 12345JVM（Java Virtual Machine），Java虚拟机JRE（Java Runtime Envir">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103190534184.png">
+<meta property="og:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103191947049.png">
+<meta property="og:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103192224568.png">
+<meta property="og:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103192554935.png">
+<meta property="og:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103192939465.png">
+<meta property="og:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103193216494.png">
+<meta property="og:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103193320871.png">
+<meta property="og:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103204230498.png">
+<meta property="og:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103160747336.png">
+<meta property="og:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103160903564.png">
+<meta property="og:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103161359314.png">
+<meta property="og:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103161538594.png">
+<meta property="og:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103163237544.png">
+<meta property="og:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103163340845.png">
+<meta property="og:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103163751643.png">
+<meta property="og:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103171526026.png">
+<meta property="og:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103172724914.png">
+<meta property="og:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103173418094.png">
+<meta property="og:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103184549254.png">
+<meta property="og:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103185550682.png">
+<meta property="og:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103211854522.png">
+<meta property="og:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103213318383.png">
+<meta property="og:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103220819536.png">
+<meta property="og:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103220915015.png">
+<meta property="og:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230104122446756.png">
+<meta property="og:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230104123815334.png">
+<meta property="article:published_time" content="2023-01-06T05:11:27.970Z">
+<meta property="article:modified_time" content="2023-01-04T05:07:18.010Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103190534184.png">
+  
+  
+  
+  <title>Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text=""></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-01-06 13:11" pubdate>
+          January 6, 2023 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.6k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          39 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Day01-1-3-Java-基础学习"><a href="#Day01-1-3-Java-基础学习" class="headerlink" title="Day01-1-3-Java-基础学习"></a>Day01-1-3-Java-基础学习</h1><h2 id="0-前置知识-计算机中的存储"><a href="#0-前置知识-计算机中的存储" class="headerlink" title="0.前置知识-计算机中的存储"></a>0.前置知识-计算机中的存储</h2><h3 id="1-存储规则"><a href="#1-存储规则" class="headerlink" title="1.存储规则"></a>1.存储规则</h3><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103190534184.png" srcset="/img/loading.gif" lazyload alt="image-20230103190534184"></p>
+<h3 id="2-进制表现形式"><a href="#2-进制表现形式" class="headerlink" title="2.进制表现形式"></a>2.进制表现形式</h3><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103191947049.png" srcset="/img/loading.gif" lazyload alt="image-20230103191947049"></p>
+<h3 id="3-进制间的转化"><a href="#3-进制间的转化" class="headerlink" title="3.进制间的转化"></a>3.进制间的转化</h3><h4 id="1-任意进制转十进制"><a href="#1-任意进制转十进制" class="headerlink" title="1.任意进制转十进制"></a>1.任意进制转十进制</h4><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103192224568.png" srcset="/img/loading.gif" lazyload alt="image-20230103192224568"></p>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103192554935.png" srcset="/img/loading.gif" lazyload alt="image-20230103192554935"></p>
+<h4 id="2-二进制转十进制"><a href="#2-二进制转十进制" class="headerlink" title="2.二进制转十进制"></a>2.二进制转十进制</h4><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103192939465.png" srcset="/img/loading.gif" lazyload alt="image-20230103192939465"></p>
+<h4 id="3-十进制转其他进制"><a href="#3-十进制转其他进制" class="headerlink" title="3.十进制转其他进制"></a>3.十进制转其他进制</h4><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103193216494.png" srcset="/img/loading.gif" lazyload alt="image-20230103193216494"></p>
+<h4 id="4-进制转化小结"><a href="#4-进制转化小结" class="headerlink" title="4.进制转化小结"></a>4.进制转化小结</h4><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103193320871.png" srcset="/img/loading.gif" lazyload alt="image-20230103193320871"></p>
+<h3 id="4-计算机存储规则小结"><a href="#4-计算机存储规则小结" class="headerlink" title="4.计算机存储规则小结"></a>4.计算机存储规则小结</h3><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103204230498.png" srcset="/img/loading.gif" lazyload alt="image-20230103204230498"></p>
+<h2 id="1-编译和解释型语言"><a href="#1-编译和解释型语言" class="headerlink" title="1.编译和解释型语言"></a>1.编译和解释型语言</h2><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103160747336.png" srcset="/img/loading.gif" lazyload alt="image-20230103160747336"></p>
+<h2 id="2-跨平台原理"><a href="#2-跨平台原理" class="headerlink" title="2.跨平台原理"></a>2.跨平台原理</h2><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103160903564.png" srcset="/img/loading.gif" lazyload alt="image-20230103160903564"></p>
+<h2 id="3-JDK和JRE"><a href="#3-JDK和JRE" class="headerlink" title="3.JDK和JRE"></a>3.JDK和JRE</h2><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103161359314.png" srcset="/img/loading.gif" lazyload alt="image-20230103161359314"></p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">JVM（Java </span>Virtual Machine），<span class="hljs-keyword">Java虚拟机</span><br><span class="hljs-keyword"></span><br><span class="hljs-keyword">JRE（Java </span>Runtime Environment），<span class="hljs-keyword">Java运行环境，包含了JVM和Java的核心类库（Java </span>API）,部分运行工具<br><br><span class="hljs-keyword">JDK（Java </span>Development Kit）称为<span class="hljs-keyword">Java开发工具，包含了JRE和开发工具</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103161538594.png" srcset="/img/loading.gif" lazyload alt="image-20230103161538594"></p>
+<h2 id="4-Java中的注释"><a href="#4-Java中的注释" class="headerlink" title="4.Java中的注释"></a>4.Java中的注释</h2><h3 id="1-单行注释"><a href="#1-单行注释" class="headerlink" title="1.单行注释"></a>1.单行注释</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">HelloWorld</span>&#123;<br>        <span class="hljs-comment">//这是但是注释</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String [] args)</span>&#123;<br>        <span class="hljs-comment">//这是输出单行注释</span><br>        System.out.printf(<span class="hljs-string">&quot;Hello World&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-多行注释"><a href="#2-多行注释" class="headerlink" title="2.多行注释"></a>2.多行注释</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">HelloWorld</span>&#123;<br>       <span class="hljs-comment">/*</span><br><span class="hljs-comment">       这是多行注释</span><br><span class="hljs-comment">       */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String [] args)</span>&#123;<br>       <span class="hljs-comment">/*</span><br><span class="hljs-comment">       这是多行注释</span><br><span class="hljs-comment">       */</span><br>        System.out.printf(<span class="hljs-string">&quot;Hello World&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-文档注释"><a href="#3-文档注释" class="headerlink" title="3.文档注释"></a>3.文档注释</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/** </span><br><span class="hljs-comment">* Application entry point </span><br><span class="hljs-comment">* <span class="hljs-doctag">@param</span> args array of command-line arguments passed to this method </span><br><span class="hljs-comment">*这是文档注释</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>单行注释和多行注释不要嵌套</strong></p>
+</blockquote>
+<h2 id="5-关键字"><a href="#5-关键字" class="headerlink" title="5.关键字"></a>5.关键字</h2><h3 id="1-关键字基本概念"><a href="#1-关键字基本概念" class="headerlink" title="1.关键字基本概念"></a>1.关键字基本概念</h3><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103163237544.png" srcset="/img/loading.gif" lazyload alt="image-20230103163237544"></p>
+<h3 id="2-Java中的关键字"><a href="#2-Java中的关键字" class="headerlink" title="2.Java中的关键字"></a>2.Java中的关键字</h3><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103163340845.png" srcset="/img/loading.gif" lazyload alt="image-20230103163340845"></p>
+<p><strong>Java中包含50多个关键字</strong></p>
+<h3 id="3-class关键字"><a href="#3-class关键字" class="headerlink" title="3.class关键字"></a>3.class关键字</h3><blockquote>
+<p><strong>class:用于(创建&#x2F;定义)一个类 类是Java最基本的组成单元</strong></p>
+</blockquote>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103163751643.png" srcset="/img/loading.gif" lazyload alt="image-20230103163751643"></p>
+<h2 id="6-字面量"><a href="#6-字面量" class="headerlink" title="6.字面量"></a>6.字面量</h2><h3 id="1-基本概念"><a href="#1-基本概念" class="headerlink" title="1.基本概念"></a>1.基本概念</h3><blockquote>
+<p>数据在程序中的书写格式</p>
+</blockquote>
+<h3 id="2-分类"><a href="#2-分类" class="headerlink" title="2.分类"></a>2.分类</h3><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103171526026.png" srcset="/img/loading.gif" lazyload alt="image-20230103171526026"></p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ValueDemo1</span>&#123;<br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span>&#123;<br>		<span class="hljs-comment">//目标：需要大家掌握常见的数据在代码中如何书写的？</span><br>		<br>		<span class="hljs-comment">//整数</span><br>		System.out.println(<span class="hljs-number">666</span>);<br>		System.out.println(-<span class="hljs-number">777</span>);<br>		<br>		<span class="hljs-comment">//小数</span><br>		System.out.println(<span class="hljs-number">1.93</span>);<br>		System.out.println(-<span class="hljs-number">3.71</span>);<br>		<br>		<span class="hljs-comment">//字符串</span><br>		System.out.println(<span class="hljs-string">&quot;黑马程序员&quot;</span>);<br>		System.out.println(<span class="hljs-string">&quot;尼古拉斯阿玮&quot;</span>);<br>		<br>		<span class="hljs-comment">//字符</span><br>		System.out.println(<span class="hljs-string">&#x27;男&#x27;</span>);<br>		System.out.println(<span class="hljs-string">&#x27;女&#x27;</span>);<br>		<br>		<span class="hljs-comment">//布尔</span><br>		System.out.println(<span class="hljs-literal">true</span>);<br>		System.out.println(<span class="hljs-literal">false</span>);<br>		<br>		<span class="hljs-comment">//空</span><br>		<span class="hljs-comment">//细节：null不能直接打印的。</span><br>		<span class="hljs-comment">//如果我们要打印null，那么只能用字符串的形式进行打印</span><br>		System.out.println(<span class="hljs-string">&quot;null&quot;</span>);<br>		<br>	&#125;<br>&#125; <br></code></pre></td></tr></table></figure>
+
+<h3 id="3-制表符-t"><a href="#3-制表符-t" class="headerlink" title="3.制表符(\t)"></a>3.制表符(\t)</h3><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103172724914.png" srcset="/img/loading.gif" lazyload alt="image-20230103172724914"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ValueDemo2</span>&#123;<br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span>&#123;<br>		<span class="hljs-comment">//目标：熟悉制表符的基本用法</span><br>		System.out.println(<span class="hljs-string">&quot;name&quot;</span> + <span class="hljs-string">&#x27;\t&#x27;</span> + <span class="hljs-string">&quot;age&quot;</span>);<br>		System.out.println(<span class="hljs-string">&quot;tom&quot;</span> + <span class="hljs-string">&#x27;\t&#x27;</span> + <span class="hljs-string">&quot;23&quot;</span>);<br>	&#125;<br>&#125; <br></code></pre></td></tr></table></figure>
+
+<h2 id="7-变量"><a href="#7-变量" class="headerlink" title="7.变量"></a>7.变量</h2><h3 id="1-使用场景及概念"><a href="#1-使用场景及概念" class="headerlink" title="1.使用场景及概念"></a>1.使用场景及概念</h3><blockquote>
+<p>当某个数据经常发生改变时，我们也可以用变量存储。当数据变化时，只要修改变量里面记录的值即可。</p>
+</blockquote>
+<h3 id="2-变量定义格式"><a href="#2-变量定义格式" class="headerlink" title="2.变量定义格式"></a>2.变量定义格式</h3><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103173418094.png" srcset="/img/loading.gif" lazyload alt="image-20230103173418094"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">VariableDemo</span>&#123;<br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span>&#123;<br>		<span class="hljs-comment">//定义一个整数类型的变量</span><br>		<span class="hljs-comment">//数据类型 变量名 = 数据值;</span><br>		<span class="hljs-type">int</span> <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> <span class="hljs-number">16</span>;<br>		System.out.println(a);<span class="hljs-comment">//16</span><br>		<br>		<span class="hljs-comment">//定义一个小数类型的变量</span><br>		<span class="hljs-type">double</span> <span class="hljs-variable">b</span> <span class="hljs-operator">=</span> <span class="hljs-number">10.1</span>;<br>		System.out.println(b);<span class="hljs-comment">//10.1</span><br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-变量的使用方式"><a href="#3-变量的使用方式" class="headerlink" title="3.变量的使用方式"></a>3.变量的使用方式</h3><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103184549254.png" srcset="/img/loading.gif" lazyload alt="image-20230103184549254"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">VariableDemo2</span>&#123;<br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span>&#123;<br>		<span class="hljs-comment">//1.变量名不允许重复</span><br>		<span class="hljs-type">int</span> <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> <span class="hljs-number">10</span>;<br>		<span class="hljs-comment">//int a = 20;</span><br>		System.out.println(a);<br>		<span class="hljs-comment">//2.一条语句可以定义多个变量</span><br>		<span class="hljs-comment">//int a = 10, b = 20, c = 20,d = 20;</span><br>		<span class="hljs-comment">//3.变量在使用之前必须要赋值</span><br>		<span class="hljs-type">int</span> <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> <span class="hljs-number">30</span>;<br>		System.out.println(a);<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="4-变量的注意事项"><a href="#4-变量的注意事项" class="headerlink" title="4.变量的注意事项"></a>4.变量的注意事项</h3><blockquote>
+<ul>
+<li>变量名不能重复</li>
+<li>在一条语句中，可以定义多个变量。但是这种方式影响代码的阅读，所以了解一下即可。</li>
+<li>变量在使用之前必须要赋值。</li>
+<li>建议:以后在定义变量的时候，请直接赋值</li>
+</ul>
+</blockquote>
+<h3 id="5-变量小结"><a href="#5-变量小结" class="headerlink" title="5.变量小结"></a>5.变量小结</h3><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103185550682.png" srcset="/img/loading.gif" lazyload alt="image-20230103185550682"></p>
+<h3 id="6-变量案例"><a href="#6-变量案例" class="headerlink" title="6.变量案例"></a>6.变量案例</h3><blockquote>
+<p>案例需求：</p>
+<p>说出公交车到终点站之后，车上一共有多少乘客？ 一开始没有乘客。</p>
+<p>第一站：上去一位乘客，没有下来乘客。</p>
+<p>第二站：上去两位乘客，下来一位乘客。</p>
+<p>第三站：上去两位乘客，下来一位乘客。</p>
+<p>第四站：没有上去乘客，下来一位乘客。</p>
+<p>第五站：上去一位乘客，没有下来乘客。</p>
+<p>问：到了终点站之后，车上一共多少乘客？</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">VariableTest1</span>&#123;<br>	<span class="hljs-comment">//主入口</span><br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span>&#123;<br>		<span class="hljs-comment">//一开始没有乘客。</span><br>		<span class="hljs-type">int</span> <span class="hljs-variable">count</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br>		<span class="hljs-comment">//第一站：上去一位乘客</span><br>		<span class="hljs-comment">//在原有的基础上 + 1</span><br>		count = count + <span class="hljs-number">1</span>;<br>		<span class="hljs-comment">//System.out.println(count);</span><br>		<span class="hljs-comment">//第二站：上去两位乘客，下来一位乘客</span><br>		count = count + <span class="hljs-number">2</span> - <span class="hljs-number">1</span>; <br>		<span class="hljs-comment">//第三站：上去两位乘客，下来一位乘客</span><br>		count = count + <span class="hljs-number">2</span> - <span class="hljs-number">1</span>;<br>		<span class="hljs-comment">//第四站：下来一位乘客</span><br>		count = count - <span class="hljs-number">1</span>;<br>		<span class="hljs-comment">//第五站：上去一位乘客</span><br>		count = count + <span class="hljs-number">1</span>;<br>		<span class="hljs-comment">//请问：到了终点站，车上一共几位乘客。</span><br>		System.out.println(count);<span class="hljs-comment">//3</span><br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="8-数据类型"><a href="#8-数据类型" class="headerlink" title="8.数据类型"></a>8.数据类型</h2><h3 id="1-数据类型分类"><a href="#1-数据类型分类" class="headerlink" title="1.数据类型分类"></a>1.数据类型分类</h3><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103211854522.png" srcset="/img/loading.gif" lazyload alt="image-20230103211854522"></p>
+<h3 id="2-基本数据类型"><a href="#2-基本数据类型" class="headerlink" title="2.基本数据类型"></a>2.基本数据类型</h3><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103213318383.png" srcset="/img/loading.gif" lazyload alt="image-20230103213318383"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">VariableDemo3</span>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span>&#123;<br>        <span class="hljs-comment">//1.定义byte类型的变量</span><br>        <span class="hljs-comment">//数据类型 变量名 = 数据值;</span><br>        <span class="hljs-type">byte</span> <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> <span class="hljs-number">10</span>;<br>        System.out.println(a);<br><br>        <span class="hljs-comment">//2.定义short类型的变量</span><br>        <span class="hljs-type">short</span> <span class="hljs-variable">b</span> <span class="hljs-operator">=</span> <span class="hljs-number">20</span>;<br>        System.out.println(b);<br><br>        <span class="hljs-comment">//3.定义int类型的变量</span><br>        <span class="hljs-type">int</span> <span class="hljs-variable">c</span> <span class="hljs-operator">=</span> <span class="hljs-number">30</span>;<br>        System.out.println(c);<br><br>        <span class="hljs-comment">//4.定义long类型的变量</span><br>        <span class="hljs-type">long</span> <span class="hljs-variable">d</span> <span class="hljs-operator">=</span> <span class="hljs-number">123456789123456789L</span>;<br>        System.out.println(d);<br><br>        <span class="hljs-comment">//5.定义float类型的变量</span><br>        <span class="hljs-type">float</span> <span class="hljs-variable">e</span> <span class="hljs-operator">=</span> <span class="hljs-number">10.1F</span>;<br>        System.out.println(e);<br><br>        <span class="hljs-comment">//6.定义double类型的变量</span><br>        <span class="hljs-type">double</span> <span class="hljs-variable">f</span> <span class="hljs-operator">=</span> <span class="hljs-number">20.3</span>;<br>        System.out.println(f);<br><br>        <span class="hljs-comment">//7.定义char类型的变量</span><br>        <span class="hljs-type">char</span> <span class="hljs-variable">g</span> <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;a&#x27;</span>;<br>        System.out.println(g);<br><br>        <span class="hljs-comment">//8.定义boolean类型的变量</span><br>        <span class="hljs-type">boolean</span> <span class="hljs-variable">h</span> <span class="hljs-operator">=</span> <span class="hljs-literal">true</span>;<br>        System.out.println(h);<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-注意事项"><a href="#3-注意事项" class="headerlink" title="3.注意事项"></a>3.注意事项</h3><blockquote>
+<ul>
+<li>如果要定义 一个整数类型的变量，不知道选择哪种数据类型了，默认使用int。</li>
+<li>如果要定义 一个小数类型的变量，不知道选择哪种数据类型了，默认使用double。</li>
+<li>如果要定义一个long类型的变量，那么在数据值的后面需要加上L后缀。（大小写都可以，建议大写。）</li>
+<li>如果要定义一个float类型的变量，那么在数据值的后面需要加上F后缀。（大小写都可以）</li>
+<li>double &gt; float &gt; long &gt; int &gt; short &gt; byte</li>
+</ul>
+</blockquote>
+<h3 id="4-数据类型案例"><a href="#4-数据类型案例" class="headerlink" title="4.数据类型案例"></a>4.数据类型案例</h3><p>需求</p>
+<blockquote>
+<p><strong>需求：定义5个变量记录老师的信息并打印</strong></p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">VariableTest1</span>&#123;<br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span>&#123;<br>		<span class="hljs-comment">//1.定义字符串类型的变量记录老师的姓名</span><br>		<span class="hljs-type">String</span> <span class="hljs-variable">name</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;黑马谢广坤&quot;</span>;<br>		<span class="hljs-comment">//2.定义整数类型的变量记录老师的年龄</span><br>		<span class="hljs-type">int</span> <span class="hljs-variable">age</span> <span class="hljs-operator">=</span> <span class="hljs-number">18</span>;<br>		<span class="hljs-comment">//3.定义字符类型的变量记录老师的性别</span><br>		<span class="hljs-type">char</span> <span class="hljs-variable">gender</span> <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;男&#x27;</span>;<br>		<span class="hljs-comment">//4.定义小数类型的变量记录老师的身高</span><br>		<span class="hljs-type">double</span> <span class="hljs-variable">height</span> <span class="hljs-operator">=</span> <span class="hljs-number">180.1</span>;<br>		<span class="hljs-comment">//5.定义布尔类型的变量记录老师的婚姻状况</span><br>		<span class="hljs-type">boolean</span> <span class="hljs-variable">flag</span> <span class="hljs-operator">=</span> <span class="hljs-literal">true</span>;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="9-标识符"><a href="#9-标识符" class="headerlink" title="9.标识符"></a>9.标识符</h2><h3 id="1-基本概念-1"><a href="#1-基本概念-1" class="headerlink" title="1.基本概念"></a>1.基本概念</h3><blockquote>
+<p>标识符:就是给类，方法，变量等起的名字。</p>
+</blockquote>
+<h3 id="2-硬性要求"><a href="#2-硬性要求" class="headerlink" title="2.硬性要求"></a>2.硬性要求</h3><blockquote>
+<ul>
+<li>必须由数字、字母、下划线_、美元符号$组成。</li>
+<li>数字不能开头</li>
+<li>不能是关键字</li>
+<li>区分大小写的</li>
+</ul>
+</blockquote>
+<h3 id="3-小驼峰命名法"><a href="#3-小驼峰命名法" class="headerlink" title="3.小驼峰命名法"></a>3.小驼峰命名法</h3><blockquote>
+<p>适用于变量名和方法名</p>
+<ul>
+<li><p>如果是一个单词，那么全部小写，比如：name</p>
+</li>
+<li><p>如果是多个单词，那么从第二个单词开始，首字母大写，比如：firstName、maxAge</p>
+</li>
+</ul>
+</blockquote>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103220819536.png" srcset="/img/loading.gif" lazyload alt="image-20230103220819536"></p>
+<h3 id="4-大驼峰命名法"><a href="#4-大驼峰命名法" class="headerlink" title="4.大驼峰命名法"></a>4.大驼峰命名法</h3><blockquote>
+<p>适用于类名</p>
+<ul>
+<li><p>如果是一个单词，那么首字母大写。比如：Demo、Test。</p>
+</li>
+<li><p>如果是多个单词，那么每一个单词首字母都需要大写。比如：HelloWorld</p>
+</li>
+</ul>
+<p>不管起什么名字，都要做到见名知意</p>
+</blockquote>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103220915015.png" srcset="/img/loading.gif" lazyload alt="image-20230103220915015"></p>
+<h2 id="10-键盘录入"><a href="#10-键盘录入" class="headerlink" title="10.键盘录入"></a>10.键盘录入</h2><h3 id="1-基本过程"><a href="#1-基本过程" class="headerlink" title="1.基本过程"></a>1.基本过程</h3><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230104122446756.png" srcset="/img/loading.gif" lazyload alt="image-20230104122446756"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//导包，其实就是先找到Scanner这个类在哪</span><br><span class="hljs-keyword">import</span> java.util.Scanner;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ScannerDemo1</span>&#123;<br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span>&#123;<br>		<span class="hljs-comment">//2.创建对象，其实就是申明一下，我准备开始用Scanner这个类了。</span><br>		<span class="hljs-type">Scanner</span> <span class="hljs-variable">sc</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Scanner</span>(System.in);<br>		<span class="hljs-comment">//3.接收数据</span><br>		<span class="hljs-comment">//当程序运行之后，我们在键盘输入的数据就会被变量i给接收了</span><br>		System.out.println(<span class="hljs-string">&quot;请输入一个数字&quot;</span>);<br>		<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> sc.nextInt();<br>		System.out.println(i);<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="11-集成开发工具IDEA"><a href="#11-集成开发工具IDEA" class="headerlink" title="11.集成开发工具IDEA"></a>11.集成开发工具IDEA</h2><h3 id="1-IDEA中层级结构介绍"><a href="#1-IDEA中层级结构介绍" class="headerlink" title="1.IDEA中层级结构介绍"></a>1.IDEA中层级结构介绍</h3><h4 id="1-基本结构"><a href="#1-基本结构" class="headerlink" title="1.基本结构"></a>1.基本结构</h4><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230104123815334.png" srcset="/img/loading.gif" lazyload alt="image-20230104123815334"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div></div>
+      <div>http://example.com/2023/01/06/Day01-1-3-Java-基础学习/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>January 6, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/01/06/Day01-1-4-Java-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/" title="">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/01/06/hello-world/" title="Hello World">
+                        <span class="hidden-mobile">Hello World</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
