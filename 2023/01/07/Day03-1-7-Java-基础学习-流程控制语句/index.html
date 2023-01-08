@@ -1,0 +1,842 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="RenBoQing">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Day03-1-7-Java-基础学习-流程控制语句1.顺序结构 顺序结构语句是Java程序默认的执行流程，按照代码的先后顺序，从上到下依次执行   2.分支结构1.if语句结构1.if结构第一种格式 123456789101112131415161718public class IfDemo &amp;#123;	public static void main(String[] args) &amp;#123;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Day03-1-7-Java-基础学习">
+<meta property="og:url" content="http://example.com/2023/01/07/Day03-1-7-Java-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0-%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5/index.html">
+<meta property="og:site_name" content="人间至味是清欢的技术小窝">
+<meta property="og:description" content="Day03-1-7-Java-基础学习-流程控制语句1.顺序结构 顺序结构语句是Java程序默认的执行流程，按照代码的先后顺序，从上到下依次执行   2.分支结构1.if语句结构1.if结构第一种格式 123456789101112131415161718public class IfDemo &amp;#123;	public static void main(String[] args) &amp;#123;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230107155341538.png">
+<meta property="article:published_time" content="2023-01-07T02:00:00.000Z">
+<meta property="article:modified_time" content="2023-01-08T03:58:33.571Z">
+<meta property="article:author" content="RenBoQing">
+<meta property="article:tag" content="Java基础">
+<meta property="article:tag" content="流程控制语句">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230107155341538.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Day03-1-7-Java-基础学习 - 人间至味是清欢的技术小窝</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>人间至味是清欢的技术小窝</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>文章</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于我</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Day03-1-7-Java-基础学习"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-01-07 10:00" pubdate>
+          2023年1月7日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          12k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          104 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Day03-1-7-Java-基础学习</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Day03-1-7-Java-基础学习-流程控制语句"><a href="#Day03-1-7-Java-基础学习-流程控制语句" class="headerlink" title="Day03-1-7-Java-基础学习-流程控制语句"></a>Day03-1-7-Java-基础学习-流程控制语句</h1><h2 id="1-顺序结构"><a href="#1-顺序结构" class="headerlink" title="1.顺序结构"></a>1.顺序结构</h2><blockquote>
+<p>顺序结构语句是Java程序默认的执行流程，按照代码的先后顺序，从上到下依次执行</p>
+</blockquote>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230107155044748.png" srcset="/img/loading.gif" lazyload alt="image-20230107155044748"></p>
+<h2 id="2-分支结构"><a href="#2-分支结构" class="headerlink" title="2.分支结构"></a>2.分支结构</h2><h3 id="1-if语句结构"><a href="#1-if语句结构" class="headerlink" title="1.if语句结构"></a>1.if语句结构</h3><h4 id="1-if结构第一种格式"><a href="#1-if结构第一种格式" class="headerlink" title="1.if结构第一种格式"></a>1.if结构第一种格式</h4><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230107155341538.png" srcset="/img/loading.gif" lazyload alt="image-20230107155341538"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">IfDemo</span> &#123;<br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>		System.out.println(<span class="hljs-string">&quot;开始&quot;</span>);	<br>		<span class="hljs-comment">//定义两个变量</span><br>		<span class="hljs-type">int</span> <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> <span class="hljs-number">10</span>;<br>		<span class="hljs-type">int</span> <span class="hljs-variable">b</span> <span class="hljs-operator">=</span> <span class="hljs-number">20</span>;	<br>		<span class="hljs-comment">//需求：判断a和b的值是否相等，如果相等，就在控制台输出：a等于b</span><br>		<span class="hljs-keyword">if</span>(a == b) &#123;<br>			System.out.println(<span class="hljs-string">&quot;a等于b&quot;</span>);<br>		&#125;		<br>		<span class="hljs-comment">//需求：判断a和c的值是否相等，如果相等，就在控制台输出：a等于c</span><br>		<span class="hljs-type">int</span> <span class="hljs-variable">c</span> <span class="hljs-operator">=</span> <span class="hljs-number">10</span>;<br>		<span class="hljs-keyword">if</span>(a == c) &#123;<br>			System.out.println(<span class="hljs-string">&quot;a等于c&quot;</span>);<br>		&#125;		<br>		System.out.println(<span class="hljs-string">&quot;结束&quot;</span>);<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>1.大括号的开头可以另起一行书写，但是建议写在第一行的末尾</p>
+<p>2.在语句体中,如果只有一句代码，大括号可以省略不写<br>3,如果对一个布尔类型的变量进行到断，不要用–号 直接将变量写在小括号中</p>
+</blockquote>
+<h4 id="2-if结构第二种格式"><a href="#2-if结构第二种格式" class="headerlink" title="2.if结构第二种格式"></a>2.if结构第二种格式</h4><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230107161015419.png" srcset="/img/loading.gif" lazyload alt="image-20230107161015419"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//1.键盘录入一个整数。表示身上的钱。</span><br><span class="hljs-type">Scanner</span> <span class="hljs-variable">sc</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Scanner</span>(System.in);<br>System.out.println(<span class="hljs-string">&quot;请输入一个整数表示身上的钱&quot;</span>);<br><span class="hljs-type">int</span> <span class="hljs-variable">money</span> <span class="hljs-operator">=</span> sc.nextInt();<br><span class="hljs-comment">//2.对钱进行判断</span><br><span class="hljs-keyword">if</span>(money &gt;= <span class="hljs-number">100</span>)&#123;<br>    System.out.println(<span class="hljs-string">&quot;吃网红餐厅&quot;</span>);<br>&#125;<span class="hljs-keyword">else</span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;福建大酒店&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>斯坦福练习题</p>
+<p>​	在实际开发中，电影院选座也会使用到if判断。假设某影院售卖了100张票，票的序号为1~100。其中奇数票号坐左侧，偶数票号坐右侧。键盘录入一个整数表示电影票的票号。根据不同情况，给出不同的提示：</p>
+<p>如果票号为奇数，那么打印坐左边。</p>
+<p>如果票号为偶数，那么打印坐右边。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//分析：</span><br><span class="hljs-comment">//1.键盘录入票号</span><br><span class="hljs-type">Scanner</span> <span class="hljs-variable">sc</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Scanner</span>(System.in);<br>System.out.println(<span class="hljs-string">&quot;请输入票号&quot;</span>);<br><span class="hljs-type">int</span> <span class="hljs-variable">ticket</span> <span class="hljs-operator">=</span> sc.nextInt();<br><span class="hljs-keyword">if</span>(ticket &gt;= <span class="hljs-number">1</span> &amp;&amp; ticket &lt;= <span class="hljs-number">100</span>)&#123;<br>    <span class="hljs-comment">//合法</span><br>    <span class="hljs-comment">//2.对票号进行判断</span><br>    <span class="hljs-keyword">if</span> (ticket % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-comment">//偶数</span><br>        System.out.println(<span class="hljs-string">&quot;坐右边&quot;</span>);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-comment">//奇数</span><br>        System.out.println(<span class="hljs-string">&quot;坐左边&quot;</span>);<br>    &#125;<br>&#125;<span class="hljs-keyword">else</span>&#123;<br>    <span class="hljs-comment">//票号不合法</span><br>    System.out.println(<span class="hljs-string">&quot;票号不合法&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-if结构第三种格式"><a href="#3-if结构第三种格式" class="headerlink" title="3.if结构第三种格式"></a>3.if结构第三种格式</h4><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230107162142619.png" srcset="/img/loading.gif" lazyload alt="image-20230107162142619"></p>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230107162248569.png" srcset="/img/loading.gif" lazyload alt="image-20230107162248569"></p>
+<blockquote>
+<p>小明快要期末考试了，小明爸爸对他说，会根据他不同的考试成绩，送他不同的礼物，</p>
+<p>假如你可以控制小明的得分，请用程序实现小明到底该获得什么样的礼物，并在控制台输出。</p>
+<p>分析：</p>
+<p>​	①小明的考试成绩未知，可以使用键盘录入的方式获取值</p>
+<p>​	②由于奖励种类较多，属于多种判断，采用if…else…if格式实现</p>
+<p>​	③为每种判断设置对应的条件</p>
+<p>​	④为每种判断设置对应的奖励</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//95~100 自行车一辆</span><br><span class="hljs-comment">//90~94   游乐场玩一天</span><br><span class="hljs-comment">//80 ~ 89 变形金刚一个</span><br><span class="hljs-comment">//80 以下  胖揍一顿</span><br><br><span class="hljs-comment">//1.键盘录入一个值表示小明的分数</span><br><span class="hljs-type">Scanner</span> <span class="hljs-variable">sc</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Scanner</span>(System.in);<br>System.out.println(<span class="hljs-string">&quot;请输入小明的成绩&quot;</span>);<br><span class="hljs-type">int</span> <span class="hljs-variable">score</span> <span class="hljs-operator">=</span> sc.nextInt();<br><span class="hljs-comment">//2.对分数的有效性进行判断</span><br><span class="hljs-keyword">if</span>(score &gt;= <span class="hljs-number">0</span> &amp;&amp; score &lt;= <span class="hljs-number">100</span>)&#123;<br>    <span class="hljs-comment">//有效的分数</span><br>    <span class="hljs-comment">//3.对小明的分数进行判断，不同情况执行不同的代码</span><br>    <span class="hljs-keyword">if</span>(score &gt;= <span class="hljs-number">95</span> &amp;&amp; score &lt;= <span class="hljs-number">100</span>)&#123;<br>        System.out.println(<span class="hljs-string">&quot;送自行车一辆&quot;</span>);<br>    &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(score &gt;= <span class="hljs-number">90</span> &amp;&amp; score &lt;= <span class="hljs-number">94</span>)&#123;<br>        System.out.println(<span class="hljs-string">&quot;游乐场玩一天&quot;</span>);<br>    &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(score &gt;= <span class="hljs-number">80</span> &amp;&amp; score &lt;= <span class="hljs-number">89</span>)&#123;<br>        System.out.println(<span class="hljs-string">&quot;变形金刚一个&quot;</span>);<br>    &#125;<span class="hljs-keyword">else</span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;胖揍一顿&quot;</span>);<br>    &#125;<br>&#125;<span class="hljs-keyword">else</span>&#123;<br>    <span class="hljs-comment">//无效的分数</span><br>    System.out.println(<span class="hljs-string">&quot;分数不合法&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230107163621138.png" srcset="/img/loading.gif" lazyload alt="image-20230107163621138"> </p>
+<h3 id="2-switch语句结构"><a href="#2-switch语句结构" class="headerlink" title="2.switch语句结构"></a>2.switch语句结构</h3><h4 id="1-基本格式"><a href="#1-基本格式" class="headerlink" title="1.基本格式"></a>1.基本格式</h4><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230107164103988.png" srcset="/img/loading.gif" lazyload alt="image-20230107164103988"></p>
+<h4 id="2-表达式说明"><a href="#2-表达式说明" class="headerlink" title="2.表达式说明"></a>2.表达式说明</h4><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230107164241437.png" srcset="/img/loading.gif" lazyload alt="image-20230107164241437"></p>
+<blockquote>
+<p>需求：键盘录入星期数，显示今天的减肥活动。</p>
+<p>周一：跑步  </p>
+<p>周二：游泳  </p>
+<p>周三：慢走  </p>
+<p>周四：动感单车</p>
+<p>周五：拳击  </p>
+<p>周六：爬山  </p>
+<p>周日：好好吃一顿</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> java.util.Scanner;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SwitchDemo2</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-comment">//1.键盘录入一个整数表示星期</span><br>        <span class="hljs-type">Scanner</span> <span class="hljs-variable">sc</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Scanner</span>(System.in);<br>        System.out.println(<span class="hljs-string">&quot;请输入一个整数表示星期&quot;</span>);<br>        <span class="hljs-type">int</span> <span class="hljs-variable">week</span> <span class="hljs-operator">=</span> sc.nextInt();<br>        <span class="hljs-comment">//2.书写一个switch语句去跟week进行匹配</span><br>        <span class="hljs-keyword">switch</span> (week)&#123;<br>            <span class="hljs-keyword">case</span> <span class="hljs-number">1</span>:<br>                System.out.println(<span class="hljs-string">&quot;跑步&quot;</span>);<br>                <span class="hljs-keyword">break</span>;<br>            <span class="hljs-keyword">case</span> <span class="hljs-number">2</span>:<br>                System.out.println(<span class="hljs-string">&quot;游泳&quot;</span>);<br>                <span class="hljs-keyword">break</span>;<br>            <span class="hljs-keyword">case</span> <span class="hljs-number">3</span>:<br>                System.out.println(<span class="hljs-string">&quot;慢走&quot;</span>);<br>                <span class="hljs-keyword">break</span>;<br>            <span class="hljs-keyword">case</span> <span class="hljs-number">4</span>:<br>                System.out.println(<span class="hljs-string">&quot;动感单车&quot;</span>);<br>                <span class="hljs-keyword">break</span>;<br>            <span class="hljs-keyword">case</span> <span class="hljs-number">5</span>:<br>                System.out.println(<span class="hljs-string">&quot;拳击&quot;</span>);<br>                <span class="hljs-keyword">break</span>;<br>            <span class="hljs-keyword">case</span> <span class="hljs-number">6</span>:<br>                System.out.println(<span class="hljs-string">&quot;爬山&quot;</span>);<br>                <span class="hljs-keyword">break</span>;<br>            <span class="hljs-keyword">case</span> <span class="hljs-number">7</span>:<br>                System.out.println(<span class="hljs-string">&quot;好好吃一顿&quot;</span>);<br>                <span class="hljs-keyword">break</span>;<br>            <span class="hljs-keyword">default</span>:<br>                System.out.println(<span class="hljs-string">&quot;输入错误，没有这个星期&quot;</span>);<br>                <span class="hljs-keyword">break</span>;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-switch的扩展知识"><a href="#3-switch的扩展知识" class="headerlink" title="3.switch的扩展知识"></a>3.switch的扩展知识</h4><h5 id="1-default的位置和省略"><a href="#1-default的位置和省略" class="headerlink" title="1.default的位置和省略"></a>1.default的位置和省略</h5><blockquote>
+<p>1.位置: defaule不一定是写在最下面的，我们可以写在任意位置。只不过习惯会写在最下面2.省略: defaule可以省略，语法不会有问题,但是不建议省略。</p>
+</blockquote>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230107185427444.png" srcset="/img/loading.gif" lazyload alt="image-20230107185427444"></p>
+<h5 id="2-case穿透"><a href="#2-case穿透" class="headerlink" title="2.case穿透"></a>2.case穿透</h5><blockquote>
+<p>执行流程:<br>1.首先还是会拿着小括号中表达式的谊跟下面每一个case进行匹配。<br>2.如果匹配上了，就会执行对应的语句体，如果此时发现了brcak，那么结束整个switch语句。</p>
+<p>3.如果没有发现break，那么程序会继续执行下一个case的语句体，一直遇到break或者右大括号为止。</p>
+<p>4.如果多个case的语句体重复了，那么我们考虑利用case穿透去简化代码。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//分析：</span><br><span class="hljs-comment">//1.键盘录入星期数</span><br><span class="hljs-type">Scanner</span> <span class="hljs-variable">sc</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Scanner</span>(System.in);<br>System.out.println(<span class="hljs-string">&quot;请输入星期&quot;</span>);<br><span class="hljs-type">int</span> <span class="hljs-variable">week</span> <span class="hljs-operator">=</span> sc.nextInt();<span class="hljs-comment">//3</span><br><span class="hljs-comment">//2.利用switch进行匹配</span><br>----------------------------------------------------<br>利用<span class="hljs-keyword">case</span>穿透简化代码<br><span class="hljs-keyword">switch</span> (week)&#123;<br>    <span class="hljs-keyword">case</span> <span class="hljs-number">1</span>:<br>    <span class="hljs-keyword">case</span> <span class="hljs-number">2</span>:<br>    <span class="hljs-keyword">case</span> <span class="hljs-number">3</span>:<br>    <span class="hljs-keyword">case</span> <span class="hljs-number">4</span>:<br>    <span class="hljs-keyword">case</span> <span class="hljs-number">5</span>:<br>        System.out.println(<span class="hljs-string">&quot;工作日&quot;</span>);<br>        <span class="hljs-keyword">break</span>;<br>    <span class="hljs-keyword">case</span> <span class="hljs-number">6</span>:<br>    <span class="hljs-keyword">case</span> <span class="hljs-number">7</span>:<br>        System.out.println(<span class="hljs-string">&quot;休息日&quot;</span>);<br>        <span class="hljs-keyword">break</span>;<br>    <span class="hljs-keyword">default</span>:<br>        System.out.println(<span class="hljs-string">&quot;没有这个星期&quot;</span>);<br>        <span class="hljs-keyword">break</span>;<br>&#125;<br>----------------------------------------------------<br>利用JDK12简化代码书写<br><span class="hljs-keyword">switch</span> (week) &#123;<br>    <span class="hljs-keyword">case</span> <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span> -&gt; System.out.println(<span class="hljs-string">&quot;工作日&quot;</span>);<br>    <span class="hljs-keyword">case</span> <span class="hljs-number">6</span>, <span class="hljs-number">7</span> -&gt; System.out.println(<span class="hljs-string">&quot;休息日&quot;</span>);<br>    <span class="hljs-keyword">default</span> -&gt; System.out.println(<span class="hljs-string">&quot;没有这个星期&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h5 id="3-switch新特性-JDK以后"><a href="#3-switch新特性-JDK以后" class="headerlink" title="3.switch新特性(JDK以后)"></a>3.switch新特性(JDK以后)</h5><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230107190733785.png" srcset="/img/loading.gif" lazyload alt="image-20230107190733785"></p>
+<blockquote>
+<p>当大括号里面只有一句代码时,大括号可以省略</p>
+</blockquote>
+<h5 id="4-switch和if语句的使用场景"><a href="#4-switch和if语句的使用场景" class="headerlink" title="4.switch和if语句的使用场景"></a>4.switch和if语句的使用场景</h5><blockquote>
+<p>switch和if第三种格式各自的使用场景if的第三种格式:一般用于对范围的判断<br>switch:把有限个数据一一列举出来,让我们任选其</p>
+</blockquote>
+<h2 id="3-循环结构"><a href="#3-循环结构" class="headerlink" title="3.循环结构"></a>3.循环结构</h2><h3 id="1-for循环"><a href="#1-for循环" class="headerlink" title="1.for循环"></a>1.for循环</h3><h4 id="1-基本格式-1"><a href="#1-基本格式-1" class="headerlink" title="1.基本格式"></a>1.基本格式</h4><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230107194308205.png" srcset="/img/loading.gif" lazyload alt="image-20230107194308205"></p>
+<h4 id="2-执行流程"><a href="#2-执行流程" class="headerlink" title="2.执行流程"></a>2.执行流程</h4><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230107194452587.png" srcset="/img/loading.gif" lazyload alt="image-20230107194452587"></p>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230107194636297.png" srcset="/img/loading.gif" lazyload alt="image-20230107194636297"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/*需求：打印5次HelloWorld</span><br><span class="hljs-comment">开始条件：1</span><br><span class="hljs-comment">结束条件：5</span><br><span class="hljs-comment">重复代码：打印语句</span><br><span class="hljs-comment">*/</span><br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">5</span>; i++) &#123;<br>    System.out.println(<span class="hljs-string">&quot;HelloWorld&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-实践案例"><a href="#3-实践案例" class="headerlink" title="3.实践案例"></a>3.实践案例</h4><h5 id="1-输出数据"><a href="#1-输出数据" class="headerlink" title="1.输出数据"></a>1.输出数据</h5><blockquote>
+<p>需求：在控制台输出1-5和5-1的数据 </p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ForTest01</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>		<span class="hljs-comment">//需求：输出数据1-5</span><br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>; i&lt;=<span class="hljs-number">5</span>; i++) &#123;<br>			System.out.println(i);<br>		&#125;<br>		System.out.println(<span class="hljs-string">&quot;--------&quot;</span>);<br>		<span class="hljs-comment">//需求：输出数据5-1</span><br>		<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">5</span>; i&gt;=<span class="hljs-number">1</span>; i--) &#123;<br>			System.out.println(i);<br>		&#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="2-求和"><a href="#2-求和" class="headerlink" title="2.求和"></a>2.求和</h5><blockquote>
+<p>需求：求1-5之间的数据和，并把求和结果在控制台输出</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ForTest02</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>	<span class="hljs-comment">//求和的最终结果必须保存起来，需要定义一个变量，用于保存求和的结果，初始值为0</span><br>		<span class="hljs-type">int</span> <span class="hljs-variable">sum</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br>		<span class="hljs-comment">//从1开始到5结束的数据，使用循环结构完成</span><br>		<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>; i&lt;=<span class="hljs-number">5</span>; i++) &#123;<br>			<span class="hljs-comment">//将反复进行的事情写入循环结构内部</span><br>             <span class="hljs-comment">// 此处反复进行的事情是将数据 i 加到用于保存最终求和的变量 sum 中</span><br>			sum = sum + i;<br>			<span class="hljs-comment">/*</span><br><span class="hljs-comment">				sum += i;	sum = sum + i;</span><br><span class="hljs-comment">				第一次：sum = sum + i = 0 + 1 = 1;</span><br><span class="hljs-comment">				第二次：sum = sum + i = 1 + 2 = 3;</span><br><span class="hljs-comment">				第三次：sum = sum + i = 3 + 3 = 6;</span><br><span class="hljs-comment">				第四次：sum = sum + i = 6 + 4 = 10;</span><br><span class="hljs-comment">				第五次：sum = sum + i = 10 + 5 = 15;</span><br><span class="hljs-comment">			*/</span><br>		&#125;<br>		<span class="hljs-comment">//当循环执行完毕时，将最终数据打印出来</span><br>		System.out.println(<span class="hljs-string">&quot;1-5之间的数据和是：&quot;</span> + sum);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="3-求偶数和"><a href="#3-求偶数和" class="headerlink" title="3.求偶数和"></a>3.求偶数和</h5><blockquote>
+<p>需求：求1-100之间的偶数和，并把求和结果在控制台输出</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ForTest03</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>	<span class="hljs-comment">//求和的最终结果必须保存起来，需要定义一个变量，用于保存求和的结果，初始值为0</span><br>		<span class="hljs-type">int</span> <span class="hljs-variable">sum</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br>		<span class="hljs-comment">//对1-100的数据求和与1-5的数据求和几乎完全一样，仅仅是结束条件不同</span><br>		<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>; i&lt;=<span class="hljs-number">100</span>; i++) &#123;<br>			<span class="hljs-comment">//对1-100的偶数求和，需要对求和操作添加限制条件，判断是否是偶数</span><br>			<span class="hljs-keyword">if</span>(i%<span class="hljs-number">2</span> == <span class="hljs-number">0</span>) &#123;<br>                <span class="hljs-comment">//sum += i；</span><br>				sum = sum + i;<br>			&#125;<br>		&#125;<br>		<span class="hljs-comment">//当循环执行完毕时，将最终数据打印出来</span><br>		System.out.println(<span class="hljs-string">&quot;1-100之间的偶数和是：&quot;</span> + sum);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="4-次数统计"><a href="#4-次数统计" class="headerlink" title="4.次数统计"></a>4.次数统计</h5><blockquote>
+<p>需求：键盘录入两个数字，表示一个范围。 统计这个范围中。</p>
+<p>既能被3整除，又能被5整除数字有多少个？</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> java.util.Scanner;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Test16</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>       <span class="hljs-comment">/* 需求：键盘录入两个数字，表示一个范围。</span><br><span class="hljs-comment">        统计这个范围中。</span><br><span class="hljs-comment">        既能被3整除，又能被5整除数字有多少个？*/</span><br><br>        <span class="hljs-comment">//分析：</span><br>        <span class="hljs-comment">//1.键盘录入两个数字</span><br>        <span class="hljs-type">Scanner</span> <span class="hljs-variable">sc</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Scanner</span>(System.in);<br>        System.out.println(<span class="hljs-string">&quot;请录入一个数字表示范围的开始&quot;</span>);<br>        <span class="hljs-type">int</span> <span class="hljs-variable">start</span> <span class="hljs-operator">=</span> sc.nextInt();<br>        System.out.println(<span class="hljs-string">&quot;请录入一个数字表示范围的结束&quot;</span>);<br>        <span class="hljs-type">int</span> <span class="hljs-variable">end</span> <span class="hljs-operator">=</span> sc.nextInt();<br><br>        <span class="hljs-comment">//统计变量</span><br>        <span class="hljs-comment">//简单理解：统计符合要求的数字的个数</span><br>        <span class="hljs-type">int</span> <span class="hljs-variable">count</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br><br>        <span class="hljs-comment">//2.利用循环获取这个范围中的每一个数字</span><br>        <span class="hljs-comment">//开始条件：start</span><br>        <span class="hljs-comment">//结束条件：end</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> start; i &lt;= end; i++) &#123;<br>            <span class="hljs-comment">//3.对每一个数字进行判断，统计有多少个满足要求的数字</span><br>            <span class="hljs-keyword">if</span> (i % <span class="hljs-number">3</span> == <span class="hljs-number">0</span> &amp;&amp; i % <span class="hljs-number">5</span> == <span class="hljs-number">0</span>) &#123;<br>               <span class="hljs-comment">// System.out.println(i);</span><br>                count++;<br>            &#125;<br>        &#125;<br><br>        System.out.println(count);<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="2-while循环"><a href="#2-while循环" class="headerlink" title="2.while循环"></a>2.while循环</h3><h4 id="1-基本格式-2"><a href="#1-基本格式-2" class="headerlink" title="1.基本格式"></a>1.基本格式</h4><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230107204558791.png" srcset="/img/loading.gif" lazyload alt="image-20230107204558791"></p>
+<h4 id="2-执行流程-1"><a href="#2-执行流程-1" class="headerlink" title="2.执行流程"></a>2.执行流程</h4><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230107204744937.png" srcset="/img/loading.gif" lazyload alt="image-20230107204744937"></p>
+<blockquote>
+<p>初始化语句;<br>do{<br>   循环体;<br>   条件控制语句;<br>}while(条件判断语句);</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">WhileDemo1</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-comment">//需求：利用while循环打印1~100</span><br>        <span class="hljs-comment">//分析：</span><br>        <span class="hljs-comment">//开始条件：1</span><br>        <span class="hljs-comment">//结束条件：100</span><br><br>        <span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">while</span>(i &lt;= <span class="hljs-number">100</span>)&#123;<br>            System.out.println(i);<br>            i++;<br>        &#125;<br><br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-while循环和for循环的区别"><a href="#3-while循环和for循环的区别" class="headerlink" title="3.while循环和for循环的区别"></a>3.while循环和for循环的区别</h4><blockquote>
+<p>for和while循环，是先判断，再执行。</p>
+<p>​	do…while是先执行，再判断。</p>
+<p>​	当知道循环次数或者循环范围的时候，用for循环。</p>
+<p>​	当不知道循环次数，也不知道循环范围，但是知道循环的结束条件时，用while循环。</p>
+</blockquote>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230107205054003.png" srcset="/img/loading.gif" lazyload alt="image-20230107205054003"></p>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230107205141626.png" srcset="/img/loading.gif" lazyload alt="image-20230107205141626"></p>
+<blockquote>
+<p>需求：世界最高山峰是珠穆朗玛峰(8844.43米&#x3D;8844430毫米)，假如我有一张足够大的纸，它的厚度是0.1毫米。<br>请问，我折叠多少次，可以折成珠穆朗玛峰的高度</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Test17</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-comment">/*需求：世界最高山峰是珠穆朗玛峰(8844.43米=8844430毫米)，假如我有一张足够大的纸，它的厚度是0.1毫米。</span><br><span class="hljs-comment">        请问，我折叠多少次，可以折成珠穆朗玛峰的高度?*/</span><br>        <span class="hljs-comment">//分析：折叠纸张：每一次折叠纸张的厚度都是原先的两倍</span><br>        <span class="hljs-comment">// double a = 0.1;</span><br>        <span class="hljs-comment">// a = a * 2;</span><br>        <span class="hljs-comment">// a *= 2</span><br>        <span class="hljs-comment">//1.定义一个变量用来记录山峰的高度</span><br>        <span class="hljs-type">double</span> <span class="hljs-variable">height</span> <span class="hljs-operator">=</span> <span class="hljs-number">8844430</span>;<br>        <span class="hljs-comment">//2.定义一个变量用来记录纸张的初始厚度</span><br>        <span class="hljs-type">double</span> <span class="hljs-variable">paper</span> <span class="hljs-operator">=</span> <span class="hljs-number">0.1</span>;<br>        <span class="hljs-comment">//3.定义一个变量用来统计次数</span><br>        <span class="hljs-type">int</span> <span class="hljs-variable">count</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br>        <span class="hljs-comment">//4.循环折叠纸张，只要纸张的厚度小于山峰的高度，那么循环就继续</span><br>        <span class="hljs-comment">//每折叠一次，统计次数就要++</span><br> <span class="hljs-comment">//选择while理由：此时我们不知道循环的次数也不知道循环的范围，只知道循环的结束条件，所以用while</span><br>        <span class="hljs-keyword">while</span>(paper &lt; height)&#123;<br>            <span class="hljs-comment">//折叠纸张</span><br>            paper = paper * <span class="hljs-number">2</span>;<br>            <span class="hljs-comment">//折叠一次，++一次</span><br>            count++;<br>        &#125;<br>        <span class="hljs-comment">//当循环结束之后，count记录的值就是折叠的次数</span><br>        System.out.println(count);<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-实践案例-1"><a href="#3-实践案例-1" class="headerlink" title="3.实践案例"></a>3.实践案例</h4><h5 id="1-回文数"><a href="#1-回文数" class="headerlink" title="1.回文数"></a>1.回文数</h5><blockquote>
+<p>需求：给你一个整数 x 。<br>如果 x 是一个回文整数，打印 true ，否则，返回 false 。<br>解释：回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。<br>例如，121 是回文，而 123 不是。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Test18</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-comment">/*需求：给你一个整数 x 。</span><br><span class="hljs-comment">        如果 x 是一个回文整数，打印 true ，否则，返回 false 。</span><br><span class="hljs-comment">        解释：回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。</span><br><span class="hljs-comment">        例如，121 是回文，而 123 不是。*/</span><br><br>        <span class="hljs-comment">//分析：</span><br>        <span class="hljs-comment">//1.定义变量记录整数</span><br>        <span class="hljs-type">int</span> <span class="hljs-variable">x</span> <span class="hljs-operator">=</span> <span class="hljs-number">12345</span>;<br>        <span class="hljs-comment">//把x做一个临时存储，用来最后进行判断</span><br>        <span class="hljs-type">int</span> <span class="hljs-variable">temp</span> <span class="hljs-operator">=</span> x;<br>        <span class="hljs-comment">//2.定义变量记录最终的结果（反过来的数字）</span><br>        <span class="hljs-type">int</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br>        <span class="hljs-comment">//3.利用循环从右往左获取x中的数字并拼接到result当中</span><br>        <span class="hljs-comment">//while</span><br>        <span class="hljs-keyword">while</span>(x != <span class="hljs-number">0</span>)&#123;<br>            <span class="hljs-comment">//获取到x最右边的数字</span><br>            <span class="hljs-type">int</span> <span class="hljs-variable">ge</span> <span class="hljs-operator">=</span> x % <span class="hljs-number">10</span>;<br>            <span class="hljs-comment">//获取一次数字之后，那么就要把当前最右边的数字给去掉</span><br>            x = x / <span class="hljs-number">10</span>;<br>            <span class="hljs-comment">//拼接到result当中</span><br>            result = result * <span class="hljs-number">10</span> + ge;<br>        &#125;<br>        System.out.println(result == temp);<br><br>      <span class="hljs-comment">/*  //1.如何获取到3</span><br><span class="hljs-comment">        int ge = x % 10;</span><br><span class="hljs-comment">        result = result + ge;</span><br><span class="hljs-comment">        System.out.println(result);</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">        //2.把十位2拼接到result里面</span><br><span class="hljs-comment">        int shi = x / 10 % 10;</span><br><span class="hljs-comment">        result = result * 10 + shi;</span><br><span class="hljs-comment">        System.out.println(result);//32</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">        //3.把百位拼接到result里面</span><br><span class="hljs-comment">        int bai = x / 100 % 10;</span><br><span class="hljs-comment">        result = result * 10 + bai;</span><br><span class="hljs-comment">        System.out.println(result);//321*/</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="2-商余数"><a href="#2-商余数" class="headerlink" title="2.商余数"></a>2.商余数</h5><blockquote>
+<p>需求：给定两个整数，被除数和除数（都是正数，且不超过int的范围） 。</p>
+<p>将两数相除，要求不使用乘法、除法和 % 运算符。<br>得到商和余数</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs java">  <span class="hljs-comment">/*需求：给定两个整数，被除数和除数（都是正数，且不超过int的范围） 。</span><br><span class="hljs-comment">        将两数相除，要求不使用乘法、除法和 % 运算符。</span><br><span class="hljs-comment">        得到商和余数。</span><br><span class="hljs-comment">        分析：</span><br><span class="hljs-comment">            被除数 / 除数 = 商 ... 余数</span><br><span class="hljs-comment">        int a = 100;</span><br><span class="hljs-comment">        int b = 10;</span><br><span class="hljs-comment">        100 - 10 = 90</span><br><span class="hljs-comment">        90 - 10 = 80</span><br><span class="hljs-comment">        80 - 10 = 70</span><br><span class="hljs-comment">        70 - 10 = 60</span><br><span class="hljs-comment">        ...</span><br><span class="hljs-comment">        10 - 10 = 0 (余数)</span><br><span class="hljs-comment">  */</span><br>        <span class="hljs-comment">//1.定义变量记录被除数</span><br>        <span class="hljs-type">int</span> <span class="hljs-variable">dividend</span> <span class="hljs-operator">=</span> <span class="hljs-number">100</span>;<br>        <span class="hljs-comment">//2.定义变量记录除数</span><br>        <span class="hljs-type">int</span> <span class="hljs-variable">divisor</span> <span class="hljs-operator">=</span> <span class="hljs-number">37</span>;<br>        <span class="hljs-comment">//3.定义一个变量用来统计相减了多少次</span><br>        <span class="hljs-type">int</span> <span class="hljs-variable">count</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br>        <span class="hljs-comment">//3.循环 while</span><br>        <span class="hljs-comment">//在循环中，不断的用被除数 - 除数</span><br>        <span class="hljs-comment">//只要被除数 是大于等于除数的，那么就一直循环</span><br>        <span class="hljs-keyword">while</span>(dividend &gt;= divisor)&#123;<br>            dividend = dividend - divisor;<br>            <span class="hljs-comment">//只要减一次，那么统计变量就自增一次</span><br>            count++;<br>        &#125;<br>       <span class="hljs-comment">//当循环结束之后dividend变量记录的就是余数</span><br>        System.out.println(<span class="hljs-string">&quot;余数为：&quot;</span> + dividend);<br>        <span class="hljs-comment">//当循环结束之后，count记录的值就是商</span><br>        System.out.println(<span class="hljs-string">&quot;商为：&quot;</span> + count);<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-do-while循环"><a href="#3-do-while循环" class="headerlink" title="3.do-while循环"></a>3.do-while循环</h3><h4 id="1-格式及流程"><a href="#1-格式及流程" class="headerlink" title="1.格式及流程"></a>1.格式及流程</h4><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230107214039168.png" srcset="/img/loading.gif" lazyload alt="image-20230107214039168"></p>
+<h2 id="4-循环高级"><a href="#4-循环高级" class="headerlink" title="4.循环高级"></a>4.循环高级</h2><h3 id="1-无限循环"><a href="#1-无限循环" class="headerlink" title="1.无限循环"></a>1.无限循环</h3><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230107215313427.png" srcset="/img/loading.gif" lazyload alt="image-20230107215313427"></p>
+<blockquote>
+<p>无限循环的下面不能再写具他代码了，因为循环永远停不下来，那么下面的代码就远执行不到</p>
+</blockquote>
+<h3 id="2-跳转控制语句"><a href="#2-跳转控制语句" class="headerlink" title="2.跳转控制语句"></a>2.跳转控制语句</h3><blockquote>
+<p>在循环的过程中，跳到其他语句上执行。</p>
+</blockquote>
+<blockquote>
+<h6 id="continue"><a href="#continue" class="headerlink" title="continue:"></a>continue:</h6><p>​	不能单独存在的。只能存在于循环当中。</p>
+<p>​	表示：跳过本次循环，继续执行下次循环。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//1.吃1~5号包子</span><br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">5</span>; i++) &#123;<br>    <span class="hljs-comment">//2.第3个包子有虫子就跳过，继续吃下面的包子</span><br>    <span class="hljs-keyword">if</span>(i == <span class="hljs-number">3</span>)&#123;<br>        <span class="hljs-comment">//跳过本次循环（本次循环中，下面的代码就不执行了），继续执行下次循环。</span><br>        <span class="hljs-keyword">continue</span>;<br>    &#125;<br>    System.out.println(<span class="hljs-string">&quot;在吃第&quot;</span> + i + <span class="hljs-string">&quot;个包子&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<h6 id="break"><a href="#break" class="headerlink" title="break:"></a>break:</h6><p>​	不能单独存在的。可以用在switch和循环中，表示结束，跳出的意思。</p>
+<p>代码示例</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//1.吃1~5号包子</span><br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">5</span>; i++) &#123;<br>    System.out.println(<span class="hljs-string">&quot;在吃第&quot;</span> + i + <span class="hljs-string">&quot;个包子&quot;</span>);<br>    <span class="hljs-comment">//2.吃完第三个的时候就不吃了</span><br>    <span class="hljs-keyword">if</span>(i == <span class="hljs-number">3</span>)&#123;<br>        <span class="hljs-keyword">break</span>;<span class="hljs-comment">//结束整个循环。</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230107220328748.png" srcset="/img/loading.gif" lazyload alt="image-20230107220328748"></p>
+<h2 id="5-循环练习"><a href="#5-循环练习" class="headerlink" title="5.循环练习"></a>5.循环练习</h2><h3 id="1-逢七过"><a href="#1-逢七过" class="headerlink" title="1.逢七过"></a>1.逢七过</h3><blockquote>
+<p>需求：</p>
+<p>朋友聚会的时候可能会玩一个游戏：逢7过 </p>
+<p>游戏规则：从任意一个数字开始报数，当你要报的数字是包含7或者是7的倍数时都要说过：过</p>
+<p>使用程序在控制台打印出1-100之间的满足逢七必过规则的数据 </p>
+<p>举例：</p>
+<p>​	1 2 3 4 5 6 过 8 9 10 11 12 13 过 15 16 过 18 …</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/*朋友聚会的时候可能会玩一个游戏：逢7过</span><br><span class="hljs-comment">        游戏规则：从任意一个数字开始报数，当你要报的数字是包含7或者是7的倍数时都要说过：过</span><br><span class="hljs-comment">        需求：使用程序在控制台打印出1-100之间的满足逢七必过规则的数据*/</span><br><span class="hljs-comment">//分析：</span><br><span class="hljs-comment">//个位7  十位7   7倍数</span><br><span class="hljs-comment">//1 2 3 4 5 6 过 8 9 10 11 12 13 过 15 16 过 18 19 20 过....</span><br><span class="hljs-comment">//69 过 过 过 过 过 过... 80</span><br><span class="hljs-comment">//1.得到1~100之间的每一个数字</span><br><span class="hljs-comment">//开始：1</span><br><span class="hljs-comment">//结束：100</span><br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">100</span>; i++) &#123;<br>    <span class="hljs-comment">//2.判断每一个数字，如果符合规则，就打印过，如果不符合规则就打印真实的数字</span><br>    <span class="hljs-keyword">if</span>(i % <span class="hljs-number">10</span> == <span class="hljs-number">7</span> || i / <span class="hljs-number">10</span> % <span class="hljs-number">10</span> == <span class="hljs-number">7</span>  ||  i % <span class="hljs-number">7</span> == <span class="hljs-number">0</span>)&#123;<br>        System.out.println(<span class="hljs-string">&quot;过&quot;</span>);<br>        <span class="hljs-keyword">continue</span>;<br>    &#125;<br>    System.out.println(i);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-平方根"><a href="#2-平方根" class="headerlink" title="2.平方根"></a>2.平方根</h3><blockquote>
+<p>需求：</p>
+<p>​	键盘录入一个大于等于2的整数 x ，计算并返回 x 的 平方根 。结果只保留整数部分 ，小数部分将被舍去</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/*需求：键盘录入一个大于等于2的整数 x ，计算并返回 x 的 平方根 。</span><br><span class="hljs-comment">        结果只保留整数部分 ，小数部分将被舍去 。</span><br><span class="hljs-comment">*/</span><br><span class="hljs-comment">//分析：</span><br><span class="hljs-comment">//平方根   16的平方根4</span><br><span class="hljs-comment">//         4的平方根2</span><br><span class="hljs-comment">// 10</span><br><span class="hljs-comment">// 1 * 1 = 1 &lt; 10</span><br><span class="hljs-comment">// 2 * 2 = 4 &lt; 10</span><br><span class="hljs-comment">// 3 * 3 = 9 &lt; 10</span><br><span class="hljs-comment">// 4 * 4 = 16 &gt; 10</span><br><span class="hljs-comment">//推断：10的平方根是在3~4之间。</span><br><span class="hljs-comment">// 20</span><br><span class="hljs-comment">// 1 * 1 = 1 &lt; 20</span><br><span class="hljs-comment">// 2 * 2 = 4 &lt; 20</span><br><span class="hljs-comment">// 3 * 3 = 9 &lt; 20</span><br><span class="hljs-comment">// 4 * 4 = 16 &lt; 20</span><br><span class="hljs-comment">// 5 * 5 = 25 &gt; 20</span><br><span class="hljs-comment">//推断：20的平方根是在4~5之间。</span><br><span class="hljs-comment">//在代码当中</span><br><span class="hljs-comment">//从1开始循环，拿着数字的平方跟原来的数字进行比较</span><br><span class="hljs-comment">//如果小于的，那么继续往后判断</span><br><span class="hljs-comment">//如果相等，那么当前数字就是平方根</span><br><span class="hljs-comment">//如果大于的，那么前一个数字就是平方跟的整数部分</span><br><span class="hljs-comment">//1.键盘录入一个整数</span><br><span class="hljs-type">Scanner</span> <span class="hljs-variable">sc</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Scanner</span>(System.in);<br>System.out.println(<span class="hljs-string">&quot;请输入一个整数&quot;</span>);<br><span class="hljs-type">int</span> <span class="hljs-variable">number</span> <span class="hljs-operator">=</span> sc.nextInt();<br><span class="hljs-comment">//2.从1开始循环判断</span><br><span class="hljs-comment">//开始：1 结束: number</span><br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span>; i &lt;= number; i++) &#123;<br>    <span class="hljs-comment">//用i * i 再跟number进行比较</span><br>    <span class="hljs-keyword">if</span>(i * i == number)&#123;<br>        System.out.println(i + <span class="hljs-string">&quot;就是&quot;</span> + number + <span class="hljs-string">&quot;的平方根&quot;</span>);<br>        <span class="hljs-comment">//一旦找到了，循环就可以停止了，后面的数字就不需要再找了，提高代码的运行效率。</span><br>        <span class="hljs-keyword">break</span>;<br>    &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(i * i &gt; number)&#123;<br>        System.out.println((i - <span class="hljs-number">1</span>) + <span class="hljs-string">&quot;就是&quot;</span> + number + <span class="hljs-string">&quot;平方根的整数部分&quot;</span>);<br>        <span class="hljs-keyword">break</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-求质数"><a href="#3-求质数" class="headerlink" title="3.求质数"></a>3.求质数</h3><blockquote>
+<p>键盘输入一个数 判断这个数是不是一个质数</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//需求：键盘录入一个正整数 x ，判断该整数是否为一个质数。</span><br><br><span class="hljs-comment">//质数：</span><br><span class="hljs-comment">//如果一个整数只能被1和本身整除，那么这个数就是质数。否则这个数叫做合数</span><br><span class="hljs-comment">//7 = 1 * 7 质数</span><br><span class="hljs-comment">//8 = 1 * 8  2 * 4 合数</span><br><br><br><span class="hljs-comment">//分析：</span><br><span class="hljs-comment">//1.键盘录入一个正整数</span><br><span class="hljs-comment">//number</span><br><span class="hljs-type">Scanner</span> <span class="hljs-variable">sc</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Scanner</span>(System.in);<br>System.out.println(<span class="hljs-string">&quot;请输入一个正整数&quot;</span>);<br><span class="hljs-type">int</span> <span class="hljs-variable">number</span> <span class="hljs-operator">=</span> sc.nextInt();<span class="hljs-comment">//9</span><br><br><span class="hljs-comment">//定义一个变量，表示标记</span><br><span class="hljs-comment">//标记着number是否为一个质数</span><br><span class="hljs-comment">//true： 是一个质数</span><br><span class="hljs-comment">//false : 不是一个质数</span><br><br><span class="hljs-comment">//表示最初就认为number是一个质数</span><br><span class="hljs-type">boolean</span> <span class="hljs-variable">flag</span> <span class="hljs-operator">=</span> <span class="hljs-literal">true</span>;<br><span class="hljs-comment">//2.判断</span><br><span class="hljs-comment">//写一个循环，从2开始判断，一直判断到number-1为止</span><br><span class="hljs-comment">//看这个范围之内，有没有数字可以被number整除</span><br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">2</span>; i &lt; number; i++) &#123;<br>    <span class="hljs-comment">//i 依次表示这个范围之内的每一个数字</span><br>    <span class="hljs-comment">//看number是否能被i整除就可以了</span><br>    <span class="hljs-keyword">if</span>(number % i == <span class="hljs-number">0</span>)&#123;<span class="hljs-comment">// 9 % 2 = 1</span><br>        flag = <span class="hljs-literal">false</span>;<br>        <span class="hljs-comment">//System.out.println(number + &quot;不是一个质数&quot;);</span><br>        <span class="hljs-keyword">break</span>;<br>    &#125;<span class="hljs-comment">/*else&#123;</span><br><span class="hljs-comment">                System.out.println(number + &quot;是一个质数&quot;);</span><br><span class="hljs-comment">            &#125;*/</span><br>&#125;<br><span class="hljs-comment">//只有当这个循环结束了，表示这个范围之内所有的数字都判断完毕了</span><br><span class="hljs-comment">//此时才能断定number是一个质数</span><br><span class="hljs-keyword">if</span>(flag)&#123;<br>    System.out.println(number + <span class="hljs-string">&quot;是一个质数&quot;</span>);<br>&#125;<span class="hljs-keyword">else</span>&#123;<br>    System.out.println(number + <span class="hljs-string">&quot;不是一个质数&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-猜数字"><a href="#4-猜数字" class="headerlink" title="4.猜数字"></a>4.猜数字</h3><blockquote>
+<p>需求：</p>
+<p>​	程序自动生成一个1-100之间的随机数，在代码中使用键盘录入去猜出这个数字是多少？</p>
+<p>要求：</p>
+<p>​	使用循环猜，一直猜中为止</p>
+</blockquote>
+<blockquote>
+<ol>
+<li>生成一个1-100之间的随机数</li>
+<li>使用键盘录入去猜出这个数字是多少</li>
+<li>把反复猜的代码写在循环中</li>
+</ol>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//1.生成一个1-100之间的随机数</span><br><span class="hljs-type">Random</span> <span class="hljs-variable">r</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Random</span>();<br><span class="hljs-type">int</span> <span class="hljs-variable">number</span> <span class="hljs-operator">=</span> r.nextInt(<span class="hljs-number">100</span>) + <span class="hljs-number">1</span>;<span class="hljs-comment">// 0 ~ 99 + 1 --- 1 ~ 100</span><br>System.out.println(number);<br><br><span class="hljs-comment">//2.使用键盘录入去猜出这个数字是多少？</span><br><span class="hljs-type">Scanner</span> <span class="hljs-variable">sc</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Scanner</span>(System.in);<br><span class="hljs-keyword">while</span>(<span class="hljs-literal">true</span>)&#123;<br>    System.out.println(<span class="hljs-string">&quot;请输入一个整数&quot;</span>);<br>    <span class="hljs-type">int</span> <span class="hljs-variable">guessNumber</span> <span class="hljs-operator">=</span> sc.nextInt();<br>    <span class="hljs-comment">//3.比较</span><br>    <span class="hljs-keyword">if</span>(guessNumber &gt; number)&#123;<br>        System.out.println(<span class="hljs-string">&quot;您猜的数字大了&quot;</span>);<br>    &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(guessNumber &lt; number)&#123;<br>        System.out.println(<span class="hljs-string">&quot;您猜的数字小了&quot;</span>);<br>    &#125;<span class="hljs-keyword">else</span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;恭喜你，猜中了&quot;</span>);<br>        <span class="hljs-keyword">break</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>随机范围的数字生成秘诀7-15</p>
+<p>1.让这个范围头尾都减去一个值，让这个范围从0开始 -7 0-8</p>
+<p>2.尾巴+1 8+1&#x3D;9</p>
+<p>3-最终的结果，再加上第一步减去的值</p>
+</blockquote>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Java%E5%9F%BA%E7%A1%80/">#Java基础</a>
+      
+        <a href="/tags/%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5/">#流程控制语句</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Day03-1-7-Java-基础学习</div>
+      <div>http://example.com/2023/01/07/Day03-1-7-Java-基础学习-流程控制语句/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>RenBoQing</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年1月7日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/01/03/Day02-1-4-Java-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/" title="Day02-1-4-Java-基础学习">
+                        <span class="hidden-mobile">Day02-1-4-Java-基础学习</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>人间至味是清欢</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>技术小窝</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
