@@ -1,0 +1,968 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="RenBoQing">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Day01-01-14-SpringCloud技术-Eureka1.微服务基本概述1.微服务简介 微服务(不是一个框架 而是一种架构思想)，是著名的oo（面向对象，ObjectOriented ）专家 Martin Fowler 提出来的，它是用来描述将软件应用程序设计为独立部署的服务的种特殊方式。最近两年，微服务在各大技术会议、文章、书籍上出现的频率已经让人意识到它对于软件领域所带来的影响力。微">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Day01-01-14-SpringCloud技术-Eureka">
+<meta property="og:url" content="http://example.com/2023/01/14/Day01-01-14-SpringCloud%E6%8A%80%E6%9C%AF-Eureka/index.html">
+<meta property="og:site_name" content="人间至味是清欢的技术小窝">
+<meta property="og:description" content="Day01-01-14-SpringCloud技术-Eureka1.微服务基本概述1.微服务简介 微服务(不是一个框架 而是一种架构思想)，是著名的oo（面向对象，ObjectOriented ）专家 Martin Fowler 提出来的，它是用来描述将软件应用程序设计为独立部署的服务的种特殊方式。最近两年，微服务在各大技术会议、文章、书籍上出现的频率已经让人意识到它对于软件领域所带来的影响力。微">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230114131334401.png">
+<meta property="article:published_time" content="2023-01-14T03:00:00.000Z">
+<meta property="article:modified_time" content="2023-01-26T15:41:25.592Z">
+<meta property="article:author" content="RenBoQing">
+<meta property="article:tag" content="springcloud">
+<meta property="article:tag" content="微服务，注册中心">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230114131334401.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Day01-01-14-SpringCloud技术-Eureka - 人间至味是清欢的技术小窝</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>人间至味是清欢的技术小窝</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>文章</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于我</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Day01-01-14-SpringCloud技术-Eureka"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-01-14 11:00" pubdate>
+          2023年1月14日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          20k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          170 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Day01-01-14-SpringCloud技术-Eureka</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Day01-01-14-SpringCloud技术-Eureka"><a href="#Day01-01-14-SpringCloud技术-Eureka" class="headerlink" title="Day01-01-14-SpringCloud技术-Eureka"></a>Day01-01-14-SpringCloud技术-Eureka</h1><h2 id="1-微服务基本概述"><a href="#1-微服务基本概述" class="headerlink" title="1.微服务基本概述"></a>1.微服务基本概述</h2><h3 id="1-微服务简介"><a href="#1-微服务简介" class="headerlink" title="1.微服务简介"></a>1.微服务简介</h3><blockquote>
+<p>微服务(不是一个框架 而是一种架构思想)，是著名的oo（面向对象，ObjectOriented ）专家 Martin Fowler 提出来的，它是用来描述将软件应用程序设计为独立部署的服务的种特殊方式。最近两年，微服务在各大技术会议、文章、书籍上出现的频率已经让人意识到它对于软件领域所带来的影响力。微服务架构的系统是个分布式系统，按业务领域划分为独立的服务单元，有自动化运维、容错、快速演进的特点，它能够解决传统单体架构系统的痛点，同时也能满足越来越复杂的业务需求.</p>
+</blockquote>
+<h3 id="2-单体架构的不足"><a href="#2-单体架构的不足" class="headerlink" title="2.单体架构的不足"></a>2.单体架构的不足</h3><blockquote>
+<p>在应用的初始阶段，单体架构无论是在开发速度、运维难度上，还是服务器的成本上都有</p>
+<p>着显著的优势。在一个产品的前景不明确的初始阶段，用单体架构是非常明智的选择。随着应</p>
+<p>用业务的发展和业务复杂度的提高，这种架构明显存在很多的不足，主要体现在以下 3 个方面：</p>
+<p><strong>1. 业务越来越复杂，单体应用的代码量越来越大，代码的可读性、可维护性和可扩展性下降，</strong></p>
+<p><strong>新人接手代码所需的时间成倍增加，业务扩展带来的代价越来越大。</strong></p>
+<p><strong>2. 随着用户越来越多，程序承受的并发越来越高，单体应用的并发能力有限。</strong></p>
+<p><strong>3. 测试的难度越来越大，单体应用的业务都在同个程序中，随着业务的扩张、复杂度的增加，</strong></p>
+<p><strong>单体应用修改业务或者增加业务或许会给其他业务带来定的影响，导致测试难度增加。</strong></p>
+</blockquote>
+<h3 id="3-什么是微服务"><a href="#3-什么是微服务" class="headerlink" title="3.什么是微服务"></a>3.什么是微服务</h3><blockquote>
+<p><strong>就是将一个大的应用，拆分成多个小的模块，每个模块都有自己的功能和职责，每个模块可以</strong></p>
+<p><strong>进行交互，这就是微服务</strong></p>
+<p>对于微服务，业界没有严格统一的定义，但是作为“微服务”这名词的发明人，Martin Fowler</p>
+<p>对微服务的定义似乎更具有权威性和指导意义，他的理解如下：</p>
+<p><strong>简而言之，微服务架构的风格，就是将单一程序开发成一个微服务，每个微服务运行在自己的进程中，并使用轻量级通信机制，通常是HTTP RESTFUL API 。这些服务围绕业务能力来划分构建的，并通过完全自动化部署机制来独立部署这些服务可以使用不同的编程语言，以及不同数据存储技术，以保证最低限度的集中式管理.</strong></p>
+</blockquote>
+<h3 id="4-微服务的特点"><a href="#4-微服务的特点" class="headerlink" title="4.微服务的特点"></a>4.微服务的特点</h3><blockquote>
+<p><strong>1. 按业务(功能)划分为一个独立运行的程序，即服务单元。</strong></p>
+<p><strong>2. 服务之间通过 HTTP 协议相互通信。 http 是一个万能的协议 (web 应用都支持的模式)</strong></p>
+<p><strong>3. 自动化部署。</strong></p>
+<p><strong>4. 可以用不同的编程语言。</strong></p>
+<p><strong>5. 可以用不同的存储技术。</strong></p>
+<p><strong>6. 服务集中化管理。</strong></p>
+<p><strong>7. 微服务是一个分布式系统。</strong></p>
+</blockquote>
+<h3 id="5-微服务特点基本概述"><a href="#5-微服务特点基本概述" class="headerlink" title="5.微服务特点基本概述"></a>5.微服务特点基本概述</h3><h4 id="1-微服务单元按业务来划分（不是绝对的）"><a href="#1-微服务单元按业务来划分（不是绝对的）" class="headerlink" title="1.微服务单元按业务来划分（不是绝对的）"></a>1.<strong>微服务单元按业务来划分（不是绝对的）</strong></h4><blockquote>
+<p>微服务的“微”到底需要定义到什么样的程度，这是个非常难以界定的概念，可以从以个方面来界定： 是根据代码量来定义，根据代码的多少来判断程序的大小： 是根据开发时间的长短来判断： 是根据业务的大小来划分。根据 Martin Fowler 的定义，微服务的“微”是按照</p>
+<p>业务来划分的 。一个大的业务可以拆分成若干小的业务， 个小的业务又可以拆分成若干更小的业务，业务到底怎么拆分才算合适，这需要开发人员自己去决定。例如微博最常见的功能是微博内容、关注和粉丝，而其中微博内容又有点赞、评论等，如何将微博这个复杂的程序划分为单个的服务，需要由开发团队去决定。按业务划分的微服务单元独立部署，运行在独立的进程中 这些微服务单元是高度组件化的模块，并提供了稳定的模块边界，服务与服务之间没有任何的相合 有非常好的扩展性和复用性。传统的软件开发模式通常由 UI 团队、服务端团队、</p>
+<p>数据库和运维团队构成，相应地将软件按照职能划分为 、服务端、数据库和运维等模块。通常这些开发 员各司其职 很少有人跨职能去工作。 如果按照业务来划分服务，每个服务都需要独立的 UI 、服务端、数据库和运维。也就是说， 个小的业务的微服务需要动用团队的人去协作，这显然增加了团队与团队之间交流协作的成本。所以产生了跨职能团 队，这个团队负责一个服务的所有工作，包括 UI 、服务端和数据库。当这个团队只有 个人的时候，就对开发人员提出了更高的要求.</p>
+</blockquote>
+<h4 id="2-微服务通过-HTTP-来互相通信"><a href="#2-微服务通过-HTTP-来互相通信" class="headerlink" title="2.微服务通过 HTTP 来互相通信"></a>2.<strong>微服务通过 HTTP 来互相通信</strong></h4><blockquote>
+<p>按照业务划分的微服务单元独立部署 并运行在各自的进程中。微服务单元之间的通信方般倾向于使用 HTTP 这种简单的通信机制，更多的时候是使用 RESTfulAPI 。这种接受请求、处理业务逻辑、返回数据的 HTTP 模式非常高效，并且这种通机制与平台和语言无关。例如用</p>
+<p>Java 写的服务可以消费用 Go 语言写的服务</p>
+</blockquote>
+<h4 id="3-微服务的数据库独立"><a href="#3-微服务的数据库独立" class="headerlink" title="3.微服务的数据库独立"></a>3.<strong>微服务的数据库独立</strong></h4><blockquote>
+<p>在单体架构中，所有的业务都共用个数据库。随着业务量的增加，数据库的表的数量越来越多，难以管理和维护，并且数据量的增 会导致查询速度越来越慢。 例如个应用有这样几个业务：用户的信息、用户的账户、用户的购物 、数据报 服务等。典型的单体架构如微服务的 个特点就是按业务划分服务，服务与服务之间无稠合，就连数据库也是独立的个典型的微服务的架构就是每个微服务都有自己独立的数据库，数据库之间没有何联系这样做的好处在于，随着业务的不断扩张，服务与服务不需要提供数据库集成，而是提供 API 接口相互调用：还有 个好处是数据库独立，单业务的数据盆少，易于维护，数据库性能有着明显的优势，数据库的迁移也很方便。另外，随着存储技术的发展，数据库的存储方式不再仅仅是关系型数据库，非关系数据库的应用也非常广泛，例如 MongoDB ，它们有着良好的读 性能，因此越来越受欢迎</p>
+<p>个典型的微服务的系统，可能每 个服务的数据库都不相同，每个服务所使用的数据存储技术可能有所不同。</p>
+</blockquote>
+<h4 id="4-微服务的自动化部署（CI-x2F-CD）-持续集成-持续交付"><a href="#4-微服务的自动化部署（CI-x2F-CD）-持续集成-持续交付" class="headerlink" title="4.微服务的自动化部署（CI &#x2F;CD）(持续集成 持续交付)"></a>4.<strong>微服务的自动化部署（CI &#x2F;CD）(持续集成 持续交付)</strong></h4><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230114123126062.png" srcset="/img/loading.gif" lazyload alt="image-20230114123126062"></p>
+<blockquote>
+<p>在微服务架构中，系统会被拆分为若干个微服务，每个微服务又是一个独立的应用程序。单体架构的应用程序只需要部署一次，而微服务架构有多少个服务就需要部署多少次。随着服务数量的增加，如果微服务按照单体架构的部署方式，部署的难度会呈指数增加。业务的粒度划分</p>
+<p>得越细，微服务的数量就越多，这时需要更稳定的部署机制。随着技术的发展，尤其是 Docker容器技术的推进，以及自动化部署工具（例如开源组件 Jenkins）的出现，自动化部署变得越来越简单。自动化部署可以提高部署的效率，减少人为的控制，部署过程中出现错误的概率降低，部署过程的每一步自动化，提高软件的质量。构建一个自动化部署的系统，虽然在前期需要开发人员或者运维人员的学习，但是对于整个软件系统来说是一个全新的概念。在软件系统的整个生命周期之中，每一步是由程序控制的，而不是人为控制，软件的质量提高到了一个新的高度。随着 DevOps 这种全新概念的推进，自动化部署必然会成为微服务部署 的一种方式</p>
+</blockquote>
+<h4 id="5-服务集中化管理"><a href="#5-服务集中化管理" class="headerlink" title="5.服务集中化管理"></a>5.<strong>服务集中化管理</strong></h4><blockquote>
+<p>微服务系统是按业务单元来划分服务的，服务数量越多，管理起来就越复杂，因此微服务必须使用集中化管理。目前流行的微服务框架中，例如 Spring Cloud 采用 Eureka 来注册服务和发现服务，另外， Zookeeper、 Consul 等都是非常优秀的服务集中化管理框架</p>
+</blockquote>
+<h4 id="6-分布式架构"><a href="#6-分布式架构" class="headerlink" title="6.分布式架构"></a>6.<strong>分布式架构</strong></h4><blockquote>
+<p>分布式系统是集群部署的，由很多计算机相互协作共同构成，它能够处理海量的用户请求。当分布式系统对外提供服务时，用户是毫不知情的，还以为是一台服务器在提供服务。分布式系统的复杂任务通过计算机之间的相互协作来完成，当然简单的任务也可以在一台计算机上完</p>
+<p>成。分布式系统通过网络协议来通信，所以分布式系统在空间上没有任何限制，即分布式服务器可以部署不同的机房和不同的地区。微服务架构是分布式架构，分布式系统比单体系统更加复杂，主要体现在服务的独立性和服务相互调用的可靠性，以及分布式事务、全局锁、全局 Id</p>
+<p>等，而单体系统不需要考虑这些复杂性。另外，分布式系统的应用都是集群化部署，会给数据一致性带来困难。分布式系统中的服务通信依赖于网络，网络不好，必然会对分布式系统带来很大的影响。在分布式系统中，服务之间相互依赖，如果一个服务出现了故障或者是网络延迟，在高并发的情况下，会导致线程阻塞，在很短的时间内该服务的线程资源会消耗殆尽，最终使得该服务不可用。由于服务的相互依赖，可能会导致整个系统的不可用，这就是“雪崩效应”。为了防止此类事件的发生，分布式系统必然要采取相应的措施，例如“熔断机制”。</p>
+</blockquote>
+<h4 id="7-熔断机制-Hystrix"><a href="#7-熔断机制-Hystrix" class="headerlink" title="7.熔断机制 Hystrix"></a>7.<strong>熔断机制</strong> <strong>Hystrix</strong></h4><blockquote>
+<p>为了防止“雪崩效应”事件的发生，分布式系统采用了熔断机制。在用 SpringCloud 构建的微服务系统中，采用了熔断器（即 Hystrix 令 组件的 C ircuit Breaker）去做熔断。例如在微服务系统中，有 a、 b、 c、 d、 e、如果此时服务 b 出现故障或者网络延迟，服务 b 会出现大量的线程阻塞，有可能在很短的时间内线程资源就被消耗完了，导致服务 b 的不可用。如果服务 b 为较 底层的服务，会影响到其他服务，导致其他服务会一直等待服务 b 的处理。如果服务 b 迟迟不处理，大量的网络请求不仅仅堆积在服务 b，而且会堆积到依赖于服务 b 的其他服务。而因服务 b 出现故障影响的服务，也会影响到依赖于因服务 b 出现故障影响的服务的其他服务，从而由 b 开始，影响到整个系统，导致整个系统的不可用。这是一件非常可怕的事，因为服务器运营商的不可靠，必然会导致服务的不可靠，而网络服务商的不可靠性，也会导致服务的不可靠。在高并发的场景下，稍微有点不可靠，由于故障的传播性，会导致大量的服务不可用，甚至导致整个系统崩溃。为了解决这一难题，微服务架构引入了熔断机制。当服务 b 出现故障，请求失败次数超过设定的阀值之后，服务 b 就会开启熔断器，之后服务 b 不进行任何的业务逻辑操作，执行快速失败，直接返回请求失败的信息。其他依赖于 b 的服务就不会因为得不到响应而线程阻塞，这时除了服务 b 和依赖于服务 b 的部分功能不可用外，其他功能正常.</p>
+</blockquote>
+<h3 id="6-微服务的优势"><a href="#6-微服务的优势" class="headerlink" title="6.微服务的优势"></a>6.微服务的优势</h3><blockquote>
+<p>相对于单体服务来说，微服务具有很多的优势，主要体现在以下方面。</p>
+<ol>
+<li><p>将一个复杂的业务分解成若干小的业务，每个业务拆分成一个服务，服务的边界明确，将复杂的问题简单化。服务按照业务拆分，编码也是按照业务来拆分，代码的可读性和可扩展性增加。新人加入团队，不需要了解所有的业务代码，只需要了解他所接管的服务的代码，新人学习时间成本减少。</p>
+</li>
+<li><p>由于微服务系统是分布式系统，服务与服务之间没有任何的祸合。随着业务的增加，可以根据业务再拆分服务，具有极强的横向扩展能力。随着应用的用户量的增加，井发量增加，可以将微服务集群化部署，从而增加系统的负载能力。简而言之，微服务系统的微服务单元具有很强的横向扩展能力。</p>
+</li>
+<li><p>服务与服务之问通过 HTTP 网络通信协议来通信，单个微服务内部高度祸合，服务与服务之间完全独立，无调合。这使得微服务可以采用任何的开发语言和技术来实现。开发人员不再被强迫使用公司以前的技术或者已经过时的技术，而是可以自由选择最适合业务场景的或者最适合自己的开发语言和技术，提高开发效率、降低开发成本。</p>
+</li>
+<li><p>如果是一个单体的应用，由于业务的复杂性、代码的祸合性，以及可能存在的历史问题。在重写一个单体应用时，要求重写的应用的人员了解所有的业务，所以重写单体应用是非常困难的，并且重写风险也较高。如果是微服务系统，由于微服务系统是按照业务的进行拆分的，并且有坚实的服务边界，所以重写某个服务就相当于重写某一个业务的代码，非常简单。</p>
+</li>
+<li><p>微服务的每个服务单元都是独立部署的，即独立运行在某个进程里。微服务的修改和部署对其他服务没有影响。试想，假设一个应用只有一个简单的修改，如果是单体架构，需要测试和部署整个应用；而如果采用微服务架构，只需要测试并部署被修改的那个服务，这就大大减少了测试和部署的时间。</p>
+</li>
+<li><p>微服务在 CAP 理论中采用的是 AP 架构，即具有高可用和分区容错的特点。高可用主要体现在系统 7 x 24 小时不间断的服务，它要求系统有大量的服务器集群，从而提高了系统的负载能力。另外，分区容错也使得系统更加健壮</p>
+</li>
+</ol>
+</blockquote>
+<h3 id="7-微服务的不足"><a href="#7-微服务的不足" class="headerlink" title="7.微服务的不足"></a>7.微服务的不足</h3><blockquote>
+<p>凡事都有两面性，微服务也不例外，微服务相对于单体应用来说具有很多的优势，当然也有它</p>
+<p>的不足，主要体现在如下方面：</p>
+<p>1.微服务的复杂度</p>
+<p>2.分布式事务问题</p>
+<p>3.服务的划分（按照功能划分 还是按照组件来划分呢） 分工</p>
+<p>4.服务的部署（不用自动化部署 自动化部署）</p>
+</blockquote>
+<h3 id="8-微服务架构的设计原则"><a href="#8-微服务架构的设计原则" class="headerlink" title="8.微服务架构的设计原则"></a>8.微服务架构的设计原则</h3><blockquote>
+<p><strong>开闭原则 单一原则</strong> 6 大设计原则 架构设计和代码设计思路一样的</p>
+<p>软件设计就好比建筑设计。 Architect 这个词在建筑学中是“建筑师”的意思，而在软件领域里则是“架构师”的意思，可见它们确实有相似之处。无论是建筑师还是架构师，他们都希望把作品设计出自己的特色，并且更愿意把创造出的东西被称为艺术品。然而现实却是，建筑设计和软件设计有非常大的区别。建筑师设计并建造出来的建筑往往很难有变化，除非拆了重建。而架构师设计出来的软件系统，为了满足产品的业务发展，在它的整个生命周期中，每一个版本都有很多的变化。软件设计每一个版本都在变化，所以软件设计应该是渐进式发展。软件从一开始就不应该被设计成微服务架构，微服务架构固然有优势，但是它需要更多的资源，包括服务器资源、技术人员等。追求大公司所带来的技术解决方案，刻意地追求某个新技术，企图使用技术解决所有的问题，这些都是软件设计的误区。技术应该是随着业务的发展而发展的，任何脱离业务的技术是不能产生价值的。在初创公司，业务很单一时，如果在 LAMP 单体构架够用的情况下，就应该用 LAMP，因为它开发速度快，性价比高。随着业务的发展，用户量的增加，可以考虑将数据库读写分离、加缓存、加复杂均衡服务器、将应用程序集群化部署等。如果业务还在不断发展，这时可以考虑使用分布式系统，例如微服务架构的系统。不管使用什么样的架构，驱动架构的发展一定是业务的发展，只有当前架构不再适合当前业务的发展，才考虑更换架构。在微服务架构中，有三大难题，那就是服务故障的传播性熔断服务的划分和分布式事务。在微服务设计时，一定要考虑清楚这三个难题，从而选择合适的框架。目前比较流行的微服务框架有 Spring 社区的 SpringCloud、 Google 公司的 Kubemetes 等。不管使用哪一种框架或者工具，都需要考虑这三大难题。为了解决服务故障的传播性，一般的微服务框架</p>
+<p>都有熔断机制组件。另外，服务的划分没有具体的划分方法，一般来说根据业务来划分服务，领域驱动设计具有指导作用。最后，分布式事务一般的解决办法就是两阶段提交或者三阶段提交，不管使用哪一种都存在事务失败，导致数据不一致的情况，关键时刻还得人工去恢复数据。</p>
+<p>总之，微服务的设计一定是渐进式的，并且是随着业务的发展而发展的。</p>
+</blockquote>
+<h3 id="9-SpringCloud-管家-注重服务的管理）"><a href="#9-SpringCloud-管家-注重服务的管理）" class="headerlink" title="9.SpringCloud (管家 注重服务的管理）"></a>9.SpringCloud (管家 注重服务的管理）</h3><blockquote>
+<p>Spring Cloud 作为 <strong>Java</strong> 语言的<strong>微服务框架</strong>，它依赖于 <strong>Spring Boot</strong>，有快速开发、持续交付和容易部署等特点。 Spring Cloud 的<strong>组件</strong>非常多，涉及微服务的方方面面，井在开源社区 Spring 和 <strong>Netflix</strong>、 Pivotal 两大公司的推动下越来越完善，如今 <strong>alibaba</strong> 也加入到其中。 <strong>spring</strong> <strong>官方</strong> <strong>netflix alibaba</strong>Spring Cloud 在开发部署上继承了 Spring Boot 的一些优点，提高其在开发和部署上的效率。 <strong>Spring Cloud</strong> <strong>的首要目标就是通过提供一系列开发组件和框架，帮助开发者迅速搭建</strong>一个分布式的微服务系统。 Spring Cloud 是通过包装其他技术框架来实现的，例如包装开源的 Netflix oss 组件，实现了一套通过基于注解、 Java 配置和基于模版开发的微服务框架。 Spring Cloud 提供了开发分布式微服务系统的一些常用组件，例如服务注册和发现、配置中心、熔断器、远程调用，智能路由、微代理、控制总线、全局锁、分布式会话等</p>
+</blockquote>
+<h3 id="10-SpringCloud-版本对应关系"><a href="#10-SpringCloud-版本对应关系" class="headerlink" title="10.SpringCloud 版本对应关系"></a>10.<strong>SpringCloud</strong> <strong>版本对应关系</strong></h3><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230114131207992.png" srcset="/img/loading.gif" lazyload alt="image-20230114131207992"></p>
+<h3 id="11-SpringCloud-常用组件表"><a href="#11-SpringCloud-常用组件表" class="headerlink" title="11.SpringCloud 常用组件表"></a>11.<strong>SpringCloud</strong> <strong>常用组件表</strong></h3><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230114131251999.png" srcset="/img/loading.gif" lazyload alt="image-20230114131251999"></p>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230114131301652.png" srcset="/img/loading.gif" lazyload alt="image-20230114131301652"></p>
+<h3 id="12-微服务最终架构"><a href="#12-微服务最终架构" class="headerlink" title="12.微服务最终架构"></a>12.微服务最终架构</h3><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230114131334401.png" srcset="/img/loading.gif" lazyload alt="image-20230114131334401"></p>
+<h2 id="2-Eureka"><a href="#2-Eureka" class="headerlink" title="2.Eureka"></a>2.<strong>Eureka</strong></h2><h3 id="1-基本概念"><a href="#1-基本概念" class="headerlink" title="1.基本概念"></a>1.基本概念</h3><blockquote>
+<p>注册发现中心</p>
+<p>Eureka 来源于古希腊词汇，意为“发现了”。在软件领域， Eureka 是 <strong>Netflix</strong> 在线影片公司开源的一个<strong>服务注册与发现的组件</strong>，和其他 Netflix 公司的服务组件（例如负载均衡、熔断器、网关等） 一起，被 Spring Cloud 社区整合为 Spring Cloud Netflix 模块。Eureka 是 Netflix 贡献给 Spring Cloud 的一个框架！Netflix 给 Spring Cloud 贡献了很多框架，后面我们会学习到！</p>
+</blockquote>
+<h3 id="2-Eureka-和-Zookeeper-的区别"><a href="#2-Eureka-和-Zookeeper-的区别" class="headerlink" title="2.Eureka 和 Zookeeper 的区别"></a>2.Eureka <strong>和</strong> <strong>Zookeeper</strong> <strong>的区别</strong></h3><h4 id="1-CAP-原则"><a href="#1-CAP-原则" class="headerlink" title="1.CAP 原则"></a>1.<strong>CAP</strong> <strong>原则</strong></h4><blockquote>
+<p>在分布式 微服务里面 CAP 定理</p>
+<p>问：为什么 zookeeper 不适合做注册中心？</p>
+<p>CAP 原则又称 CAP 定理，指的是在一个分布式系统中，</p>
+<p>一致性（</p>
+<p>Consistency）</p>
+<p>可用性（</p>
+<p>Availability）</p>
+<p>分区容错性（</p>
+<p>Partition tolerance）（这个特性是不可避免的）</p>
+<p>CAP 原则指的是，这三个要素最多只能同时实现两点，不可能三者兼顾。</p>
+</blockquote>
+<h4 id="2-分布式特征"><a href="#2-分布式特征" class="headerlink" title="2.分布式特征"></a>2.<strong>分布式特征</strong></h4><blockquote>
+<p><strong>C :</strong> 数据的一致性 （A,B,C 里面的数据是一致的）</p>
+<p>Zk 注重数据的一致性。</p>
+<p>Eureka 不是很注重数据的一致性！</p>
+<p><strong>A:</strong> 服务的可用性（若 zk 集群里面的 master 挂了怎么办）Paxos（多数派）</p>
+<p>在 zk 里面，若主机挂了，则 zk 集群整体不对外提供服务了，需要选一个新的出来（</p>
+<p>120s左右）才能继续对外提供服务！</p>
+<p>Eureka 注重服务的可用性，当 Eureka 集群只有一台活着，它就能对外提供服务</p>
+<p><strong>P</strong>：区的容错性（在集群里面的机器，因为网络原因，机房的原因，可能导致数据不会里面</p>
+<p>同步），它在分布式必须需要实现的特性！</p>
+<p><strong>Zookeeper</strong> 注重数据的一致性，CP zk(注册中心，配置文件中心，协调中心*)</p>
+<p><strong>Eureka</strong> <strong>注重服务的可用性</strong> <strong>AP</strong> </p>
+<p><strong>eureka</strong> <strong>（注册中心）</strong></p>
+</blockquote>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230114150443549.png" srcset="/img/loading.gif" lazyload alt="image-20230114150443549"></p>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230114150605291.png" srcset="/img/loading.gif" lazyload alt="image-20230114150605291"></p>
+<h3 id="3-Eureka快速入门"><a href="#3-Eureka快速入门" class="headerlink" title="3.Eureka快速入门"></a>3.<strong>Eureka</strong>快速入门</h3><h4 id="1-创建Eureka-server"><a href="#1-创建Eureka-server" class="headerlink" title="1.创建Eureka-server"></a>1.创建<strong>Eureka-server</strong></h4><h5 id="1-创建项目并选择依赖"><a href="#1-创建项目并选择依赖" class="headerlink" title="1.创建项目并选择依赖"></a>1.创建项目并选择依赖</h5><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230114195233502.png" srcset="/img/loading.gif" lazyload alt="image-20230114195233502"></p>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230114195247262.png" srcset="/img/loading.gif" lazyload alt="image-20230114195247262"></p>
+<h5 id="2-分析pom-xml配置文件"><a href="#2-分析pom-xml配置文件" class="headerlink" title="2.分析pom.xml配置文件"></a>2.分析pom.xml配置文件</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><code class="hljs xml-dtd">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br>&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;<br>         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;<br>    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;<br>    &lt;parent&gt;<br>        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;<br>        &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;<br>       &lt;!-- 注意选择boot的版本   --&gt;<br>        &lt;version&gt;2.3.12.RELEASE&lt;/version&gt;<br>        &lt;relativePath/&gt; &lt;!-- lookup parent from repository --&gt;<br>    &lt;/parent&gt;<br>    &lt;groupId&gt;com.powernode&lt;/groupId&gt;<br>    &lt;artifactId&gt;eureka-serve&lt;/artifactId&gt;<br>    &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;<br>    &lt;name&gt;eureka-serve&lt;/name&gt;<br>    &lt;description&gt;Demo project for Spring Boot&lt;/description&gt;<br><br>    &lt;properties&gt;<br>        &lt;java.version&gt;1.8&lt;/java.version&gt;<br>             &lt;!-- cloud的版本和boot的版本要对应   --&gt;<br>        &lt;spring-cloud.version&gt;Hoxton.SR12&lt;/spring-cloud.version&gt;<br>    &lt;/properties&gt;<br>            &lt;!-- eureka-server 服务端的依赖 --&gt;<br>    &lt;dependencies&gt;<br>        &lt;dependency&gt;<br>            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;<br>            &lt;artifactId&gt;spring-cloud-starter-netflix-eureka-server&lt;/artifactId&gt;<br>            &lt;version&gt;2.2.3.RELEASE&lt;/version&gt;<br>        &lt;/dependency&gt;<br>        &lt;dependency&gt;<br>            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;<br>            &lt;artifactId&gt;spring-boot-configuration-processor&lt;/artifactId&gt;<br>            &lt;optional&gt;true&lt;/optional&gt;<br>        &lt;/dependency&gt;<br>        &lt;dependency&gt;<br>            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;<br>            &lt;artifactId&gt;lombok&lt;/artifactId&gt;<br>            &lt;optional&gt;true&lt;/optional&gt;<br>        &lt;/dependency&gt;<br>        &lt;dependency&gt;<br>            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;<br>            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;<br>            &lt;scope&gt;test&lt;/scope&gt;<br>        &lt;/dependency&gt;<br>    &lt;/dependencies&gt;<br>    &lt;dependencyManagement&gt;<br>        &lt;dependencies&gt;<br>            &lt;dependency&gt;<br>                &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;<br>                &lt;artifactId&gt;spring-cloud-dependencies&lt;/artifactId&gt;<br>                &lt;version&gt;$&#123;spring-cloud.version&#125;&lt;/version&gt;<br>                &lt;type&gt;pom&lt;/type&gt;<br>                &lt;scope&gt;import&lt;/scope&gt;<br>            &lt;/dependency&gt;<br>        &lt;/dependencies&gt;<br>    &lt;/dependencyManagement&gt;<br>    &lt;build&gt;<br>        &lt;plugins&gt;<br>            &lt;plugin&gt;<br>                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;<br>                &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;<br>                &lt;configuration&gt;<br>                    &lt;excludes&gt;<br>                        &lt;exclude&gt;<br>                            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;<br>                            &lt;artifactId&gt;lombok&lt;/artifactId&gt;<br>                        &lt;/exclude&gt;<br>                    &lt;/excludes&gt;<br>                &lt;/configuration&gt;<br>            &lt;/plugin&gt;<br>        &lt;/plugins&gt;<br>    &lt;/build&gt;<br>&lt;/project&gt;<br><br></code></pre></td></tr></table></figure>
+
+<h5 id="3-修改配置文件"><a href="#3-修改配置文件" class="headerlink" title="3.修改配置文件"></a>3.修改配置文件</h5><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">server:</span><br>  <span class="hljs-attr">port:</span> <span class="hljs-number">8761</span>   <span class="hljs-comment">#eureka的默认端口</span><br><span class="hljs-comment"># 应用的名称</span><br><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">application:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">eureka-serve</span>   <span class="hljs-comment">#应用名称 服务的名称</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="4-修改启动类并开启注解"><a href="#4-修改启动类并开启注解" class="headerlink" title="4.修改启动类并开启注解"></a>4.修改启动类并开启注解</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@SpringBootApplication</span><br><span class="hljs-comment">//开启EurekaServer服务</span><br><span class="hljs-meta">@EnableEurekaServer</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">EurekaServeApplication</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        SpringApplication.run(EurekaServeApplication.class, args);<br>    &#125;<br><br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h5 id="5-访问测试"><a href="#5-访问测试" class="headerlink" title="5.访问测试"></a>5.访问测试</h5><blockquote>
+<p><a target="_blank" rel="noopener" href="http://localhost:8761/">http://localhost:8761</a></p>
+</blockquote>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230114200859688.png" srcset="/img/loading.gif" lazyload alt="image-20230114200859688"></p>
+<h5 id="6-端口及配置文件分析"><a href="#6-端口及配置文件分析" class="headerlink" title="6.端口及配置文件分析"></a>6.端口及配置文件分析</h5><blockquote>
+<p>Eureka-Server不仅提供让别人注册的功能，它也能注册到别人里面，自己注册自己所以，在启动项目时，默认会注册自己，我们也可以关掉这个功能。</p>
+</blockquote>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230114201015053.png" srcset="/img/loading.gif" lazyload alt="image-20230114201015053"></p>
+<h4 id="2-创建Eureka-client"><a href="#2-创建Eureka-client" class="headerlink" title="2.创建Eureka-client"></a>2.创建Eureka-client</h4><h5 id="1-创建项目并选择依赖-1"><a href="#1-创建项目并选择依赖-1" class="headerlink" title="1.创建项目并选择依赖"></a>1.创建项目并选择依赖</h5><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230114201434383.png" srcset="/img/loading.gif" lazyload alt="image-20230114201434383"></p>
+<h5 id="2-分析pom-xml配置文件-1"><a href="#2-分析pom-xml配置文件-1" class="headerlink" title="2.分析pom.xml配置文件"></a>2.分析pom.xml配置文件</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs xml-dtd">   &lt;!--    boot版本    --&gt;<br>    &lt;parent&gt;<br>        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;<br>        &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;<br>        &lt;version&gt;2.3.12.RELEASE&lt;/version&gt;<br>        &lt;relativePath/&gt; &lt;!-- lookup parent from repository --&gt;<br>    &lt;/parent&gt;<br>&lt;!--   cloud版本     --&gt;<br>   &lt;properties&gt;<br>        &lt;java.version&gt;1.8&lt;/java.version&gt;<br>        &lt;spring-cloud.version&gt;Hoxton.SR12&lt;/spring-cloud.version&gt;<br>    &lt;/properties&gt;<br>&lt;!--  eureka-client客户端依赖      --&gt;<br>      &lt;dependency&gt;<br>            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;<br>            &lt;artifactId&gt;spring-cloud-starter-netflix-eureka-client&lt;/artifactId&gt;<br>            &lt;version&gt;2.2.3.RELEASE&lt;/version&gt;<br>        &lt;/dependency&gt;<br></code></pre></td></tr></table></figure>
+
+<h5 id="3-修改配置文件-1"><a href="#3-修改配置文件-1" class="headerlink" title="3.修改配置文件"></a>3.修改配置文件</h5><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">server:</span><br>  <span class="hljs-attr">port:</span> <span class="hljs-number">8080</span>  <span class="hljs-comment">#客户端没有要求</span><br><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">application:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">eureka-client-a</span><br><span class="hljs-comment">#    需要注册 注册的含义是什么?就是将自己的一些信息发送过去</span><br><span class="hljs-comment">#1.什么信息(ip 端口 系统已经好了)  2.发到哪里(指定一个地址 )</span><br><span class="hljs-attr">eureka:</span><br>  <span class="hljs-attr">client:</span><br>    <span class="hljs-attr">service-url:</span><br>      <span class="hljs-comment">#这个就是发送到服务端的地址  </span><br>      <span class="hljs-attr">defaultzone:</span> <span class="hljs-string">http://localhost:8761/eureka</span>  <span class="hljs-comment">#eureka服务端和客户端的交互地址</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="4-修改启动类并开启注解-1"><a href="#4-修改启动类并开启注解-1" class="headerlink" title="4.修改启动类并开启注解"></a>4.修改启动类并开启注解</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@SpringBootApplication</span><br><span class="hljs-comment">//开启客户端的注解</span><br><span class="hljs-meta">@EnableEurekaClient</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">EurekaClientAApplication</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        SpringApplication.run(EurekaClientAApplication.class, args);<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="5-访问测试-1"><a href="#5-访问测试-1" class="headerlink" title="5.访问测试"></a>5.访问测试</h5><blockquote>
+<p><a target="_blank" rel="noopener" href="http://localhost:8761/">http://localhost:8761</a></p>
+</blockquote>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230114202240511.png" srcset="/img/loading.gif" lazyload alt="image-20230114202240511"></p>
+<h5 id="6-再一次创建一个客户端B"><a href="#6-再一次创建一个客户端B" class="headerlink" title="6.再一次创建一个客户端B"></a>6.再一次创建一个客户端B</h5><blockquote>
+<p>如 client-a 一样，这里就不贴多余截图了，<strong>注意端口和服务名以及启动类上的注解</strong>，在测试</p>
+<p>查看是否注册上去，在 eureka 里面是通过 spring.application.name 来区分服务的</p>
+</blockquote>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230114203422872.png" srcset="/img/loading.gif" lazyload alt="image-20230114203422872"></p>
+<h5 id="7-同一个服务（客户端）启动多台"><a href="#7-同一个服务（客户端）启动多台" class="headerlink" title="7.同一个服务（客户端）启动多台"></a>7.<strong>同一个服务（客户端）启动多台</strong></h5><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230114203451126.png" srcset="/img/loading.gif" lazyload alt="image-20230114203451126"></p>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230114203502540.png" srcset="/img/loading.gif" lazyload alt="image-20230114203502540"></p>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230114203521474.png" srcset="/img/loading.gif" lazyload alt="image-20230114203521474"></p>
+<h5 id="8-注册中心的状态认识"><a href="#8-注册中心的状态认识" class="headerlink" title="8.注册中心的状态认识"></a>8.<strong>注册中心的状态认识</strong></h5><blockquote>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230114203600151.png" srcset="/img/loading.gif" lazyload alt="image-20230114203600151"></p>
+</blockquote>
+<h5 id="9-服务的实例名称"><a href="#9-服务的实例名称" class="headerlink" title="9.服务的实例名称"></a>9.<strong>服务的实例名称</strong></h5><blockquote>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230114203632511.png" srcset="/img/loading.gif" lazyload alt="image-20230114203632511"></p>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230114203640765.png" srcset="/img/loading.gif" lazyload alt="image-20230114203640765"></p>
+</blockquote>
+<h3 id="4-常用配置文件设置（serve和client）"><a href="#4-常用配置文件设置（serve和client）" class="headerlink" title="4.常用配置文件设置（serve和client）"></a>4.<strong>常用配置文件设置</strong>（serve和client）</h3><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230114211907860.png" srcset="/img/loading.gif" lazyload alt="image-20230114211907860"></p>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230114211917182.png" srcset="/img/loading.gif" lazyload alt="image-20230114211917182"></p>
+<h4 id="1-server中-服务端-常用的配置"><a href="#1-server中-服务端-常用的配置" class="headerlink" title="1.server中(服务端)常用的配置"></a>1.server中(服务端)常用的配置</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">server:</span><br>  <span class="hljs-attr">port:</span> <span class="hljs-number">8761</span>   <span class="hljs-comment">#eureka的默认端口</span><br><span class="hljs-comment"># 应用的名称</span><br><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">application:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">eureka-serve</span>   <span class="hljs-comment">#应用名称</span><br><span class="hljs-comment">#eureka的配置分为三类server client  实例类 eureka-serve既是客户端又是服务端</span><br><span class="hljs-comment">#serve端一般不写client 但是需要写 实例类() 它本身是一实例</span><br><span class="hljs-attr">eureka:</span><br><span class="hljs-comment">#  服务端配置</span><br>  <span class="hljs-attr">server:</span><br>    <span class="hljs-attr">eviction-interval-timer-in-ms:</span> <span class="hljs-number">30000</span> <span class="hljs-comment">#清除无效节点的频率(毫秒)--定期删除</span><br>    <span class="hljs-attr">enable-self-preservation:</span> <span class="hljs-literal">true</span>  <span class="hljs-comment">#server 的自我保护机制，避免因为网络原因造成误剔除,生产环境建议打开</span><br>    <span class="hljs-attr">renewal-percent-threshold:</span> <span class="hljs-number">0.85</span> <span class="hljs-comment">#85%，如果在一个机房的 client 端，15 分钟内有 85%的 client 没有续约，那么则可能是网络原因，认为服务实例没有问题，不会剔除他们，宁可放过一万，不可错杀一个，确保高可用</span><br><span class="hljs-comment">#  实例的配置</span><br>  <span class="hljs-attr">instance:</span><br>    <span class="hljs-attr">hostname:</span> <span class="hljs-string">localhsot</span>  <span class="hljs-comment">#本机的名称</span><br>    <span class="hljs-attr">instance-id:</span> <span class="hljs-string">$&#123;eureka.instance.hostname&#125;:$&#123;spring.application.name&#125;:$&#123;server.port&#125;</span> <span class="hljs-comment">#主机名称:应用名称:端口号  使用stl表达式取值</span><br>    <span class="hljs-attr">prefer-ip-address:</span> <span class="hljs-literal">true</span> <span class="hljs-comment"># 服务列表以 ip 的形式展示具体的服务信息</span><br>    <span class="hljs-attr">lease-renewal-interval-in-seconds:</span> <span class="hljs-number">10</span> <span class="hljs-comment"># 表示 eureka client 发送心跳给 server 端的频率</span><br>    <span class="hljs-attr">lease-expiration-duration-in-seconds:</span> <span class="hljs-number">20</span> <span class="hljs-comment">#表示 eureka server 至上一次收到 client 的心跳之后，等待下一次心跳的超时时间，在这个时间内若没收到下一次心跳，则将移除该实例</span><br><br></code></pre></td></tr></table></figure>
+
+<h4 id="2-client-客户端-常用配置"><a href="#2-client-客户端-常用配置" class="headerlink" title="2.client(客户端)常用配置"></a>2.client(客户端)常用配置</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">server:</span><br>  <span class="hljs-attr">port:</span> <span class="hljs-number">8080</span>  <span class="hljs-comment">#客户端没有要求</span><br><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">application:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">eureka-client-a</span><br><span class="hljs-comment">#    需要注册 注册的含义是什么?就是将自己的一些信息发送过去</span><br><span class="hljs-comment">#1.什么信息(ip 端口 系统已经好了)  2.发到哪里(指定一个地址 )</span><br><span class="hljs-attr">eureka:</span><br><span class="hljs-comment">#  客户端配置</span><br>  <span class="hljs-attr">client:</span><br>    <span class="hljs-comment">#eureka 服务端和客户端的交互地址,集群用,隔开</span><br>    <span class="hljs-attr">service-url:</span><br>      <span class="hljs-attr">defaultzone:</span> <span class="hljs-string">http://localhost:8761/eureka</span> <span class="hljs-comment">#eureka服务端和客户端的交互地址</span><br>    <span class="hljs-attr">register-with-eureka:</span> <span class="hljs-literal">true</span>   <span class="hljs-comment">#注册自己 也可以不注册</span><br>    <span class="hljs-attr">fetch-registry:</span> <span class="hljs-literal">true</span> <span class="hljs-comment">#是否拉取服务列表到本地</span><br>    <span class="hljs-attr">registry-fetch-interval-seconds:</span> <span class="hljs-number">10</span> <span class="hljs-comment"># 表示 eureka-client 间隔多久去拉取服务注册信息  缓解脏读问题 但是性能就下降了</span><br><span class="hljs-comment">#  实力端配置</span><br>  <span class="hljs-attr">instance:</span><br>    <span class="hljs-attr">hostname:</span> <span class="hljs-string">localhost</span> <span class="hljs-comment">#主机的地址 也可以写ip  最好写ip地址</span><br>    <span class="hljs-attr">instance-id:</span> <span class="hljs-string">$&#123;eureka.instance.hostname&#125;:$&#123;spring.application.name&#125;:$&#123;server.port&#125;</span> <span class="hljs-comment">#主机名称:应用名称:端口号  使用stl表达式取值</span><br>    <span class="hljs-attr">prefer-ip-address:</span> <span class="hljs-literal">true</span>  <span class="hljs-comment">#显示ip</span><br>    <span class="hljs-attr">lease-expiration-duration-in-seconds:</span> <span class="hljs-number">20</span>  <span class="hljs-comment">#表示 eureka server 至上一次收到 client 的心跳之后，等待下一次心跳的超时时间，在这个时间内若没收到下一次心跳，则将移除该实例</span><br>    <span class="hljs-attr">lease-renewal-interval-in-seconds:</span> <span class="hljs-number">10</span> <span class="hljs-comment"># 表示 eureka client 发送心跳给 server 端的频率</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="5-构建高可用的-Eureka-Server-集群"><a href="#5-构建高可用的-Eureka-Server-集群" class="headerlink" title="5.构建高可用的 Eureka-Server 集群"></a>5.<strong>构建高可用的</strong> <strong>Eureka-Server</strong> <strong>集群</strong></h3><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230115122945801.png" srcset="/img/loading.gif" lazyload alt="image-20230115122945801"></p>
+<h4 id="1-修改eureka-service配置文件"><a href="#1-修改eureka-service配置文件" class="headerlink" title="1.修改eureka-service配置文件"></a>1.修改eureka-service配置文件</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">server:</span><br>  <span class="hljs-attr">port:</span> <span class="hljs-number">8761</span><br><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">application:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">erueka-serve</span><br>  <span class="hljs-comment">#  服务端配置</span><br><span class="hljs-attr">eureka:</span><br>  <span class="hljs-attr">client:</span><br>    <span class="hljs-comment">#eureka 服务端和客户端的交互地址,集群用,隔开</span><br>    <span class="hljs-attr">service-url:</span><br>      <span class="hljs-attr">defaultzone:</span> <span class="hljs-string">http://localhost:8762/eureka,</span> <span class="hljs-string">http://localhost:8763/eureka</span> <span class="hljs-comment">#eureka服务端和客户端的交互地址 这里将8761注册到62和63中</span><br>    <span class="hljs-attr">register-with-eureka:</span> <span class="hljs-literal">true</span>   <span class="hljs-comment">#注册自己 也可以不注册</span><br>    <span class="hljs-attr">fetch-registry:</span> <span class="hljs-literal">true</span> <span class="hljs-comment">#是否拉取服务列表到本地</span><br>    <span class="hljs-attr">registry-fetch-interval-seconds:</span> <span class="hljs-number">10</span> <span class="hljs-comment"># 表示 eureka-client 间隔多久去拉取服务注册信息  缓解脏读问题 但是性能就下降了</span><br>  <span class="hljs-comment">#  实例的配置</span><br>  <span class="hljs-attr">instance:</span><br>    <span class="hljs-attr">hostname:</span> <span class="hljs-string">localhsot</span>  <span class="hljs-comment">#本机的名称</span><br>    <span class="hljs-attr">instance-id:</span> <span class="hljs-string">$&#123;eureka.instance.hostname&#125;:$&#123;spring.application.name&#125;:$&#123;server.port&#125;</span> <span class="hljs-comment">#主机名称:应用名称:端口号  使用stl表达式取值</span><br>    <span class="hljs-attr">prefer-ip-address:</span> <span class="hljs-literal">true</span> <span class="hljs-comment"># 服务列表以 ip 的形式展示具体的服务信息</span><br>    <span class="hljs-attr">lease-renewal-interval-in-seconds:</span> <span class="hljs-number">10</span> <span class="hljs-comment"># 表示 eureka client 发送心跳给 server 端的频率</span><br>    <span class="hljs-attr">lease-expiration-duration-in-seconds:</span> <span class="hljs-number">20</span> <span class="hljs-comment">#表示 eureka server 至上一次收到 client 的心跳之后，等待下一次心跳的超时时间，在这个时间内若没收到下一次心跳，则将移除该实例</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="2-新建eureka-service-a服务端并修改配置文件"><a href="#2-新建eureka-service-a服务端并修改配置文件" class="headerlink" title="2.新建eureka-service-a服务端并修改配置文件"></a>2.新建eureka-service-a服务端并修改配置文件</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment">#集群配置</span><br><span class="hljs-attr">server:</span><br>  <span class="hljs-attr">port:</span> <span class="hljs-number">8762</span><br><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">application:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">erueka-serve</span><br>  <span class="hljs-comment">#  服务端配置</span><br><span class="hljs-attr">eureka:</span><br>  <span class="hljs-attr">client:</span><br>    <span class="hljs-comment">#eureka 服务端和客户端的交互地址,集群用,隔开</span><br>    <span class="hljs-attr">service-url:</span><br>      <span class="hljs-attr">defaultzone:</span> <span class="hljs-string">http://localhost:8761/eureka,http://localhost:8763/eureka</span> <span class="hljs-comment">#eureka服务端和客户端的交互地址 这里将8762注册到61和63中</span><br>    <span class="hljs-attr">register-with-eureka:</span> <span class="hljs-literal">true</span>   <span class="hljs-comment">#注册自己 也可以不注册</span><br>    <span class="hljs-attr">fetch-registry:</span> <span class="hljs-literal">true</span> <span class="hljs-comment">#是否拉取服务列表到本地</span><br>    <span class="hljs-attr">registry-fetch-interval-seconds:</span> <span class="hljs-number">10</span> <span class="hljs-comment"># 表示 eureka-client 间隔多久去拉取服务注册信息  缓解脏读问题 但是性能就下降了</span><br><br>  <span class="hljs-comment">#  实例的配置</span><br>  <span class="hljs-attr">instance:</span><br>    <span class="hljs-attr">hostname:</span> <span class="hljs-string">localhsot</span>  <span class="hljs-comment">#本机的名称</span><br>    <span class="hljs-attr">instance-id:</span> <span class="hljs-string">$&#123;eureka.instance.hostname&#125;:$&#123;spring.application.name&#125;:$&#123;server.port&#125;</span> <span class="hljs-comment">#主机名称:应用名称:端口号  使用stl表达式取值</span><br>    <span class="hljs-attr">prefer-ip-address:</span> <span class="hljs-literal">true</span> <span class="hljs-comment"># 服务列表以 ip 的形式展示具体的服务信息</span><br>    <span class="hljs-attr">lease-renewal-interval-in-seconds:</span> <span class="hljs-number">10</span> <span class="hljs-comment"># 表示 eureka client 发送心跳给 server 端的频率</span><br>    <span class="hljs-attr">lease-expiration-duration-in-seconds:</span> <span class="hljs-number">20</span> <span class="hljs-comment">#表示 eureka server 至上一次收到 client 的心跳之后，等待下一次心跳的超时时间，在这个时间内若没收到下一次心跳，则将移除该实例</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="3-新建eureka-service-b服务端修改配置文件"><a href="#3-新建eureka-service-b服务端修改配置文件" class="headerlink" title="3.新建eureka-service-b服务端修改配置文件"></a>3.新建eureka-service-b服务端修改配置文件</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">server:</span><br>  <span class="hljs-attr">port:</span> <span class="hljs-number">8763</span><br><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">application:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">erueka-serve</span><br>  <span class="hljs-comment">#  服务端配置</span><br><span class="hljs-attr">eureka:</span><br>  <span class="hljs-attr">client:</span><br>    <span class="hljs-comment">#eureka 服务端和客户端的交互地址,集群用,隔开</span><br>    <span class="hljs-attr">service-url:</span><br>      <span class="hljs-attr">defaultzone:</span> <span class="hljs-string">http://localhost:8761/eureka,http://localhost:8762/eureka</span> <span class="hljs-comment">#eureka服务端和客户端的交互地址 这里将8763注册到61和62中</span><br>    <span class="hljs-attr">register-with-eureka:</span> <span class="hljs-literal">true</span>   <span class="hljs-comment">#注册自己 也可以不注册</span><br>    <span class="hljs-attr">fetch-registry:</span> <span class="hljs-literal">true</span> <span class="hljs-comment">#是否拉取服务列表到本地</span><br>    <span class="hljs-attr">registry-fetch-interval-seconds:</span> <span class="hljs-number">10</span> <span class="hljs-comment"># 表示 eureka-client 间隔多久去拉取服务注册信息  缓解脏读问题 但是性能就下降了</span><br><br>  <span class="hljs-comment">#  实例的配置</span><br>  <span class="hljs-attr">instance:</span><br>    <span class="hljs-attr">lease-expiration-duration-in-seconds:</span> <span class="hljs-number">20</span> <span class="hljs-comment">#表示 eureka server 至上一次收到 client 的心跳之后，等待下一次心跳的超时时间，在这个时间内若没收到下一次心跳，则将移除该实例</span><br><br></code></pre></td></tr></table></figure>
+
+<h4 id="4-构建测试"><a href="#4-构建测试" class="headerlink" title="4.构建测试"></a>4.构建测试</h4><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230115141756698.png" srcset="/img/loading.gif" lazyload alt="image-20230115141756698"></p>
+<h4 id="5-修改配置"><a href="#5-修改配置" class="headerlink" title="5.修改配置"></a>5.修改配置</h4><blockquote>
+<p>发现并没有出现集群信息，只是同一个服务 server 启动了多台 没有数据交互 不是真正意</p>
+<p>义上的集群</p>
+<p><a target="_blank" rel="noopener" href="http://localhost:8761/eureka/,http://localhost:8762/eureka/">http://localhost:8761/eureka/,http://localhost:8762/eureka/</a></p>
+<p>这样写，eureka 认为只有一个机器，就是 localhost</p>
+<p>所以这里面不能写成一样</p>
+<p>修改 hosts 文件： </p>
+<p>C:\Windows\System32\drivers\etc</p>
+<p>如果你修改了 hosts 文件 发现没有生效 记得在 cmd 里面刷新一下</p>
+</blockquote>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230115143542908.png" srcset="/img/loading.gif" lazyload alt="image-20230115143542908"></p>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230115143628998.png" srcset="/img/loading.gif" lazyload alt="image-20230115143628998"></p>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230115143646469.png" srcset="/img/loading.gif" lazyload alt="image-20230115143646469"></p>
+<blockquote>
+<p>相当于只修改了defaultzone: <a target="_blank" rel="noopener" href="http://localhost:8761/eureka/,http://localhost:8762/eureka/">http://localhost:8761/eureka/,http://localhost:8762/eureka/</a> 里面的local</p>
+<p>改为 per1,per2 ,per3 改为对应的即可</p>
+</blockquote>
+<h4 id="6-最终优化配置文件-每个配置都需要修改"><a href="#6-最终优化配置文件-每个配置都需要修改" class="headerlink" title="6.最终优化配置文件(每个配置都需要修改)"></a>6.最终优化配置文件(每个配置都需要修改)</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">server:</span><br><span class="hljs-attr">port:</span> <span class="hljs-number">8761</span> <span class="hljs-comment">#不需要修改 defaultZone 了,修改端口起三个服务</span><br><span class="hljs-attr">spring:</span><br><span class="hljs-attr">application:</span><br><span class="hljs-attr">name:</span> <span class="hljs-string">eureka-server</span> <span class="hljs-comment">#服务名称</span><br><span class="hljs-attr">eureka:</span><br><span class="hljs-attr">client:</span><br><span class="hljs-attr">fetch-registry:</span> <span class="hljs-literal">true</span> <span class="hljs-comment">#是否拉取服务列表</span><br><span class="hljs-attr">register-with-eureka:</span> <span class="hljs-literal">true</span> <span class="hljs-comment">#是否注册自己（集群需要注册自己和拉取服务）</span><br><span class="hljs-attr">service-url:</span><br><span class="hljs-attr">defaultZone:</span> <span class="hljs-string">http://peer1:8761/eureka/,http://peer2:8762/eureka/,http://peer3:8763/eureka/</span><br><span class="hljs-attr">server:</span><br><span class="hljs-attr">eviction-interval-timer-in-ms:</span> <span class="hljs-number">90000</span> <span class="hljs-comment">#清除无效节点的评率(毫秒)</span><br><span class="hljs-attr">instance:</span><br><span class="hljs-attr">lease-expiration-duration-in-seconds:</span> <span class="hljs-number">90</span> <span class="hljs-comment">#server 在等待下一个客户端发送的心跳时间，若在指定时间</span><br><span class="hljs-string">不能收到客户端心跳，则剔除此实例并且禁止流量</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="7-集群的使用"><a href="#7-集群的使用" class="headerlink" title="7.集群的使用"></a>7.<strong>集群的使用</strong></h4><h5 id="1-修改eureka-client-a配置文件"><a href="#1-修改eureka-client-a配置文件" class="headerlink" title="1.修改eureka-client-a配置文件"></a>1.修改<strong>eureka-client-a</strong>配置文件</h5><blockquote>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230115144629227.png" srcset="/img/loading.gif" lazyload alt="image-20230115144629227"></p>
+<p>相当于这个客户端注册到对应的三个 服务端</p>
+</blockquote>
+<h5 id="2-连接测试"><a href="#2-连接测试" class="headerlink" title="2.连接测试"></a>2.连接测试</h5><blockquote>
+<p>无论哪一台成功 都会成功进行交互</p>
+</blockquote>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230115144859262.png" srcset="/img/loading.gif" lazyload alt="image-20230115144859262"></p>
+<h5 id="3-宕机测试"><a href="#3-宕机测试" class="headerlink" title="3.宕机测试"></a>3.宕机测试</h5><blockquote>
+<p>Eureka server 的集群里面，没有主机和从机的概念，节点都是对等的，只有集群里面有一</p>
+<p>个集群存活，就能保证服务的可用性。 （主机 （写） 从 （读））</p>
+<p>只要有一台存活，服务就能注册和调用</p>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230115144933756.png" srcset="/img/loading.gif" lazyload alt="image-20230115144933756"></p>
+</blockquote>
+<h4 id="8-分布式数据一致性协议"><a href="#8-分布式数据一致性协议" class="headerlink" title="8.分布式数据一致性协议"></a>8.分布式数据一致性协议</h4><blockquote>
+<p>zk 是 Paxos</p>
+<p>eureka 没有分布式数据一致性的机制 节点都是相同的</p>
+<p>nacos raft</p>
+<p>在有主从模式的集群中 一般都要遵循这样的协议 才可以稳定对外提供服务</p>
+<p>Zookeeper Paxos</p>
+<p>Nacos raft</p>
+<p><a target="_blank" rel="noopener" href="http://thesecretlivesofdata.com/raft/">http://thesecretlivesofdata.com/raft/</a></p>
+</blockquote>
+<h3 id="6-Eureka概念的理解"><a href="#6-Eureka概念的理解" class="headerlink" title="6.Eureka概念的理解"></a>6.<strong>Eureka</strong>概念的理解</h3><h4 id="1-服务的注册"><a href="#1-服务的注册" class="headerlink" title="1.服务的注册"></a>1.服务的注册</h4><blockquote>
+<p>当项目启动时（eureka 的客户端），就会向 eureka-server 发送自己的<strong>元数据（原始数据）</strong>（运行的 ip，端口 port，健康的状态监控等，因为使用的是 http&#x2F;ResuFul 请求风格），eureka-server 会在自己内部保留这些元数据(内存中)。（有一个服务列表restful 风格，以 http 动词的请求方式，完成对 url 资源的操作）</p>
+</blockquote>
+<h4 id="2-服务的续约"><a href="#2-服务的续约" class="headerlink" title="2.服务的续约"></a>2.<strong>服务的续约</strong></h4><blockquote>
+<p>项目启动成功了，除了向 eureka-server 注册自己成功，还会<strong>定时</strong>的向 eureka-server 汇报自己，心跳，表示自己还活着。（修改一个时间）</p>
+</blockquote>
+<h4 id="3-服务的下线（主动下线）"><a href="#3-服务的下线（主动下线）" class="headerlink" title="3.服务的下线（主动下线）"></a>3.<strong>服务的下线（主动下线）</strong></h4><blockquote>
+<p>当项目关闭时，会给 eureka-server 报告，说明自己要下机了。</p>
+</blockquote>
+<h4 id="4-服务的剔除（被动下线，主动剔除）"><a href="#4-服务的剔除（被动下线，主动剔除）" class="headerlink" title="4.服务的剔除（被动下线，主动剔除）"></a>4.<strong>服务的剔除（被动下线，主动剔除）</strong></h4><blockquote>
+<p>当项目超过了指定时间没有向 eureka-server 汇报自己，那么 eureka-server 就会认为此节点死掉了，会把它剔除掉，也不会放流量和请求到此节点了。</p>
+</blockquote>
+<h3 id="7-Eureka-源码分析-入门"><a href="#7-Eureka-源码分析-入门" class="headerlink" title="7.Eureka 源码分析(入门)"></a>7.<strong>Eureka</strong> <strong>源码分析(入门)</strong></h3><h4 id="1-Eureka-运作原理的特点"><a href="#1-Eureka-运作原理的特点" class="headerlink" title="1.Eureka 运作原理的特点"></a>1.<strong>Eureka</strong> <strong>运作原理的特点</strong></h4><blockquote>
+<p><strong>Eureka-server</strong> <strong>对外提供的是</strong> <strong>restful</strong> <strong>风格的服务</strong></p>
+<p>以 http 动词的形式对 url 资源进行操作 get post put delete</p>
+<p><strong>http</strong> <strong>服务</strong> <strong>+</strong> <strong>特定的请求方式</strong> <strong>+</strong> <strong>特定的</strong> <strong>url</strong> <strong>地址</strong></p>
+<p>只要利用这些 restful 我们就能对项目实现注册和发现</p>
+<p>只不过，eureka 已经帮我们使用 java 语言写了 client，让我们的项目只要依赖 client 就能实现注册和发现！</p>
+<p>只要你会发起 Http 请求，那你就<strong>有可能</strong>自己实现服务的注册和发现。不管你是什么语言！</p>
+</blockquote>
+<h4 id="2-服务注册的源码分析【重点】"><a href="#2-服务注册的源码分析【重点】" class="headerlink" title="2.服务注册的源码分析【重点】"></a>2.<strong>服务注册的源码分析【重点】</strong></h4><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230115165440590.png" srcset="/img/loading.gif" lazyload alt="image-20230115165440590"></p>
+<h2 id="3-restTemplates"><a href="#3-restTemplates" class="headerlink" title="3.restTemplates"></a>3.restTemplates</h2><h3 id="1-基本使用"><a href="#1-基本使用" class="headerlink" title="1.基本使用"></a>1.基本使用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">void</span> <span class="hljs-title function_">contextLoads</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-comment">//在java代码中请求一个接口 请求一个页面</span><br>        <span class="hljs-type">RestTemplate</span> <span class="hljs-variable">restTemplate</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RestTemplate</span>();<br>        <span class="hljs-comment">//请求百度</span><br>        <span class="hljs-type">String</span> <span class="hljs-variable">url</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;https://www.baidu.com&quot;</span>;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> restTemplate.getForObject(url, String.class);<br>        <span class="hljs-comment">//百度会返回一个页面</span><br>        System.out.println(result);<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-访问GET接口"><a href="#2-访问GET接口" class="headerlink" title="2.访问GET接口"></a>2.访问GET接口</h3><blockquote>
+<p>Controller</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/*</span><br><span class="hljs-comment"> * Get请求</span><br><span class="hljs-comment"> * @author RenBoQing</span><br><span class="hljs-comment"> * @date 2023/1/15 0015 18:50</span><br><span class="hljs-comment"> * @param name</span><br><span class="hljs-comment"> * @return java.lang.String</span><br><span class="hljs-comment"> */</span><br><span class="hljs-comment">/*</span><br><span class="hljs-comment"> get请求传递参数 使用name=?参数</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@GetMapping(&quot;/testGet&quot;)</span><br><span class="hljs-keyword">public</span> String <span class="hljs-title function_">get</span><span class="hljs-params">(String name)</span> &#123;<br>    System.out.println(name);<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;ok&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>测试类</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/*</span><br><span class="hljs-comment"> *使用Java代码访问get接口</span><br><span class="hljs-comment"> * @author RenBoQing</span><br><span class="hljs-comment"> * @date 2023/1/15 0015 18:47</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">void</span> <span class="hljs-title function_">testGet</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-comment">//构建对象</span><br>    <span class="hljs-type">RestTemplate</span> <span class="hljs-variable">restTemplate</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RestTemplate</span>();<br>    <span class="hljs-comment">//定义路径</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">url</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;http://127.0.0.1:8080/testGet?name=lishi&quot;</span>;<br>    <span class="hljs-comment">//getForObject 只拿到响应的结果</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> restTemplate.getForObject(url, String.class);<br>    <span class="hljs-comment">//但是getForEntity会拿到请求的所有东西 请求头参数.响应状态码 报文</span><br>    ResponseEntity&lt;String&gt; templateForEntity = restTemplate.getForEntity(url, String.class);<br>    System.out.println(result);<br>    System.out.println(templateForEntity);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-访问Post接口"><a href="#3-访问Post接口" class="headerlink" title="3.访问Post接口"></a>3.访问Post接口</h3><blockquote>
+<p>Post的请求参数有两种 一种是application&#x2F;json 使用  @RequestBody加上对应的参数即可<br>第二种是表单参数 直接使用对应的对象即可</p>
+</blockquote>
+<h4 id="1-类型一-使用json传递参数"><a href="#1-类型一-使用json传递参数" class="headerlink" title="1.类型一-使用json传递参数"></a>1.类型一-使用json传递参数</h4><blockquote>
+<p>Controller</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/*</span><br><span class="hljs-comment">    *第一种 使用json的参数  接受json的核心是在请求头里面使用</span><br><span class="hljs-comment">    * @author RenBoQing</span><br><span class="hljs-comment">    * @date 2023/1/15 0015 18:56</span><br><span class="hljs-comment">    * @param user</span><br><span class="hljs-comment">    * @return java.lang.String</span><br><span class="hljs-comment">    */</span><br>   <span class="hljs-meta">@PostMapping(&quot;/testPost1&quot;)</span><br>   <span class="hljs-keyword">public</span> String <span class="hljs-title function_">post1</span><span class="hljs-params">(<span class="hljs-meta">@RequestBody</span> User user)</span> &#123;<br>       System.out.println(user);<br>       <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;ok&quot;</span>;<br>   &#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>测试类</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/*</span><br><span class="hljs-comment"> *使用Java代码访问Post接口的json参数</span><br><span class="hljs-comment"> * @author RenBoQing</span><br><span class="hljs-comment"> * @date 2023/1/15 0015 19:25</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">void</span> <span class="hljs-title function_">testPost1</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-comment">//构建对象</span><br>    <span class="hljs-type">RestTemplate</span> <span class="hljs-variable">restTemplate</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RestTemplate</span>();<br>    <span class="hljs-comment">//定义路径</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">url</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;http://127.0.0.1:8080/testPost1&quot;</span>;<br>    <span class="hljs-comment">//构建对象 使用json传参</span><br>    <span class="hljs-type">User</span> <span class="hljs-variable">user</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">User</span>(<span class="hljs-string">&quot;RenBoQing&quot;</span>, <span class="hljs-number">23</span>, <span class="hljs-number">221.01</span>);<br>    <span class="hljs-comment">// 发送请求  三个参数 第一个是请求的地址 第二个是参数 ，第三个是你想要返回的值的类型</span><br>    <span class="hljs-comment">//发送post而且是json参数因为web里面默认使用jackson他会把你的对象转成json字符串</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> restTemplate.postForObject(url, user, String.class);<br>    System.out.println(result);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="2-类型二-使用表单传递参数"><a href="#2-类型二-使用表单传递参数" class="headerlink" title="2.类型二-使用表单传递参数"></a>2.类型二-使用表单传递参数</h4><blockquote>
+<p>Controller</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/*</span><br><span class="hljs-comment">     *Post请求 第二种表单参数  form action</span><br><span class="hljs-comment">     * 表单接受对象 header content-type = application/x-www-form-urlencoded</span><br><span class="hljs-comment">     * @author RenBoQing</span><br><span class="hljs-comment">     * @date 2023/1/15 0015 18:52</span><br><span class="hljs-comment">     * @param name</span><br><span class="hljs-comment">     * @return java.lang.String</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@PostMapping(&quot;/testPost2&quot;)</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">post</span><span class="hljs-params">(User user)</span> &#123;<br>        System.out.println(user);<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;ok&quot;</span>;<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>测试类</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java">    <span class="hljs-comment">/*</span><br><span class="hljs-comment">     *用Java代码访问Post接口的表单参数</span><br><span class="hljs-comment">     * @author RenBoQing</span><br><span class="hljs-comment">     * @date 2023/1/15 0015 19:30</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-keyword">void</span> <span class="hljs-title function_">testPost2</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-comment">//构建对象</span><br>        <span class="hljs-type">RestTemplate</span> <span class="hljs-variable">restTemplate</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RestTemplate</span>();<br>        <span class="hljs-comment">//定义路径</span><br>        <span class="hljs-type">String</span> <span class="hljs-variable">url</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;http://127.0.0.1:8080/testPost2&quot;</span>;<br>        <span class="hljs-comment">// 使用工具类 构建表单参数</span><br>        LinkedMultiValueMap&lt;String, Object&gt; valueMap = <span class="hljs-keyword">new</span> <span class="hljs-title class_">LinkedMultiValueMap</span>&lt;&gt;();<br>        valueMap.add(<span class="hljs-string">&quot;name&quot;</span>, <span class="hljs-string">&quot;RenBoQing222&quot;</span>);<br>        valueMap.add(<span class="hljs-string">&quot;age&quot;</span>, <span class="hljs-number">50</span>);<br>        valueMap.add(<span class="hljs-string">&quot;prices&quot;</span>, <span class="hljs-number">80000</span>);<br>        <span class="hljs-type">String</span> <span class="hljs-variable">post</span> <span class="hljs-operator">=</span> restTemplate.postForObject(url, valueMap, String.class);<br>        System.out.println(post);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Java%E6%88%90%E9%95%BF%E4%B9%8B%E8%B7%AF/" class="category-chain-item">Java成长之路</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Java%E6%88%90%E9%95%BF%E4%B9%8B%E8%B7%AF/SpringCloud/" class="category-chain-item">SpringCloud</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/springcloud/">#springcloud</a>
+      
+        <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1%EF%BC%8C%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83/">#微服务，注册中心</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Day01-01-14-SpringCloud技术-Eureka</div>
+      <div>http://example.com/2023/01/14/Day01-01-14-SpringCloud技术-Eureka/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>RenBoQing</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年1月14日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/01/15/Day07-01-25-SpringCloud%E6%8A%80%E6%9C%AF-Alibaba/" title="Day07-01-25-SpringCloud技术-Alibaba">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Day07-01-25-SpringCloud技术-Alibaba</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/01/10/Day06-1-10-Java-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%9F%BA%E7%A1%80/" title="Day06-1-10-Java-基础学习-面向对象基础">
+                        <span class="hidden-mobile">Day06-1-10-Java-基础学习-面向对象基础</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>人间至味是清欢</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>技术小窝</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

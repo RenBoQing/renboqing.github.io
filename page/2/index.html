@@ -1,0 +1,672 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="RenBoQing">
+  <meta name="keywords" content="">
+  
+    <meta property="og:type" content="website">
+<meta property="og:title" content="人间至味是清欢的技术小窝">
+<meta property="og:url" content="http://example.com/page/2/index.html">
+<meta property="og:site_name" content="人间至味是清欢的技术小窝">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="RenBoQing">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>人间至味是清欢的技术小窝</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>人间至味是清欢的技术小窝</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>文章</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于我</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="欲望以提升热忱，毅力以磨平高山"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          style="margin-top: 0">
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2023/01/07/Day03-1-7-Java-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0-%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5/" target="_self">
+          <img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230107155341538.png" srcset="/img/loading.gif" lazyload alt="Day03-1-7-Java-基础学习-流程控制语句">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/01/07/Day03-1-7-Java-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0-%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5/" target="_self">
+          Day03-1-7-Java-基础学习-流程控制语句
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt " href="/2023/01/07/Day03-1-7-Java-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0-%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5/" target="_self">
+        <div>
+          Day03-1-7-Java-基础学习-流程控制语句1.顺序结构 顺序结构语句是Java程序默认的执行流程，按照代码的先后顺序，从上到下依次执行   2.分支结构1.if语句结构1.if结构第一种格式 123456789101112131415161718public class IfDemo &#123;	public static void main(String[] args) &#123;
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-01-07 10:00" pubdate>
+              2023-01-07
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Java%E6%88%90%E9%95%BF%E4%B9%8B%E8%B7%AF/" class="category-chain-item">Java成长之路</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Java%E6%88%90%E9%95%BF%E4%B9%8B%E8%B7%AF/Java%E5%9F%BA%E7%A1%80/" class="category-chain-item">Java基础</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Java%E5%9F%BA%E7%A1%80/">#Java基础</a>
+            
+              <a href="/tags/%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5/">#流程控制语句</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2023/01/03/Day02-1-4-Java-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0-%E8%BF%90%E7%AE%97%E7%AC%A6/" target="_self">
+          <img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230104162530481.png" srcset="/img/loading.gif" lazyload alt="Day02-1-4-Java-基础学习-运算符">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/01/03/Day02-1-4-Java-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0-%E8%BF%90%E7%AE%97%E7%AC%A6/" target="_self">
+          Day02-1-4-Java-基础学习-运算符
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt " href="/2023/01/03/Day02-1-4-Java-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0-%E8%BF%90%E7%AE%97%E7%AC%A6/" target="_self">
+        <div>
+          Day02-1-4-Java-基础学习-运算符1.运算符和表达式1.基本概念 运算符：对字面量或者变量进行操作的符号。 表达式：用运算符把字面量或者变量连接起来，符合java语法的式子就可以称为表达式。 ​       不同运算符连接的表达式体现的是不同类型的表达式。   2.算术运算符1.基本概念 1+ - * :跟小学数学中一模一样没有任何区别  12345678/：除法/*1.整数相除结果只
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-01-03 10:00" pubdate>
+              2023-01-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Java%E6%88%90%E9%95%BF%E4%B9%8B%E8%B7%AF/" class="category-chain-item">Java成长之路</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Java%E6%88%90%E9%95%BF%E4%B9%8B%E8%B7%AF/Java%E5%9F%BA%E7%A1%80/" class="category-chain-item">Java基础</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Java%E5%9F%BA%E7%A1%80/">#Java基础</a>
+            
+              <a href="/tags/%E8%BF%90%E7%AE%97%E7%AC%A6/">#运算符</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2023/01/03/Day01-1-3-%E5%89%8D%E7%AB%AF-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0-HTML/" target="_self">
+          <img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20221227152450218.png" srcset="/img/loading.gif" lazyload alt="Day01-1-3-前端-基础学习-HTML">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/01/03/Day01-1-3-%E5%89%8D%E7%AB%AF-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0-HTML/" target="_self">
+          Day01-1-3-前端-基础学习-HTML
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt " href="/2023/01/03/Day01-1-3-%E5%89%8D%E7%AB%AF-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0-HTML/" target="_self">
+        <div>
+          Day01-1-3-前端-基础学习-HTML1.Web基础入门1.Web标准 2.Web标准构成 3.Web标准的记忆方法 4.小结 2.HTML-基础标签011.基本概念12HTML的全称为超文本标记语言，是一种标记语言。它包括一系列标签．通过这些标签可以将网络上的文档格式统一，使分散的Internet资源连接为一个逻辑整体。HTML文本是由HTML命令组成的描述性文本，HTML命令可以说明文字
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-01-03 09:00" pubdate>
+              2023-01-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/" class="category-chain-item">前端学习</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%89%8D%E7%AB%AF/">#前端</a>
+            
+              <a href="/tags/HTML%E5%9F%BA%E7%A1%80/">#HTML基础</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2023/01/02/Day01-1-3-Java-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" target="_self">
+          <img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230103163340845.png" srcset="/img/loading.gif" lazyload alt="Day01-1-3-Java-基础学习-数据类型">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2023/01/02/Day01-1-3-Java-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" target="_self">
+          Day01-1-3-Java-基础学习-数据类型
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt " href="/2023/01/02/Day01-1-3-Java-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" target="_self">
+        <div>
+          Day01-1-3-Java-基础学习-数据类型0.前置知识-计算机中的存储1.存储规则 2.进制表现形式 3.进制间的转化1.任意进制转十进制  2.二进制转十进制 3.十进制转其他进制 4.进制转化小结 4.计算机存储规则小结 1.编译和解释型语言 2.跨平台原理 3.JDK和JRE 12345JVM（Java Virtual Machine），Java虚拟机JRE（Java Runtime
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-01-02 09:00" pubdate>
+              2023-01-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Java%E6%88%90%E9%95%BF%E4%B9%8B%E8%B7%AF/" class="category-chain-item">Java成长之路</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Java%E6%88%90%E9%95%BF%E4%B9%8B%E8%B7%AF/Java%E5%9F%BA%E7%A1%80/" class="category-chain-item">Java基础</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Java%E5%9F%BA%E7%A1%80/">#Java基础</a>
+            
+              <a href="/tags/JDK%EF%BC%8C%E5%8F%98%E9%87%8F%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">#JDK，变量，数据类型</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    </span>
+  </nav>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>人间至味是清欢</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>技术小窝</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

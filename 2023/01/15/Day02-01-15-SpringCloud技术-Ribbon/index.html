@@ -1,0 +1,807 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="RenBoQing">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Day02-01-15-SpringCloud技术-Ribbon1.Ribbon概述 1.Spring Cloud Ribbon 是一个基于 HTTP 和 TCP 的客户端负载均衡工具，它基于 NetflixRibbon 实现。通过 Spring Cloud 的封装，可以让我们轻松地将面向服务的 REST 模版请求自动转换成客户端负载均衡的服务调用。 轮询 hash 权重 …  2.简单的说 Ri">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Day02-01-15-SpringCloud技术-Ribbon">
+<meta property="og:url" content="http://example.com/2023/01/15/Day02-01-15-SpringCloud%E6%8A%80%E6%9C%AF-Ribbon/index.html">
+<meta property="og:site_name" content="人间至味是清欢的技术小窝">
+<meta property="og:description" content="Day02-01-15-SpringCloud技术-Ribbon1.Ribbon概述 1.Spring Cloud Ribbon 是一个基于 HTTP 和 TCP 的客户端负载均衡工具，它基于 NetflixRibbon 实现。通过 Spring Cloud 的封装，可以让我们轻松地将面向服务的 REST 模版请求自动转换成客户端负载均衡的服务调用。 轮询 hash 权重 …  2.简单的说 Ri">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230116190600533.png">
+<meta property="article:published_time" content="2023-01-15T03:00:00.000Z">
+<meta property="article:modified_time" content="2023-01-26T15:42:38.890Z">
+<meta property="article:author" content="RenBoQing">
+<meta property="article:tag" content="springcloud">
+<meta property="article:tag" content="微服务，负载均衡">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230116190600533.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Day02-01-15-SpringCloud技术-Ribbon - 人间至味是清欢的技术小窝</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>人间至味是清欢的技术小窝</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>文章</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于我</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Day02-01-15-SpringCloud技术-Ribbon"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-01-15 11:00" pubdate>
+          2023年1月15日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          78 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Day02-01-15-SpringCloud技术-Ribbon</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Day02-01-15-SpringCloud技术-Ribbon"><a href="#Day02-01-15-SpringCloud技术-Ribbon" class="headerlink" title="Day02-01-15-SpringCloud技术-Ribbon"></a>Day02-01-15-SpringCloud技术-Ribbon</h1><h2 id="1-Ribbon概述"><a href="#1-Ribbon概述" class="headerlink" title="1.Ribbon概述"></a>1.<strong>Ribbon概述</strong></h2><blockquote>
+<p>1.Spring Cloud Ribbon 是一个基于 HTTP 和 TCP 的<strong>客户端负载均衡工具</strong>，它基于 <strong>Netflix</strong>Ribbon 实现。通过 Spring Cloud 的封装，可以让我们轻松地将面向服务的 REST 模版请求自动转换成客户端负载均衡的服务调用。 轮询 hash 权重 … </p>
+<p>2.简单的说 Ribbon 就是 netfix 公司的一个开源项目，主要功能是提供<strong>客户端负载均衡算法和</strong>服务调用**。Ribbon 客户端组件提供了一套完善的配置项，比如连接超时，重试等。</p>
+<p>3.在 Spring Cloud 构建的微服务系统中， Ribbon 作为服务<strong>消费者</strong>的负载均衡器，有两种使用方式，一种是和 <strong>RestTemplate</strong> 相结合，另一种是和 OpenFeign 相结合。OpenFeign 已经默认集成了 Ribbon,关于 OpenFeign 的内容将会在下一章进行详细讲解。Ribbon 有很多子模块，但很多模块没有用于生产环境!</p>
+</blockquote>
+<h2 id="2-负载均衡"><a href="#2-负载均衡" class="headerlink" title="2.负载均衡"></a>2.负载均衡</h2><blockquote>
+<p>负载均衡，英文名称为 Load Balance（LB）http:&#x2F;&#x2F; lb:&#x2F;&#x2F;（负载均衡协议） ，其含义就是指将负载（工作任务）进行平衡、分摊到多个操作单元上进行运行，例如 Web 服务器、企业核心应用服务器和其它主要任务服务器等，从而协同完成工作任务。负载均衡构建在原有网络结构之上，它提供了一种透明且廉价有效的方法扩展服务器和网络设备的带宽、加强网络数据处理能力、增加吞吐量、提高网络的可用性和灵活性.</p>
+</blockquote>
+<h3 id="1-服务器的负载均衡"><a href="#1-服务器的负载均衡" class="headerlink" title="1.服务器的负载均衡"></a>1.服务器的负载均衡</h3><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230115210510067.png" srcset="/img/loading.gif" lazyload alt="image-20230115210510067"></p>
+<h2 id="3-Ribbon快速入门"><a href="#3-Ribbon快速入门" class="headerlink" title="3.Ribbon快速入门"></a>3.Ribbon快速入门</h2><h3 id="1-ribbon调用架构图"><a href="#1-ribbon调用架构图" class="headerlink" title="1.ribbon调用架构图"></a>1.ribbon调用架构图</h3><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230115211736677.png" srcset="/img/loading.gif" lazyload alt="image-20230115211736677"></p>
+<h3 id="2-项目搭建"><a href="#2-项目搭建" class="headerlink" title="2.项目搭建"></a>2.项目搭建</h3><blockquote>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230115212007659.png" srcset="/img/loading.gif" lazyload alt="image-20230115212007659"></p>
+</blockquote>
+<h4 id="1-创建eureka-serve"><a href="#1-创建eureka-serve" class="headerlink" title="1.创建eureka-serve"></a>1.创建eureka-serve</h4><h5 id="1-创建项目"><a href="#1-创建项目" class="headerlink" title="1.创建项目"></a>1.创建项目</h5><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230115220931468.png" srcset="/img/loading.gif" lazyload alt="image-20230115220931468"></p>
+<h5 id="2-修改pom-xml"><a href="#2-修改pom-xml" class="headerlink" title="2.修改pom.xml"></a>2.修改pom.xml</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs xml-dtd">&lt;parent&gt;<br>    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;<br>    &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;<br>    &lt;version&gt;2.3.12.RELEASE&lt;/version&gt;<br>    &lt;relativePath/&gt; <br>&lt;/parent&gt;<br> &lt;properties&gt;<br>    &lt;java.version&gt;1.8&lt;/java.version&gt;<br>    &lt;spring-cloud.version&gt;Hoxton.SR12&lt;/spring-cloud.version&gt;<br>&lt;/properties&gt;<br>&lt;dependency&gt;<br>        &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;<br>        &lt;artifactId&gt;spring-cloud-starter-netflix-eureka-client&lt;/artifactId&gt;<br>        &lt;version&gt;2.2.3.RELEASE&lt;/version&gt;<br>    &lt;/dependency&gt;<br></code></pre></td></tr></table></figure>
+
+<h5 id="3-修改配置文件并开启注解"><a href="#3-修改配置文件并开启注解" class="headerlink" title="3.修改配置文件并开启注解"></a>3.修改配置文件并开启注解</h5><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">server:</span><br>  <span class="hljs-attr">port:</span> <span class="hljs-number">8761</span><br><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">application:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">eureka-serve</span><br><span class="hljs-attr">eureka:</span><br>  <span class="hljs-attr">server:</span><br>    <span class="hljs-attr">eviction-interval-timer-in-ms:</span> <span class="hljs-number">1000</span><br>    <span class="hljs-attr">renewal-percent-threshold:</span> <span class="hljs-number">0.85</span><br>    <span class="hljs-attr">enable-self-preservation:</span> <span class="hljs-literal">true</span><br>  <span class="hljs-attr">instance:</span><br>    <span class="hljs-attr">hostname:</span> <span class="hljs-string">localhsot</span><br>    <span class="hljs-attr">instance-id:</span> <span class="hljs-string">$&#123;eureka.instance.hostname&#125;:$&#123;spring.application.name&#125;:$&#123;server.port&#125;</span><br>    <span class="hljs-attr">prefer-ip-address:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">lease-renewal-interval-in-seconds:</span> <span class="hljs-number">10</span><br>    <span class="hljs-attr">lease-expiration-duration-in-seconds:</span> <span class="hljs-number">20</span><br>  <span class="hljs-attr">client:</span><br>    <span class="hljs-attr">service-url:</span><br>      <span class="hljs-attr">defaultzone:</span> <span class="hljs-string">http://localhost:8761/eureka</span><br>    <span class="hljs-attr">register-with-eureka:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">fetch-registry:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">registry-fetch-interval-seconds:</span> <span class="hljs-number">10</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//开启EurekaServer服务</span><br><span class="hljs-meta">@EnableEurekaServer</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="2-创建provider-1"><a href="#2-创建provider-1" class="headerlink" title="2.创建provider-1"></a>2.创建provider-1</h4><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230115212256700.png" srcset="/img/loading.gif" lazyload alt="image-20230115212256700"></p>
+<h5 id="1-修改xml的配置文件"><a href="#1-修改xml的配置文件" class="headerlink" title="1.修改xml的配置文件"></a>1.修改xml的配置文件</h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">parent</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.3.12.RELEASE<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">relativePath</span>/&gt;</span> <br><span class="hljs-tag">&lt;/<span class="hljs-name">parent</span>&gt;</span><br> <span class="hljs-tag">&lt;<span class="hljs-name">properties</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">java.version</span>&gt;</span>1.8<span class="hljs-tag">&lt;/<span class="hljs-name">java.version</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">spring-cloud.version</span>&gt;</span>Hoxton.SR12<span class="hljs-tag">&lt;/<span class="hljs-name">spring-cloud.version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">properties</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-eureka-client<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.2.3.RELEASE<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="2-编写配置文件并开启注解"><a href="#2-编写配置文件并开启注解" class="headerlink" title="2.编写配置文件并开启注解"></a>2.编写配置文件并开启注解</h5><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">server:</span><br>  <span class="hljs-attr">port:</span> <span class="hljs-number">8080</span><br><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">application:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">provider</span><br><span class="hljs-attr">eureka:</span><br>  <span class="hljs-attr">client:</span><br>    <span class="hljs-attr">service-url:</span><br>      <span class="hljs-attr">defaultZone:</span> <span class="hljs-string">http://localhost:8761/eureka</span><br>  <span class="hljs-attr">instance:</span><br>    <span class="hljs-attr">hostname:</span> <span class="hljs-string">localhsot</span><br>    <span class="hljs-attr">instance-id:</span> <span class="hljs-string">$&#123;eureka.instance.hostname&#125;:$&#123;spring.application.name&#125;:$&#123;server.port&#125;</span><br>    <span class="hljs-attr">prefer-ip-address:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">lease-renewal-interval-in-seconds:</span> <span class="hljs-number">10</span><br>    <span class="hljs-attr">lease-expiration-duration-in-seconds:</span> <span class="hljs-number">20</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>@EnableEurekaClient</p>
+</blockquote>
+<h5 id="3-编写接口"><a href="#3-编写接口" class="headerlink" title="3.编写接口"></a>3.编写接口</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RestController</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">TestController</span> &#123;<br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">     *提供者aaa的接口</span><br><span class="hljs-comment">     * @author RenBoQing</span><br><span class="hljs-comment">     * @date 2023/1/15 0015 22:23</span><br><span class="hljs-comment">     * @return java.lang.String</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@GetMapping(&quot;/hello&quot;)</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">hello</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;我是提供者aaa返回的接口&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-创建provider-2"><a href="#3-创建provider-2" class="headerlink" title="3.创建provider-2"></a>3.创建provider-2</h4><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230115223047299.png" srcset="/img/loading.gif" lazyload alt="image-20230115223047299"></p>
+<h5 id="1-修改配置文件"><a href="#1-修改配置文件" class="headerlink" title="1.修改配置文件"></a>1.修改配置文件</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs xml-dtd">&lt;parent&gt;<br>    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;<br>    &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;<br>    &lt;version&gt;2.3.12.RELEASE&lt;/version&gt;<br>    &lt;relativePath/&gt; <br>&lt;/parent&gt;<br> &lt;properties&gt;<br>    &lt;java.version&gt;1.8&lt;/java.version&gt;<br>    &lt;spring-cloud.version&gt;Hoxton.SR12&lt;/spring-cloud.version&gt;<br>&lt;/properties&gt;<br>&lt;dependency&gt;<br>        &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;<br>        &lt;artifactId&gt;spring-cloud-starter-netflix-eureka-client&lt;/artifactId&gt;<br>        &lt;version&gt;2.2.3.RELEASE&lt;/version&gt;<br>    &lt;/dependency&gt;<br></code></pre></td></tr></table></figure>
+
+<h5 id="2-编写配置文件并开始注解"><a href="#2-编写配置文件并开始注解" class="headerlink" title="2.编写配置文件并开始注解"></a>2.编写配置文件并开始注解</h5><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">server:</span><br>  <span class="hljs-attr">port:</span> <span class="hljs-number">8081</span><br><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">application:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">provider</span><br><span class="hljs-attr">eureka:</span><br>  <span class="hljs-attr">client:</span><br>    <span class="hljs-attr">service-url:</span><br>      <span class="hljs-attr">defaultZone:</span> <span class="hljs-string">http://localhost:8761/eureka</span><br>  <span class="hljs-attr">instance:</span><br>    <span class="hljs-attr">hostname:</span> <span class="hljs-string">localhsot</span><br>    <span class="hljs-attr">instance-id:</span> <span class="hljs-string">$&#123;eureka.instance.hostname&#125;:$&#123;spring.application.name&#125;:$&#123;server.port&#125;</span><br>    <span class="hljs-attr">prefer-ip-address:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">lease-renewal-interval-in-seconds:</span> <span class="hljs-number">10</span><br>    <span class="hljs-attr">lease-expiration-duration-in-seconds:</span> <span class="hljs-number">20</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>@EnableEurekaClient</p>
+</blockquote>
+<h5 id="3-编写接口-1"><a href="#3-编写接口-1" class="headerlink" title="3.编写接口"></a>3.编写接口</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RestController</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">TestController</span> &#123;<br>    <span class="hljs-meta">@GetMapping(&quot;/hello&quot;)</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">hello</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;我是提供者BB的接口&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="4-创建consumer-消费者"><a href="#4-创建consumer-消费者" class="headerlink" title="4.创建consumer(消费者)"></a>4.创建consumer(消费者)</h4><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230115230957646.png" srcset="/img/loading.gif" lazyload alt="image-20230115230957646"></p>
+<h5 id="1-修改配置文件-1"><a href="#1-修改配置文件-1" class="headerlink" title="1.修改配置文件"></a>1.修改配置文件</h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--添加ribbon的依赖--&gt;</span><br>       <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>           <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>           <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-ribbon<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>           <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.2.9.RELEASE<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>       <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-comment">&lt;!--boot版本--&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">parent</span>&gt;</span><br>       <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>       <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>       <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.3.12.RELEASE<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>       <span class="hljs-tag">&lt;<span class="hljs-name">relativePath</span>/&gt;</span> <br>   <span class="hljs-tag">&lt;/<span class="hljs-name">parent</span>&gt;</span><br><span class="hljs-comment">&lt;!--cloud版本--&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">properties</span>&gt;</span><br>       <span class="hljs-tag">&lt;<span class="hljs-name">java.version</span>&gt;</span>1.8<span class="hljs-tag">&lt;/<span class="hljs-name">java.version</span>&gt;</span><br>       <span class="hljs-tag">&lt;<span class="hljs-name">spring-cloud.version</span>&gt;</span>Hoxton.SR12<span class="hljs-tag">&lt;/<span class="hljs-name">spring-cloud.version</span>&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">properties</span>&gt;</span><br><span class="hljs-comment">&lt;!--eureka-client版本--&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>           <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>           <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-eureka-client<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>           <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.2.3.RELEASE<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>       <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><br></code></pre></td></tr></table></figure>
+
+<h5 id="2-编写配置文件并开启注解-1"><a href="#2-编写配置文件并开启注解-1" class="headerlink" title="2.编写配置文件并开启注解"></a>2.编写配置文件并开启注解</h5><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">server:</span><br>  <span class="hljs-attr">port:</span> <span class="hljs-number">8082</span><br><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">application:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">consumer</span><br><span class="hljs-attr">eureka:</span><br>  <span class="hljs-attr">client:</span><br>    <span class="hljs-attr">service-url:</span><br>      <span class="hljs-attr">defaultZone:</span> <span class="hljs-string">http://localhost:8761/eureka</span><br>  <span class="hljs-attr">instance:</span><br>    <span class="hljs-attr">hostname:</span> <span class="hljs-string">localhsot</span><br>    <span class="hljs-attr">instance-id:</span> <span class="hljs-string">$&#123;eureka.instance.hostname&#125;:$&#123;spring.application.name&#125;:$&#123;server.port&#125;</span><br>    <span class="hljs-attr">prefer-ip-address:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">lease-renewal-interval-in-seconds:</span> <span class="hljs-number">10</span><br>    <span class="hljs-attr">lease-expiration-duration-in-seconds:</span> <span class="hljs-number">20</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>@EnableEurekaClient</p>
+</blockquote>
+<h5 id="3-编写consumer的启动类-添加RestTemplate"><a href="#3-编写consumer的启动类-添加RestTemplate" class="headerlink" title="3.编写consumer的启动类(添加RestTemplate)"></a>3.编写consumer的启动类(添加RestTemplate)</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/*</span><br><span class="hljs-comment">    *将RestTemplate注入到IOC容器中</span><br><span class="hljs-comment">    * @author RenBoQing</span><br><span class="hljs-comment">    * @date 2023/1/15 0015 23:29</span><br><span class="hljs-comment">    * @return org.springframework.web.client.RestTemplate</span><br><span class="hljs-comment">    */</span><br>   <span class="hljs-meta">@Bean</span><br>   <span class="hljs-meta">@LoadBalanced</span> <span class="hljs-comment">//开启ribbon的功能 的负载均衡的功能</span><br>   <span class="hljs-keyword">public</span> RestTemplate <span class="hljs-title function_">restTemplate</span><span class="hljs-params">()</span> &#123;<br>       <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RestTemplate</span>();<br>   &#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="4-编写接口并测试"><a href="#4-编写接口并测试" class="headerlink" title="4.编写接口并测试"></a>4.编写接口并测试</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RestController</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">TestController</span> &#123;<br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> RestTemplate restTemplate;<br><br>    <span class="hljs-meta">@GetMapping(&quot;/testRibbon&quot;)</span><br>    <span class="hljs-comment">//String serviceName 参数为服务的名称 也就是application.name</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">testRibbon</span><span class="hljs-params">(String serviceName)</span> &#123;<br>        <span class="hljs-comment">//  需要拿到对应的ip和端口号以及地址</span><br>        <span class="hljs-comment">//这里的ribbon会自动解析服务的名称和端口号</span><br>        <span class="hljs-type">String</span> <span class="hljs-variable">forObject</span> <span class="hljs-operator">=</span> restTemplate.getForObject(<span class="hljs-string">&quot;http://&quot;</span> + serviceName + <span class="hljs-string">&quot;/hello&quot;</span>, String.class);<br>        <span class="hljs-keyword">return</span> forObject;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="5-小思考"><a href="#5-小思考" class="headerlink" title="5.小思考"></a>5.小思考</h5><blockquote>
+<p>思考ribbon是怎么将 <a target="_blank" rel="noopener" href="http://provider/hello%E8%B7%AF%E5%BE%84%E8%AF%B7%E6%B1%82%E6%88%90%E5%8A%9F%E7%9A%84http://127.0.0.1:8080/helLo">http://provider/hello路径请求成功的http://127.0.0.1:8080/helLo</a><br>1.拦截这个请求<br>2.截取主机名称<br>3.借助eureka来做服务发现List&lt;&gt;<br>4.通过负载均衡算法拿到一个服务ip port5.reconsutruct</p>
+<p>5 reconstructRL(重构路径)</p>
+<p>6.发起请求</p>
+</blockquote>
+<h5 id="6-注意事项"><a href="#6-注意事项" class="headerlink" title="6.注意事项"></a>6.注意事项</h5><h6 id="1-关于restTemplate问题"><a href="#1-关于restTemplate问题" class="headerlink" title="1.关于restTemplate问题"></a>1.关于restTemplate问题</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java">只要restTemplate加了rabbon的注解 项目中发起请求 都会走ribbon的代理<br>如果需要使用原生的restTemplate 就需要重新<span class="hljs-keyword">new</span>一个对象<br>  <span class="hljs-type">RestTempLate</span> <span class="hljs-variable">myRest</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RestTempLate</span>();<br><span class="hljs-type">String</span> <span class="hljs-variable">forobject</span> <span class="hljs-operator">=</span> myRest.getForobject(<span class="hljs-string">&quot;http://LocaLhost:8888/aaa&quot;</span>， string.class);<br></code></pre></td></tr></table></figure>
+
+<h6 id="2-关于消费者先启动问题"><a href="#2-关于消费者先启动问题" class="headerlink" title="2.关于消费者先启动问题"></a>2.关于消费者先启动问题</h6><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230116000705912.png" srcset="/img/loading.gif" lazyload alt="image-20230116000705912"></p>
+<h2 id="4-Ribbon源码分析"><a href="#4-Ribbon源码分析" class="headerlink" title="4.Ribbon源码分析"></a>4.Ribbon源码分析</h2><h3 id="1-Ribbon的职责"><a href="#1-Ribbon的职责" class="headerlink" title="1.Ribbon的职责"></a>1.Ribbon的职责</h3><blockquote>
+<p><strong>先通过</strong> <strong>“http:&#x2F;&#x2F;“ + serviceId + “&#x2F;info”</strong> <strong>我们思考</strong> <strong>ribbon</strong> <strong>在真正调用之前需要做什么？</strong></p>
+<p><strong>restTemplate.getForObject(“<a target="_blank" rel="noopener" href="http://provider/info%E2%80%9D">http://provider/info”</a>, String.class);</strong></p>
+<p>想要把上面这个请求执行成功，我们需要以下几步</p>
+<ol>
+<li><p>拦截该请求；</p>
+</li>
+<li><p>获取该请求的 URL 地址:<a target="_blank" rel="noopener" href="http://provider/hello">http://provider/hello</a></p>
+</li>
+<li><p>截取 URL 地址中的 provider</p>
+</li>
+<li><p>从服务列表中找到 key 为 provider 的服务实例的集合(服务发现)</p>
+</li>
+<li><p>根据<strong>负载均衡算法</strong>选出一个符合的实例</p>
+</li>
+<li><p>拿到该实例的 host 和 port，重构原来 URL 中的 provider</p>
+</li>
+<li><p>真正的发送 restTemplate.getForObject(“<a href="http://ip:port/hello”，String.class">http://ip:port/hello”，String.class</a>)</p>
+</li>
+</ol>
+</blockquote>
+<h3 id="2-负载均衡测试"><a href="#2-负载均衡测试" class="headerlink" title="2.负载均衡测试"></a>2.负载均衡测试</h3><blockquote>
+<p>Ribbon的重点就是负载均衡</p>
+</blockquote>
+<h4 id="1-创建Controller"><a href="#1-创建Controller" class="headerlink" title="1.创建Controller"></a>1.创建Controller</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Autowired</span><br>   <span class="hljs-keyword">private</span> LoadBalancerClient loadBalancerClient;<br>   <span class="hljs-comment">/*</span><br><span class="hljs-comment">   *测试ribbon的负载均衡</span><br><span class="hljs-comment">   * @author RenBoQing</span><br><span class="hljs-comment">   * @date 2023/1/16 0016 12:42</span><br><span class="hljs-comment">   * @param serviceName</span><br><span class="hljs-comment">   * @return java.lang.String</span><br><span class="hljs-comment">   */</span><br>   <span class="hljs-meta">@GetMapping(&quot;/testRibbonRule&quot;)</span><br>   <span class="hljs-keyword">public</span> String <span class="hljs-title function_">testRibbonRule</span><span class="hljs-params">(String serviceName)</span> &#123;<br>       <span class="hljs-comment">//这里需要调用loadBalancerClient客户端</span><br>       <span class="hljs-type">ServiceInstance</span> <span class="hljs-variable">choose</span> <span class="hljs-operator">=</span> loadBalancerClient.choose(serviceName);<br>       <span class="hljs-keyword">return</span> choose.toString();<br>   &#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-Ribbon-负载均衡的实现和几种算法"><a href="#3-Ribbon-负载均衡的实现和几种算法" class="headerlink" title="3.Ribbon 负载均衡的实现和几种算法"></a>3.<strong>Ribbon</strong> <strong>负载均衡的实现和几种算法</strong></h3><h4 id="1-轮循算法"><a href="#1-轮循算法" class="headerlink" title="1.轮循算法"></a>1.轮循算法</h4><h5 id="1-基本机构图"><a href="#1-基本机构图" class="headerlink" title="1.基本机构图"></a>1.基本机构图</h5><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230116190600533.png" srcset="/img/loading.gif" lazyload alt="image-20230116190600533"></p>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230116192253831.png" srcset="/img/loading.gif" lazyload alt="image-20230116192253831"></p>
+<h4 id="2-RandomRule–随机"><a href="#2-RandomRule–随机" class="headerlink" title="2.RandomRule–随机"></a>2.RandomRule–随机</h4><h4 id="3-权重"><a href="#3-权重" class="headerlink" title="3.权重"></a>3.权重</h4><h4 id="4-iphash"><a href="#4-iphash" class="headerlink" title="4.iphash"></a>4.<strong>iphash</strong></h4><h4 id="5-AvailabilityFilteringRule"><a href="#5-AvailabilityFilteringRule" class="headerlink" title="5**.AvailabilityFilteringRule**"></a>5**.AvailabilityFilteringRule**</h4><blockquote>
+<p>会先过滤掉由于多次访问故障处于断路器跳闸状态的服务，还有并发的连接数量超过阈值的服务，然后对于剩余的服务列表按照轮询的策略进行访问</p>
+</blockquote>
+<h4 id="6-WeightedResponseTimeRule"><a href="#6-WeightedResponseTimeRule" class="headerlink" title="6.WeightedResponseTimeRule"></a>6.WeightedResponseTimeRule</h4><blockquote>
+<p>根据平均响应时间计算所有服务的权重，响应时快服务权重越大被选中的概率越大。刚启动时如果同统计信息不足，则使用轮询的策略，等统计信息足够会切换到自身规则</p>
+</blockquote>
+<h4 id="7-RetryRule"><a href="#7-RetryRule" class="headerlink" title="7.RetryRule"></a>7.<strong>RetryRule</strong></h4><blockquote>
+<p>先按照轮询的策略获取服务，如果获取服务失败则在指定的时间内会进行重试，获取可用的服务</p>
+</blockquote>
+<h4 id="8-BestAvailableRule"><a href="#8-BestAvailableRule" class="headerlink" title="8.BestAvailableRule"></a>8.<strong>BestAvailableRule</strong></h4><blockquote>
+<p>会先过滤掉由于多次访问故障而处于断路器跳闸状态的服务，然后选择一个并发量小的服务</p>
+</blockquote>
+<h4 id="9-ZoneAvoidanceRule"><a href="#9-ZoneAvoidanceRule" class="headerlink" title="9.ZoneAvoidanceRule"></a>9.<strong>ZoneAvoidanceRule</strong></h4><blockquote>
+<p>默认规则复合判断Server 所在区域的性能和Server的可用行选择服务器</p>
+</blockquote>
+<blockquote>
+<p><strong>Ribbon</strong> <strong>默认使用哪一个负载均衡算法：</strong></p>
+<p><strong>ZoneAvoidanceRule</strong> <strong>：区间内亲和轮询的算法！通过一个</strong> <strong>key</strong> <strong>来区分</strong></p>
+</blockquote>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230116193025460.png" srcset="/img/loading.gif" lazyload alt="image-20230116193025460"></p>
+<h3 id="4-修改默认的负载均衡算法"><a href="#4-修改默认的负载均衡算法" class="headerlink" title="4.修改默认的负载均衡算法"></a>4.<strong>修改默认的负载均衡算法</strong></h3><h4 id="1-修改yml文件"><a href="#1-修改yml文件" class="headerlink" title="1.修改yml文件"></a>1.修改yml文件</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">provider:</span> <span class="hljs-comment">#提供者的服务名称,那么访问该服务的时候就会按照自定义的负载均衡算法</span><br>  <span class="hljs-attr">ribbon:</span><br>    <span class="hljs-attr">NFLoadBalancerRuleClassName:</span> <span class="hljs-string">com.netflix.loadbalancer.RandomRule</span> <span class="hljs-comment">#几种算法的全限定类名</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="2-全局配置"><a href="#2-全局配置" class="headerlink" title="2.全局配置"></a>2.全局配置</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//写入Bean的配置文件</span><br> <span class="hljs-comment">/*</span><br><span class="hljs-comment">     *指定全局的配置服务全部使用同一个规则</span><br><span class="hljs-comment">     * @author RenBoQing</span><br><span class="hljs-comment">     * @date 2023/1/16 0016 19:44</span><br><span class="hljs-comment">     * @return com.netflix.loadbalancer.IRule</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> IRule <span class="hljs-title function_">myRule</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-comment">//指定调用所有的服务都用此算法</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RandomRule</span>();<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="5-Ribbon的常用配置"><a href="#5-Ribbon的常用配置" class="headerlink" title="5.Ribbon的常用配置"></a>5.Ribbon的常用配置</h2><blockquote>
+<p><strong>Ribbon</strong> <strong>有很多默认的配置，查看</strong> <strong>DefaultClientConfigImpl</strong></p>
+</blockquote>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230116194932178.png" srcset="/img/loading.gif" lazyload alt="image-20230116194932178"></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">ribbon:</span> <span class="hljs-comment">#全局的设置</span><br><span class="hljs-attr">eager-load:</span><br><span class="hljs-attr">enabled:</span> <span class="hljs-literal">false</span> <span class="hljs-comment"># ribbon 一启动不会主动去拉取服务列表，当实际使用时才去拉取 是否立即加载</span><br><span class="hljs-attr">http:</span><br><span class="hljs-attr">client:</span><br><span class="hljs-attr">enabled:</span> <span class="hljs-literal">false</span> <span class="hljs-comment"># 在 ribbon 最后要发起 Http 的调用调用，我们认为是RestTemplate 完成的，其实最后是 HttpURLConnection 来完成的，这里面设置为 true ，可以把 HttpUrlConnection-&gt;HttpClient</span><br><span class="hljs-attr">okhttp:</span><br><span class="hljs-attr">enabled:</span> <span class="hljs-literal">false</span> <span class="hljs-comment">#HttpUrlConnection 来完成的，这里面设置为 true ，可以</span><br><span class="hljs-string">把</span> <span class="hljs-string">HttpUrlConnection-&gt;OkHttpClient(也是发</span> <span class="hljs-string">http</span> <span class="hljs-string">请求的，它在移动端的开发用的多)</span><br><span class="hljs-attr">provider:</span> <span class="hljs-comment">#提供者的服务名称,那么访问该服务的时候就会按照自定义的负载均衡算法</span><br><span class="hljs-attr">ribbon:</span><br><span class="hljs-attr">NFLoadBalancerRuleClassName:</span> <span class="hljs-string">com.netflix.loadbalancer.RandomRule</span><br><span class="hljs-comment">#修改默认负载均衡算法，几种算法的全限定类名</span><br><span class="hljs-comment"># NFLoadBalancerClassName: #loadBalance 策略</span><br><span class="hljs-comment"># NFLoadBalancerPingClassName: #ping 机制策略</span><br><span class="hljs-comment"># NIWSServerListClassName: #服务列表策略</span><br><span class="hljs-comment"># NIWSServerListFilterClassName: #服务列表过滤策略</span><br><span class="hljs-comment">#ZonePreferenceServerListFilter 默认是优先过滤非一个区的服务列</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230116203153946.png" srcset="/img/loading.gif" lazyload alt="image-20230116203153946"></p>
+<h2 id="6-Ribbon小结"><a href="#6-Ribbon小结" class="headerlink" title="6.Ribbon小结"></a>6.Ribbon小结</h2><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230116204049097.png" srcset="/img/loading.gif" lazyload alt="image-20230116204049097"></p>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230116204311522.png" srcset="/img/loading.gif" lazyload alt="image-20230116204311522"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Java%E6%88%90%E9%95%BF%E4%B9%8B%E8%B7%AF/" class="category-chain-item">Java成长之路</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Java%E6%88%90%E9%95%BF%E4%B9%8B%E8%B7%AF/SpringCloud/" class="category-chain-item">SpringCloud</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/springcloud/">#springcloud</a>
+      
+        <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1%EF%BC%8C%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/">#微服务，负载均衡</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Day02-01-15-SpringCloud技术-Ribbon</div>
+      <div>http://example.com/2023/01/15/Day02-01-15-SpringCloud技术-Ribbon/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>RenBoQing</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年1月15日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/01/16/Day03-01-16-SpringCloud%E6%8A%80%E6%9C%AF-openFeign/" title="Day03-01-16-SpringCloud技术-openFeign">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Day03-01-16-SpringCloud技术-openFeign</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/01/15/Day07-01-25-SpringCloud%E6%8A%80%E6%9C%AF-Alibaba/" title="Day07-01-25-SpringCloud技术-Alibaba">
+                        <span class="hidden-mobile">Day07-01-25-SpringCloud技术-Alibaba</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>人间至味是清欢</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>技术小窝</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

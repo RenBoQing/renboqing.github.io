@@ -1,0 +1,825 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="RenBoQing">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Day04-01-17-SpringCloud技术-Hystrix1.服务雪崩 1.服务雪崩的本质 服务雪崩的本质：线程没有及时回收。 不管是调用成功还是失败，只要线程可以及时回收，就可以解决服务雪崩  2.解决方案1.修改调用的超时时长 将服务间的调用超时时长改小，这样就可以让线程及时回收，保证服务可用 优点：非常简单，也可以有效的解决服务雪崩 缺点：不够灵活，有的服务需要更长的时间去处理（写库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Day04-01-17-SpringCloud技术-Hystrix">
+<meta property="og:url" content="http://example.com/2023/01/17/Day04-01-17-SpringCloud%E6%8A%80%E6%9C%AF-Hystrix/index.html">
+<meta property="og:site_name" content="人间至味是清欢的技术小窝">
+<meta property="og:description" content="Day04-01-17-SpringCloud技术-Hystrix1.服务雪崩 1.服务雪崩的本质 服务雪崩的本质：线程没有及时回收。 不管是调用成功还是失败，只要线程可以及时回收，就可以解决服务雪崩  2.解决方案1.修改调用的超时时长 将服务间的调用超时时长改小，这样就可以让线程及时回收，保证服务可用 优点：非常简单，也可以有效的解决服务雪崩 缺点：不够灵活，有的服务需要更长的时间去处理（写库">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230117161822739.pn">
+<meta property="article:published_time" content="2023-01-17T03:00:00.000Z">
+<meta property="article:modified_time" content="2023-01-26T15:44:45.128Z">
+<meta property="article:author" content="RenBoQing">
+<meta property="article:tag" content="springcloud">
+<meta property="article:tag" content="微服务，服务容错">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230117161822739.pn">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Day04-01-17-SpringCloud技术-Hystrix - 人间至味是清欢的技术小窝</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>人间至味是清欢的技术小窝</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>文章</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于我</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Day04-01-17-SpringCloud技术-Hystrix"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-01-17 11:00" pubdate>
+          2023年1月17日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          12k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          98 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Day04-01-17-SpringCloud技术-Hystrix</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Day04-01-17-SpringCloud技术-Hystrix"><a href="#Day04-01-17-SpringCloud技术-Hystrix" class="headerlink" title="Day04-01-17-SpringCloud技术-Hystrix"></a>Day04-01-17-SpringCloud技术-Hystrix</h1><h2 id="1-服务雪崩"><a href="#1-服务雪崩" class="headerlink" title="1.服务雪崩"></a>1.服务雪崩</h2><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230117161822739.png" srcset="/img/loading.gif" lazyload alt="image-20230117161822739"></p>
+<h3 id="1-服务雪崩的本质"><a href="#1-服务雪崩的本质" class="headerlink" title="1.服务雪崩的本质"></a>1.服务雪崩的本质</h3><blockquote>
+<p><strong>服务雪崩的本质：线程没有及时回收。</strong></p>
+<p><strong>不管是调用成功还是失败，只要线程可以及时回收，就可以解决服务雪崩</strong></p>
+</blockquote>
+<h3 id="2-解决方案"><a href="#2-解决方案" class="headerlink" title="2.解决方案"></a>2.解决方案</h3><h4 id="1-修改调用的超时时长"><a href="#1-修改调用的超时时长" class="headerlink" title="1.修改调用的超时时长"></a>1.<strong>修改调用的超时时长</strong></h4><blockquote>
+<p>将服务间的调用超时时长改小，这样就可以让线程及时回收，保证服务可用</p>
+<p>优点：非常简单，也可以有效的解决服务雪崩</p>
+<p>缺点：<strong>不够灵活</strong>，有的服务需要更长的时间去处理（写库，整理数据）</p>
+</blockquote>
+<h4 id="2-设置拦截器"><a href="#2-设置拦截器" class="headerlink" title="2.设置拦截器"></a>2.<strong>设置拦截器</strong></h4><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230117164307381.png" srcset="/img/loading.gif" lazyload alt="image-20230117164307381"></p>
+<h2 id="2-Hystrix简介"><a href="#2-Hystrix简介" class="headerlink" title="2.Hystrix简介"></a>2.Hystrix简介</h2><blockquote>
+<p>熔断器，也叫断路器！（正常情况下 断路器是关的 只有出了问题才打开）用来<strong>保护微服务不****雪崩的方法</strong>。思想和我们上面画的拦截器一样。</p>
+<p>Hystrix 是 Netflix 公司开源的一个项目，它提供了熔断器功能，能够阻止<strong>分布式系统中出现</strong>联动故障**。Hystrix 是通过隔离服务的访问点阻止联动故障的，并提供了故障的解决方案，从而提高了整个分布式系统的弹性。微博 弹性云扩容 Docker K8s</p>
+</blockquote>
+<h2 id="3-Hystrix快速入门"><a href="#3-Hystrix快速入门" class="headerlink" title="3.Hystrix快速入门"></a>3.Hystrix快速入门</h2><h3 id="1-构建eureka-serve-注册中心"><a href="#1-构建eureka-serve-注册中心" class="headerlink" title="1.构建eureka-serve(注册中心)"></a>1.构建eureka-serve(注册中心)</h3><h3 id="2-构建rent-car-service-服务者"><a href="#2-构建rent-car-service-服务者" class="headerlink" title="2.构建rent-car-service(服务者)"></a>2.构建rent-car-service(服务者)</h3><h4 id="1-新建项目"><a href="#1-新建项目" class="headerlink" title="1.新建项目"></a>1.新建项目</h4><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230117165426262.png" srcset="/img/loading.gif" lazyload alt="image-20230117165426262"></p>
+<h4 id="2-修改pom-xml配置文件"><a href="#2-修改pom-xml配置文件" class="headerlink" title="2.修改pom.xml配置文件"></a>2.修改pom.xml配置文件</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs xml-dtd">  &lt;parent&gt;<br>     &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;<br>     &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;<br>     &lt;version&gt;2.3.12.RELEASE&lt;/version&gt;<br>     &lt;relativePath/&gt; &lt;!-- lookup parent from repository --&gt;<br> &lt;/parent&gt;<br>&lt;properties&gt;<br>     &lt;java.version&gt;1.8&lt;/java.version&gt;<br>     &lt;spring-cloud.version&gt;Hoxton.SR12&lt;/spring-cloud.version&gt;<br> &lt;/properties&gt;<br>&lt;dependency&gt;<br>         &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;<br>         &lt;artifactId&gt;spring-cloud-starter-netflix-eureka-client&lt;/artifactId&gt;<br>         &lt;version&gt;2.2.3.RELEASE&lt;/version&gt;<br> &lt;/dependency&gt;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-修改配置文件-yml"><a href="#3-修改配置文件-yml" class="headerlink" title="3.修改配置文件(yml)"></a>3.修改配置文件(yml)</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java">server:<br>  port: <span class="hljs-number">8081</span><br>spring:<br>  application:<br>    name: rent-car-service<br>eureka:<br>  client:<br>    service-url:<br>      defaultZone: http:<span class="hljs-comment">//localhost:8761/eureka</span><br>  instance:<br>    instance-id: $&#123;spring.application.name&#125;:$&#123;server.port&#125;<br>    prefer-ip-address: <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="4-开启注解"><a href="#4-开启注解" class="headerlink" title="4.开启注解"></a>4.开启注解</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@EnableEurekaClient</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="5-开发接口"><a href="#5-开发接口" class="headerlink" title="5.开发接口"></a>5.开发接口</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/*</span><br><span class="hljs-comment">    *对用户的开放的租车接口</span><br><span class="hljs-comment">    * @author RenBoQing</span><br><span class="hljs-comment">    * @date 2023/1/17 0017 17:38</span><br><span class="hljs-comment">    * @return java.lang.String</span><br><span class="hljs-comment">    */</span><br>   <span class="hljs-meta">@GetMapping(&quot;/rentCar&quot;)</span><br>   <span class="hljs-keyword">public</span> String <span class="hljs-title function_">rentCar</span><span class="hljs-params">()</span> &#123;<br>       <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;租车成功&quot;</span>;<br>   &#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-构建customer-service-调用者"><a href="#3-构建customer-service-调用者" class="headerlink" title="3.构建customer-service(调用者)"></a>3.构建customer-service(调用者)</h3><h4 id="1-新建项目-1"><a href="#1-新建项目-1" class="headerlink" title="1.新建项目"></a>1.新建项目</h4><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230117171114339.png" srcset="/img/loading.gif" lazyload alt="image-20230117171114339"></p>
+<h4 id="2-修改pom-xml配置文件-1"><a href="#2-修改pom-xml配置文件-1" class="headerlink" title="2.修改pom.xml配置文件"></a>2.修改pom.xml配置文件</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs xml-dtd">  &lt;parent&gt;<br>     &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;<br>     &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;<br>     &lt;version&gt;2.3.12.RELEASE&lt;/version&gt;<br>     &lt;relativePath/&gt; &lt;!-- lookup parent from repository --&gt;<br> &lt;/parent&gt;<br>&lt;properties&gt;<br>     &lt;java.version&gt;1.8&lt;/java.version&gt;<br>     &lt;spring-cloud.version&gt;Hoxton.SR12&lt;/spring-cloud.version&gt;<br> &lt;/properties&gt;<br>&lt;dependency&gt;<br>         &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;<br>         &lt;artifactId&gt;spring-cloud-starter-netflix-eureka-client&lt;/artifactId&gt;<br>         &lt;version&gt;2.2.3.RELEASE&lt;/version&gt;<br> &lt;/dependency&gt;<br>&lt;dependency&gt;<br>         &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;<br>         &lt;artifactId&gt;spring-cloud-starter-openfeign&lt;/artifactId&gt;<br>     &lt;/dependency&gt;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-修改配置文件-yml-1"><a href="#3-修改配置文件-yml-1" class="headerlink" title="3.修改配置文件(yml)"></a>3.修改配置文件(yml)</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">server:</span><br>  <span class="hljs-attr">port:</span> <span class="hljs-number">8080</span><br><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">application:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">customer-service</span><br><span class="hljs-attr">eureka:</span><br>  <span class="hljs-attr">client:</span><br>    <span class="hljs-attr">service-url:</span><br>      <span class="hljs-attr">defaultZone:</span> <span class="hljs-string">http://localhost:8761/eureka</span><br>  <span class="hljs-attr">instance:</span><br>    <span class="hljs-attr">instance-id:</span> <span class="hljs-string">$&#123;spring.application.name&#125;:$&#123;server.port&#125;</span><br>    <span class="hljs-attr">prefer-ip-address:</span> <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="4-开启注解-1"><a href="#4-开启注解-1" class="headerlink" title="4.开启注解"></a>4.开启注解</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@EnableEurekaClient</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="5-编写远程调用feign"><a href="#5-编写远程调用feign" class="headerlink" title="5.编写远程调用feign"></a>5.编写远程调用feign</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@FeignClient(value = &quot;rent-car-service&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">CustomerRentFeign</span> &#123;<br>    <span class="hljs-comment">//远程调用的接口</span><br>    <span class="hljs-meta">@GetMapping(&quot;/rentCar&quot;)</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">rentCar</span><span class="hljs-params">()</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="6-开启feign的客户端"><a href="#6-开启feign的客户端" class="headerlink" title="6.开启feign的客户端"></a>6.开启feign的客户端</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@SpringBootApplication</span><br><span class="hljs-meta">@EnableEurekaClient</span><br><span class="hljs-meta">@EnableFeignClients</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CustomerServiceApplication</span> &#123;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        SpringApplication.run(CustomerServiceApplication.class, args);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="7-注入调用"><a href="#7-注入调用" class="headerlink" title="7.注入调用"></a>7.注入调用</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RestController</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CustomerController</span> &#123;<br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> CustomerRentFeign customerRentFeign;<br><br>    <span class="hljs-meta">@GetMapping(&quot;/customerRent&quot;)</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">CustomerRent</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;客户来租车了&quot;</span>);<br>        <span class="hljs-comment">//远程调用</span><br>        <span class="hljs-type">String</span> <span class="hljs-variable">rentCar</span> <span class="hljs-operator">=</span> customerRentFeign.rentCar();<br>        System.out.println(rentCar);<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;ok&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="4-整合Hystrix"><a href="#4-整合Hystrix" class="headerlink" title="4.整合Hystrix"></a>4.整合Hystrix</h2><h3 id="1-引入依赖文件-消费者-调用者"><a href="#1-引入依赖文件-消费者-调用者" class="headerlink" title="1.引入依赖文件(消费者-调用者)"></a>1.引入依赖文件(消费者-调用者)</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml-dtd"> &lt;dependency&gt;<br>    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;<br>    &lt;artifactId&gt;spring-cloud-starter-netflix-hystrix&lt;/artifactId&gt;<br>&lt;/dependency&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-创建远程调用服务宕机后的备用服务"><a href="#2-创建远程调用服务宕机后的备用服务" class="headerlink" title="2.创建远程调用服务宕机后的备用服务"></a>2.创建远程调用服务宕机后的备用服务</h3><blockquote>
+<p>在服务者的feign下面去实现这个对应的接口  即为备用的方案 就好比service 和serviceimpl的关系</p>
+</blockquote>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230117194557938.png" srcset="/img/loading.gif" lazyload alt="image-20230117194557938"></p>
+<blockquote>
+<p>并在hystrix的下面创建他的实现类，备用方案</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ConsumerRentFeignHystrix</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">CustomerRentFeign</span> &#123;<br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">     *备选方法</span><br><span class="hljs-comment">     * @author RenBoQing</span><br><span class="hljs-comment">     * @date 2023/1/17 0017 19:47</span><br><span class="hljs-comment">     * @return java.lang.String</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">rentCar</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;我是备胎&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>并在原来提供服务的接口上说明 该服务宕机后 指定对应的备选方案</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@FeignClient(value = &quot;rent-car-service&quot;, fallback = ConsumerRentFeignHystrix.class)</span><br><span class="hljs-comment">//fallback表示该服务熔断以后 启用备用方案的实现类的名称</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">CustomerRentFeign</span> &#123;<br>    <span class="hljs-comment">//远程调用的接口</span><br>    <span class="hljs-meta">@GetMapping(&quot;/rentCar&quot;)</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">rentCar</span><span class="hljs-params">()</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-开启feign对Hystrix的支持-调用者"><a href="#3-开启feign对Hystrix的支持-调用者" class="headerlink" title="3.开启feign对Hystrix的支持(调用者)"></a>3.开启feign对Hystrix的支持(调用者)</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment">#开启feign对Hystrix的支持</span><br><span class="hljs-attr">feign:</span><br>  <span class="hljs-attr">hystrix:</span><br>    <span class="hljs-attr">enabled:</span> <span class="hljs-literal">true</span> <span class="hljs-comment">#在cloud的f版本以前 是默认开启的 但是后来有了其他的熔断组件</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="5-Hystrix常用配置"><a href="#5-Hystrix常用配置" class="headerlink" title="5.Hystrix常用配置"></a>5.Hystrix常用配置</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs xml-dtd">server:<br>  port: 8081<br>spring:<br>  application:<br>    name: customer-service<br>eureka:<br>  client:<br>    service-url:<br>      defaultZone: http://localhost:8761/eureka<br>  instance:<br>    instance-id: $&#123;spring.application.name&#125;:$&#123;server.port&#125;<br>    prefer-ip-address: true<br> #开启feign对Hystrix的支持<br>feign:<br>  hystrix:<br>    enabled: true #在cloud的f版本以前 是默认开启的 但是后来有了其他的熔断组件<br>ribbon:<br>  ReadTimeout: 5000 #要结合 feign 的底层 ribbon 调用的时长<br>  ConnectTimeout: 5000<br>hystrix: #hystrix 的全局控制<br>  command:<br>    default: #default 是全局控制，也可以换成单个方法控制，把 default 换成方法名即可<br>      fallback:<br>        isolation:<br>          semaphore:<br>            maxConcurrentRequests: 1000 #信号量隔离级别最大并发数<br>      circuitBreaker:<br>        enabled: true #开启断路器<br>        requestVolumeThreshold: 3 #失败次数（阀值）<br>        sleepWindowInMilliseconds: 20000 #窗口时间<br>        errorThresholdPercentage: 60 #失败率<br>      execution:<br>        isolation:<br>          Strategy: thread #隔离方式 thread 线程隔离集合和 SEMAPHORE 信号量隔离<br></code></pre></td></tr></table></figure>
+
+<h2 id="6-分布式项目架构"><a href="#6-分布式项目架构" class="headerlink" title="6.分布式项目架构"></a>6.分布式项目架构</h2><h3 id="1-单体项目结构"><a href="#1-单体项目结构" class="headerlink" title="1.单体项目结构"></a>1.单体项目结构</h3><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230117211525904.png" srcset="/img/loading.gif" lazyload alt="image-20230117211525904"></p>
+<h3 id="2-分布式聚合项目结构"><a href="#2-分布式聚合项目结构" class="headerlink" title="2.分布式聚合项目结构"></a>2.分布式聚合项目结构</h3><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230117214529517.png" srcset="/img/loading.gif" lazyload alt="image-20230117214529517"></p>
+<h4 id="1-优化方案一"><a href="#1-优化方案一" class="headerlink" title="1.优化方案一"></a>1.优化方案一</h4><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230117214808807.png" srcset="/img/loading.gif" lazyload alt="image-20230117214808807"></p>
+<h4 id="2-优化方案二"><a href="#2-优化方案二" class="headerlink" title="2.优化方案二"></a>2.优化方案二</h4><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230117220546384.png" srcset="/img/loading.gif" lazyload alt="image-20230117220546384"></p>
+<h2 id="7-Feign的工程化实例"><a href="#7-Feign的工程化实例" class="headerlink" title="7.Feign的工程化实例"></a>7.Feign的工程化实例</h2><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230117221725059.png" srcset="/img/loading.gif" lazyload alt="image-20230117221725059"></p>
+<h3 id="1-创建创建父项目feign"><a href="#1-创建创建父项目feign" class="headerlink" title="1.创建创建父项目feign"></a>1.创建创建父项目feign</h3><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230117223949555.png" srcset="/img/loading.gif" lazyload alt="image-20230117223949555"></p>
+<blockquote>
+<p>主项目的父项目是一个boot</p>
+</blockquote>
+<h4 id="1-主项目配置文件-pom"><a href="#1-主项目配置文件-pom" class="headerlink" title="1.主项目配置文件(pom)"></a>1.主项目配置文件(pom)</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs xml-dtd">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br>&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;<br>         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;<br>         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;<br>    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;<br>    &lt;!-- 该项目的父项目是一个boot项目 --&gt;<br>    &lt;parent&gt;<br>        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;<br>        &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;<br>        &lt;version&gt;2.3.12.RELEASE&lt;/version&gt;<br>        &lt;relativePath/&gt; &lt;!-- lookup parent from repository --&gt;<br>    &lt;/parent&gt;<br>    &lt;!--   父项目的打包方式是pom--&gt;<br>    &lt;packaging&gt;pom&lt;/packaging&gt;<br>    &lt;groupId&gt;com.powernode&lt;/groupId&gt;<br>    &lt;artifactId&gt;04-feign-project&lt;/artifactId&gt;<br>    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;<br>    &lt;!--定义全局版本号控制--&gt;<br>    &lt;properties&gt;<br>        &lt;maven.compiler.source&gt;8&lt;/maven.compiler.source&gt;<br>        &lt;maven.compiler.target&gt;8&lt;/maven.compiler.target&gt;<br>        &lt;java.version&gt;1.8&lt;/java.version&gt;<br>        &lt;spring-cloud.version&gt;Hoxton.SR12&lt;/spring-cloud.version&gt;<br>    &lt;/properties&gt;<br>    &lt;!--    项目依赖 全局依赖 所有模块都有--&gt;<br>    &lt;dependencies&gt;<br>        &lt;dependency&gt;<br>            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;<br>            &lt;artifactId&gt;lombok&lt;/artifactId&gt;<br>        &lt;/dependency&gt;<br>    &lt;/dependencies&gt;<br>    &lt;!--    依赖管理  加载这里的依赖不会被加载进项目 只是做了一个版本控制--&gt;<br>    &lt;dependencyManagement&gt;<br>        &lt;dependencies&gt;<br>            &lt;!--            cloud版本号控制--&gt;<br>            &lt;dependency&gt;<br>                &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;<br>                &lt;artifactId&gt;spring-cloud-dependencies&lt;/artifactId&gt;<br>                &lt;version&gt;$&#123;spring-cloud.version&#125;&lt;/version&gt;<br>                &lt;type&gt;pom&lt;/type&gt;<br>                &lt;scope&gt;import&lt;/scope&gt;<br>            &lt;/dependency&gt;<br>        &lt;/dependencies&gt;<br>    &lt;/dependencyManagement&gt;<br><br>    &lt;!--   打包 和仓库的 构建工具--&gt;<br>    &lt;build&gt;<br><br>    &lt;/build&gt;<br>&lt;/project&gt;<br></code></pre></td></tr></table></figure>
+
+<h4 id="2-构建project-domain"><a href="#2-构建project-domain" class="headerlink" title="2.构建project-domain"></a>2.构建project-domain</h4><blockquote>
+<p>这里的都需要使用pom项目来修改为boot项目 </p>
+</blockquote>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230117230756904.png" srcset="/img/loading.gif" lazyload alt="image-20230117230756904"></p>
+<h4 id="3-构建common-api"><a href="#3-构建common-api" class="headerlink" title="3.构建common-api"></a>3.构建common-api</h4><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230117230756904.png" srcset="/img/loading.gif" lazyload alt="image-20230117230756904"></p>
+<h4 id="4-构建user-center"><a href="#4-构建user-center" class="headerlink" title="4.构建user-center"></a>4.构建user-center</h4><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230117231841811.png" srcset="/img/loading.gif" lazyload alt="image-20230117231841811"></p>
+<h4 id="5-构建order-center"><a href="#5-构建order-center" class="headerlink" title="5.构建order-center"></a>5.构建order-center</h4><p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230117232008585.png" srcset="/img/loading.gif" lazyload alt="image-20230117232008585"></p>
+<h4 id="6-构建各模块的依赖关系"><a href="#6-构建各模块的依赖关系" class="headerlink" title="6.构建各模块的依赖关系"></a>6.构建各模块的依赖关系</h4><blockquote>
+<p>api会依赖domain  所以在api的xml文件中引入domain</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml-dtd">&lt;dependency&gt;<br>         &lt;groupId&gt;com.powernode&lt;/groupId&gt;<br>         &lt;artifactId&gt;project-domain&lt;/artifactId&gt;<br>         &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;<br>     &lt;/dependency&gt;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>user-center 和order-center会依赖api 所以在user-center和order-center中引入api</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs xml-dtd">&lt;dependencies&gt;<br>     &lt;dependency&gt;<br>         &lt;groupId&gt;com.powernode&lt;/groupId&gt;<br>         &lt;artifactId&gt;common-api&lt;/artifactId&gt;<br>         &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;<br>     &lt;/dependency&gt;<br> &lt;/dependencies&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-书写全局domain"><a href="#2-书写全局domain" class="headerlink" title="2.书写全局domain"></a>2.书写全局domain</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> RenBoQing</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@date</span> 2023年01月17日 23:40</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@Description</span></span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Data</span><br><span class="hljs-meta">@AllArgsConstructor</span><br><span class="hljs-meta">@NoArgsConstructor</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Order</span> &#123;<br>    <span class="hljs-keyword">private</span> Integer orderId;<br>    <span class="hljs-keyword">private</span> String name;<br>    <span class="hljs-keyword">private</span> Double price;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意事项 domain 和api不需要启动相当于一个jar的感觉  user-center和order-center需要引入 启动服务</p>
+</blockquote>
+<h3 id="3-构建order-center"><a href="#3-构建order-center" class="headerlink" title="3.构建order-center"></a>3.构建order-center</h3><h4 id="1-引入依赖"><a href="#1-引入依赖" class="headerlink" title="1.引入依赖"></a>1.引入依赖</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-eureka-client<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">build</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">plugins</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">plugins</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">build</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="2-编写代码"><a href="#2-编写代码" class="headerlink" title="2.编写代码"></a>2.编写代码</h4><h5 id="1-改为Springboot项目"><a href="#1-改为Springboot项目" class="headerlink" title="1.改为Springboot项目"></a>1.改为Springboot项目</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@SpringBootApplication</span><br><span class="hljs-meta">@EnableEurekaClient</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">OrderServiceApp</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        SpringApplication.run(OrderServiceApp.class,args);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="2-构建接口"><a href="#2-构建接口" class="headerlink" title="2.构建接口"></a>2.构建接口</h5><blockquote>
+<p>为了接口能够复用和被远程调用 而且远程调用的接口和对外暴露的接口相同 直接抽取到api中构建</p>
+<p>因为api中需要 FeignClient所以需要引入依赖 </p>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230118000057506.png" srcset="/img/loading.gif" lazyload alt="image-20230118000057506"></p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@FeignClient(&quot;order-service&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">UserOrderFeign</span> &#123;<br><br>   <span class="hljs-comment">//根据用户用id来查询订单</span><br>    <span class="hljs-meta">@GetMapping(&quot;/order/getOrderByUserId&quot;)</span><br>    Order <span class="hljs-title function_">getOrderById</span><span class="hljs-params">(<span class="hljs-meta">@RequestParam</span> Integer userId)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这里定义以后 子模块对应的接口直接实现这个接口即可</p>
+</blockquote>
+<h5 id="3-在order-center中实现接口"><a href="#3-在order-center中实现接口" class="headerlink" title="3.在order-center中实现接口"></a>3.在order-center中实现接口</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RestController</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">OrderController</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">UserOrderFeign</span> &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> Order <span class="hljs-title function_">getOrderById</span><span class="hljs-params">(Integer userId)</span> &#123;<br>        System.out.println(userId);<br>        <span class="hljs-type">Order</span> <span class="hljs-variable">order</span> <span class="hljs-operator">=</span> Order.builder().name(<span class="hljs-string">&quot;青椒肉丝&quot;</span>).price(<span class="hljs-number">12.32</span>).orderId(<span class="hljs-number">12</span>).build();<br>        <span class="hljs-keyword">return</span> order;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-修改配置文件-注册发现"><a href="#3-修改配置文件-注册发现" class="headerlink" title="3.修改配置文件-注册发现"></a>3.修改配置文件-注册发现</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">server:</span><br>  <span class="hljs-attr">port:</span> <span class="hljs-number">8080</span><br><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">application:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">order-service</span><br><span class="hljs-attr">eureka:</span><br>  <span class="hljs-attr">client:</span><br>    <span class="hljs-attr">service-url:</span><br>      <span class="hljs-attr">defaultZone:</span> <span class="hljs-string">http://localhost:8761/eureka</span><br>  <span class="hljs-attr">instance:</span><br>    <span class="hljs-attr">instance-id:</span> <span class="hljs-string">$&#123;spring.application.name&#125;:$&#123;server.port&#125;</span><br>    <span class="hljs-attr">prefer-ip-address:</span> <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="4-构建user-center-1"><a href="#4-构建user-center-1" class="headerlink" title="4.构建user-center"></a>4.构建user-center</h3><h4 id="1-引入依赖-1"><a href="#1-引入依赖-1" class="headerlink" title="1.引入依赖"></a>1.引入依赖</h4><blockquote>
+<p>为了接口能够复用和被远程调用 而且远程调用的接口和对外暴露的接口相同 直接抽取到api中构建</p>
+<p>因为api中需要 FeignClient所以需要引入依赖 </p>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230118000057506.png" srcset="/img/loading.gif" lazyload alt="image-20230118000057506"></p>
+<p>因为api中添加了feign所以子模块不需要添加</p>
+<p>添加熔断注解到api中</p>
+<p><img src="https://typora-demo-rbq.oss-cn-hangzhou.aliyuncs.com/image-20230118002525635.png" srcset="/img/loading.gif" lazyload alt="image-20230118002525635"></p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs xml-dtd">&lt;dependency&gt;<br>        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;<br>        &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;<br>    &lt;/dependency&gt;<br>    &lt;dependency&gt;<br>        &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;<br>        &lt;artifactId&gt;spring-cloud-starter-netflix-eureka-client&lt;/artifactId&gt;<br>    &lt;/dependency&gt;<br></code></pre></td></tr></table></figure>
+
+<h4 id="2-编写代码-1"><a href="#2-编写代码-1" class="headerlink" title="2.编写代码"></a>2.编写代码</h4><h5 id="1-改为SpringBoot项目"><a href="#1-改为SpringBoot项目" class="headerlink" title="1.改为SpringBoot项目"></a>1.改为SpringBoot项目</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@SpringBootApplication</span><br><span class="hljs-meta">@EnableEurekaClient</span><br><span class="hljs-meta">@EnableFeignClients</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UserServiceApp</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        SpringApplication.run(UserServiceApp.class,args);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="2-构建接口-1"><a href="#2-构建接口-1" class="headerlink" title="2.构建接口"></a>2.构建接口</h5><blockquote>
+<p>这里使用浏览器访问 直接书写接口即可 不需要内部调用</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RestController</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UserController</span> &#123;<br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> UserOrderFeign userOrderFeign;<br>    <span class="hljs-meta">@GetMapping(&quot;/find&quot;)</span><br>    <span class="hljs-keyword">public</span> Order <span class="hljs-title function_">findOrder</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> userOrderFeign.getOrderById(<span class="hljs-number">1</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-修改配置文件-注册发现-1"><a href="#3-修改配置文件-注册发现-1" class="headerlink" title="3.修改配置文件-注册发现"></a>3.修改配置文件-注册发现</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">server:</span><br>  <span class="hljs-attr">port:</span> <span class="hljs-number">8081</span><br><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">application:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">user-service</span><br><span class="hljs-attr">eureka:</span><br>  <span class="hljs-attr">client:</span><br>    <span class="hljs-attr">service-url:</span><br>      <span class="hljs-attr">defaultZone:</span> <span class="hljs-string">http://localhost:8761/eureka</span><br>  <span class="hljs-attr">instance:</span><br>    <span class="hljs-attr">instance-id:</span> <span class="hljs-string">$&#123;spring.application.name&#125;:$&#123;server.port&#125;</span><br>    <span class="hljs-attr">prefer-ip-address:</span> <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="5-整合Hystrix熔断"><a href="#5-整合Hystrix熔断" class="headerlink" title="5.整合Hystrix熔断"></a>5.整合Hystrix熔断</h3><h4 id="1-user-service中开启熔断"><a href="#1-user-service中开启熔断" class="headerlink" title="1.user-service中开启熔断"></a>1.user-service中开启熔断</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">server:</span><br>  <span class="hljs-attr">port:</span> <span class="hljs-number">8081</span><br><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">application:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">user-service</span><br><span class="hljs-attr">eureka:</span><br>  <span class="hljs-attr">client:</span><br>    <span class="hljs-attr">service-url:</span><br>      <span class="hljs-attr">defaultZone:</span> <span class="hljs-string">http://localhost:8761/eureka</span><br>  <span class="hljs-attr">instance:</span><br>    <span class="hljs-attr">instance-id:</span> <span class="hljs-string">$&#123;spring.application.name&#125;:$&#123;server.port&#125;</span><br>    <span class="hljs-attr">prefer-ip-address:</span> <span class="hljs-literal">true</span><br><span class="hljs-attr">feign:</span><br>  <span class="hljs-attr">hystrix:</span><br>    <span class="hljs-attr">enabled:</span> <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="2-在user-service中或者api中书写熔断代码"><a href="#2-在user-service中或者api中书写熔断代码" class="headerlink" title="2.在user-service中或者api中书写熔断代码"></a>2.在user-service中或者api中书写熔断代码</h4><blockquote>
+<p>为了方便管理 我们统一在api中书写代码</p>
+</blockquote>
+<h5 id="1-在api的feign下书写代码"><a href="#1-在api的feign下书写代码" class="headerlink" title="1.在api的feign下书写代码"></a>1.在api的feign下书写代码</h5><blockquote>
+<p>在api的feign中新建hystrix去实现对应的接口方法</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UserOrderFeignHystrix</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">UserOrderFeign</span> &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> Order <span class="hljs-title function_">getOrderById</span><span class="hljs-params">(Integer userId)</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;走了熔断方案 没有数据走过来&quot;</span>);<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="2-在对应的接口上指定熔断的方案"><a href="#2-在对应的接口上指定熔断的方案" class="headerlink" title="2.在对应的接口上指定熔断的方案"></a>2.在对应的接口上指定熔断的方案</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@FeignClient(value = &quot;order-service&quot;,fallback = UserOrderFeignHystrix.class)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">UserOrderFeign</span> &#123;<br><br>   <span class="hljs-comment">//根据用户用id来查询订单</span><br>    <span class="hljs-meta">@GetMapping(&quot;/order/getOrderByUserId&quot;)</span><br>    Order <span class="hljs-title function_">getOrderById</span><span class="hljs-params">(<span class="hljs-meta">@RequestParam</span> Integer userId)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Java%E6%88%90%E9%95%BF%E4%B9%8B%E8%B7%AF/" class="category-chain-item">Java成长之路</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Java%E6%88%90%E9%95%BF%E4%B9%8B%E8%B7%AF/SpringCloud/" class="category-chain-item">SpringCloud</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/springcloud/">#springcloud</a>
+      
+        <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1%EF%BC%8C%E6%9C%8D%E5%8A%A1%E5%AE%B9%E9%94%99/">#微服务，服务容错</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Day04-01-17-SpringCloud技术-Hystrix</div>
+      <div>http://example.com/2023/01/17/Day04-01-17-SpringCloud技术-Hystrix/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>RenBoQing</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年1月17日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/01/18/Day05-01-18-SpringCloud%E6%8A%80%E6%9C%AF-Sleuth/" title="Day05-01-18-SpringCloud技术-Sleuth">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Day05-01-18-SpringCloud技术-Sleuth</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/01/16/Day03-01-16-SpringCloud%E6%8A%80%E6%9C%AF-openFeign/" title="Day03-01-16-SpringCloud技术-openFeign">
+                        <span class="hidden-mobile">Day03-01-16-SpringCloud技术-openFeign</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>人间至味是清欢</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>技术小窝</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
